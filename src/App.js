@@ -1,7 +1,8 @@
+import React from "react";
 import "./App.css";
 import { Main } from "./components/main/Main";
 import { WorkerForm } from "./components/workerForm/WorkerForm";
-import LaptopList from "./components/laptopList/LaptopList";
+import { LaptopList } from "./components/laptopList/LaptopList";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
