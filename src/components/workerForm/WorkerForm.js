@@ -39,8 +39,8 @@ export const WorkerForm = () => {
       setTeamError("error");
     } else if (!position) {
       setPositionError("error");
-    } else if (email.split("@")[1] != "redberry.ge") {
-      setEmailError("უნდა მთავრდებოდეს @redburry.ge");
+    } else if (email.split("@")[1] !== "redberry.ge") {
+      setEmailError("უნდა მთავრდებოდეს @redberry.ge");
     } else if (!phoneNumber.startsWith("+995")) {
       setPhoneNumberError("ნომერი უნდა იწყებოდეს +995 ით");
     } else if (phoneNumber.length < 13) {
@@ -180,7 +180,7 @@ export const WorkerForm = () => {
               type="text"
               className={emailError ? "errorInput" : ""}
               value={email}
-              placeholder="grisha@redburry.com"
+              placeholder="grish666@redberry.com"
               onChange={(e) => setEmail(e.target.value)}
             />
             {emailError ? (
