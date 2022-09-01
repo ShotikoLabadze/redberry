@@ -1,18 +1,20 @@
 import React from "react";
-import "./App.css";
+import { Route, Routes } from "react-router-dom";
 import { Main } from "./components/main/Main";
 import { WorkerForm } from "./components/workerForm/WorkerForm";
-import { LaptopList } from "./components/laptopList/LaptopList";
 import { LaptopInfo } from "./components/laptopInfo/LaptopInfo";
-import { Route, Routes } from "react-router-dom";
+import { LaptopList } from "./components/laptopList/LaptopList";
+import { LaptopListPage } from "./components/laptopListPage/LaptopListPage";
+import "./App.css";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Main />} />
-      <Route path="/WorkerForm" element={<WorkerForm />} />
-      <Route path="/LaptopList" element={<LaptopList />} />
-      <Route path="/LaptopInfo" element={<LaptopInfo />} />
+      <Route path="/workerform" element={<WorkerForm />} />
+      <Route path="/laptopinfo" element={<LaptopInfo />} />
+      <Route path="/laptoplist" element={<LaptopList />} />
+      <Route path="/laptopinfo/:id" element={<LaptopListPage />} />
     </Routes>
   );
 }

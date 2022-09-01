@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import frame from "../../assets/Congratulations.png";
 import footerIMG from "../../assets/FooterIMG.png";
 import Modal from "react-modal";
+import "./LaptopInfo.css";
 
 const customStyles = {
   content: {
@@ -35,7 +37,7 @@ export const LaptopInfo = () => {
   const [laptopPrice, setLaptopPrice] = useState(0);
   const [laptopCondition, setLaptopCondition] = useState("");
   const inputRef = useRef();
-  const token = "471b30ab3027124dd141e95931bc0be3";
+  const token = "58fb15a2289017f3c82b6d0949bbaf33";
   const [modalIsOpen, setIsOpen] = useState(false);
 
   const [fileError, setFileError] = useState(null);
@@ -165,21 +167,29 @@ export const LaptopInfo = () => {
 
   return (
     <div>
-      <div className="">
+      <div className="infoBody1">
         <Link to="/">
-          <button className=" ">
-            <i class=""></i>
+          <button className="backButton left">
+            <i class="fa-solid fa-chevron-left"></i>
           </button>
         </Link>
-        <div className="" style={{ marginTop: "70px" }}>
-          <p className="">თანამშრომლის ინფო</p>
-          <p className="">ლეპტოპის მახასიათებლები</p>
+        <div className="nav" style={{ marginTop: "70px" }}>
+          <p className="navTitle">თანამშრომლის ინფო</p>
+
+          <p className="navTitle">ლეპტოპის მახასიათებლები</p>
         </div>
-        <div className="">
-          <div className="">
+        <div className="navLine1">
+          <hr></hr>
+          <hr className="navLinehr1"></hr>
+        </div>
+        <div className="infobody1">
+          <div className="infoPerson">
             <div className={fileError ? "fileError" : "file"}>
               {fileError && (
-                <i class="" style={{ color: "#c8cb52", marginTop: "20px" }}></i>
+                <i
+                  class="fa-solid fa-triangle-exclamation fa-2x"
+                  style={{ color: "#c8cb52", marginTop: "20px" }}
+                ></i>
               )}
               {file ? (
                 <img
@@ -203,7 +213,7 @@ export const LaptopInfo = () => {
                   </p>
                 </div>
               )}
-              <label for="" class="">
+              <label for="file-upload" class="fileAppearance">
                 ატვირთე
               </label>
               <input
@@ -215,14 +225,14 @@ export const LaptopInfo = () => {
               />
             </div>
           </div>
-          <div className="">
+          <div className="infoPerson">
             <div>
               {laptopNameError ? (
-                <p className="" style={{ color: "#e52f2f" }}>
+                <p className="label" style={{ color: "#e52f2f" }}>
                   ლეპტოპის სახელი
                 </p>
               ) : (
-                <p className="">ლეპტოპის სახელი</p>
+                <p className="label">ლეპტოპის სახელი</p>
               )}
 
               <input
@@ -233,11 +243,13 @@ export const LaptopInfo = () => {
                 onChange={(e) => setLaptopName(e.target.value)}
               />
               {laptopNameError ? (
-                <p className="" style={{ color: "#e52f2f" }}>
+                <p className="label3" style={{ color: "#e52f2f" }}>
                   {laptopNameError}
                 </p>
               ) : (
-                <p className="">მხოლოდ ლათინურ სიმბოლოებს "!@#$%^&*()_+="</p>
+                <p className="label3">
+                  მხოლოდ ლათინურ სიმბოლოებს "!@#$%^&*()_+="
+                </p>
               )}
             </div>
             <div>
@@ -256,9 +268,9 @@ export const LaptopInfo = () => {
               </select>
             </div>
           </div>
-          <hr className="" />
+          <hr className="line" />
 
-          <div class="">
+          <div class="laptopInfo">
             <div>
               <select
                 className={
@@ -278,11 +290,11 @@ export const LaptopInfo = () => {
             </div>
             <div>
               {laptopCpuCoreError ? (
-                <p className="" style={{ color: "red" }}>
+                <p className="label" style={{ color: "red" }}>
                   CPU-ს ბირთვი
                 </p>
               ) : (
-                <p className="">CPU-ს ბირთვი</p>
+                <p className="label">CPU-ს ბირთვი</p>
               )}
               <input
                 type="text"
@@ -296,20 +308,20 @@ export const LaptopInfo = () => {
                 onChange={(e) => setLaptopCpuCore(e.target.value)}
               />
               {laptopCpuCoreError ? (
-                <p className="" style={{ color: "red" }}>
+                <p className="label3" style={{ color: "red" }}>
                   მხოლოდ ციფრები
                 </p>
               ) : (
-                <p className="">მხოლოდ ციფრები</p>
+                <p className="label3">მხოლოდ ციფრები</p>
               )}{" "}
             </div>
             <div>
               {laptopCpuStreamError ? (
-                <p className="" style={{ color: "red" }}>
+                <p className="label" style={{ color: "red" }}>
                   CPU-ს ნაკადი
                 </p>
               ) : (
-                <p className="">CPU-ს ნაკადი</p>
+                <p className="label">CPU-ს ნაკადი</p>
               )}
               <input
                 type="text"
@@ -323,23 +335,23 @@ export const LaptopInfo = () => {
                 onChange={(e) => setLaptopCpuStream(e.target.value)}
               />
               {laptopCpuStreamError ? (
-                <p className="" style={{ color: "red" }}>
+                <p className="label3" style={{ color: "red" }}>
                   მხოლოდ ციფრები
                 </p>
               ) : (
-                <p className="">მხოლოდ ციფრები</p>
+                <p className="label3">მხოლოდ ციფრები</p>
               )}
             </div>
           </div>
 
-          <div class="">
+          <div class="laptopInfoSecondRow">
             <div>
               {laptopRamError ? (
-                <p className="" style={{ color: "red" }}>
+                <p className="label" style={{ color: "red" }}>
                   ლეპტოპის RAM (GB)
                 </p>
               ) : (
-                <p className="">ლეპტოპის RAM (GB)</p>
+                <p className="label">ლეპტოპის RAM (GB)</p>
               )}
               <input
                 type="text"
@@ -351,37 +363,40 @@ export const LaptopInfo = () => {
                 onChange={(e) => setLaptopRam(e.target.value)}
               />
               {laptopRamError ? (
-                <p className="" style={{ color: "red" }}>
+                <p className="label3" style={{ color: "red" }}>
                   მხოლოდ ციფრები
                 </p>
               ) : (
-                <p className="">მხოლოდ ციფრები</p>
+                <p className="label3">მხოლოდ ციფრები</p>
               )}
             </div>
 
             <div onChange={(e) => setLaptopMemoryType(e.target.value)}>
-              <p className="">
+              <p className="label">
                 მეხსიერების ტიპი
                 {laptopMemoryTypeError && (
-                  <i class="" style={{ color: "#c8cb52" }}></i>
+                  <i
+                    class="fa-solid fa-triangle-exclamation"
+                    style={{ color: "#c8cb52" }}
+                  ></i>
                 )}
               </p>
               <input type="radio" name="memoryType" value="SSD"></input>
-              <label className="">SSD</label>
+              <label className="radioLabel">SSD</label>
 
               <input
                 type="radio"
-                className=""
+                className="radioButton"
                 name="memoryType"
                 value="HDD"
               ></input>
-              <label className="">HDD</label>
+              <label className="radioLabel">HDD</label>
             </div>
           </div>
 
           <hr className="line" />
 
-          <div class="">
+          <div class="laptopInfoSecondRow">
             <div>
               <p className="label">შეძენის რიცხვი (არჩევითი)</p>
               <input
@@ -393,11 +408,11 @@ export const LaptopInfo = () => {
             </div>
             <div>
               {laptopPriceError ? (
-                <p className="" style={{ color: "red" }}>
+                <p className="label" style={{ color: "red" }}>
                   ლეპტოპის ფასი
                 </p>
               ) : (
-                <p className="">ლეპტოპის ფასი</p>
+                <p className="label">ლეპტოპის ფასი</p>
               )}
               <input
                 type="text"
@@ -407,16 +422,19 @@ export const LaptopInfo = () => {
                     : "laptopInfoInput2"
                 }
                 placeholder="0"
-                value={Number(laptopPrice)}
+                value={laptopPrice}
                 onChange={(e) => setLaptopPrice(e.target.value)}
               />
-              <i class="" style={{ marginLeft: "5px" }}></i>
+              <i
+                class="fa-solid fa-lari-sign"
+                style={{ marginLeft: "5px" }}
+              ></i>
               {laptopPriceError ? (
-                <p className="" style={{ color: "red" }}>
+                <p className="label3" style={{ color: "red" }}>
                   მხოლოდ ციფრები
                 </p>
               ) : (
-                <p className="">მხოლოდ ციფრები</p>
+                <p className="label3">მხოლოდ ციფრები</p>
               )}
             </div>
 
@@ -425,26 +443,29 @@ export const LaptopInfo = () => {
               value={laptopCondition}
               onChange={(e) => setLaptopCondition(e.target.value)}
             >
-              <p className="">ლეპტოპის მდგომარეობა</p>
+              <p className="label">ლეპტოპის მდგომარეობა</p>
               {laptopConditionError && (
-                <i class="" style={{ color: "#c8cb52" }}></i>
+                <i
+                  class="fa-solid fa-triangle-exclamation"
+                  style={{ color: "#c8cb52" }}
+                ></i>
               )}
               <input type="radio" name="laptopCondition" value="used"></input>
-              <label className="">მეორადი</label>
+              <label className="radioLabel">მეორადი</label>
 
               <input
                 type="radio"
-                className=""
+                className="radioButton"
                 name="laptopCondition"
                 value="new"
               ></input>
-              <label className="">ახალი</label>
+              <label className="radioLabel">ახალი</label>
             </div>
           </div>
 
-          <Link to="/WorkerForm">
+          <Link to="/workerinfo">
             <button
-              className=""
+              className="button1 backButton1"
               style={{
                 float: "left",
                 marginLeft: "40px",
@@ -458,7 +479,7 @@ export const LaptopInfo = () => {
           </Link>
 
           <button
-            className=""
+            className="button1"
             style={{ marginBottom: "40px" }}
             onClick={submitHandler}
           >
@@ -471,9 +492,9 @@ export const LaptopInfo = () => {
               style={customStyles}
               contentLabel="Example Modal"
             >
-              <img src={footerIMG} />
-              <p className="">ჩანაწერი დამატებულია !</p>
-              <Link to="/LaptopList">
+              <img src={frame} />
+              <p className="navTitle1">ჩანაწერი დამატებულია !</p>
+              <Link to="/laptoplist">
                 <button className="button">სიაში გადაყვანა</button>
               </Link>
               <Link to="/">
@@ -484,7 +505,7 @@ export const LaptopInfo = () => {
                     border: "1px solid white",
                     marginTop: "40px",
                   }}
-                  className=""
+                  className="button"
                 >
                   მთავარი
                 </button>
@@ -493,7 +514,7 @@ export const LaptopInfo = () => {
           </div>
         </div>
         <div>
-          <img className="" src={footerIMG} style={{ bottom: "0" }} />
+          <img className="footer" src={footerIMG} style={{ bottom: "0" }} />
         </div>
       </div>
     </div>

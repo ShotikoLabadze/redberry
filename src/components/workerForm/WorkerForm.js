@@ -11,27 +11,28 @@ export const WorkerForm = () => {
 
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
-  const [email, setEmail] = useState("");
   const [team, setTeam] = useState(0);
-  const [position, setPosition] = useState(0);
+  const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [position, setPosition] = useState(0);
   const [emailError, setEmailError] = useState("");
   const [nameError, setNameError] = useState("");
-  const [surnameError, setSurnameError] = useState("");
   const [teamError, setTeamError] = useState("");
-  const [positionError, setPositionError] = useState("");
+  const [surnameError, setSurnameError] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
+  const [positionError, setPositionError] = useState("");
+  const [text, setText] = useState();
 
-  const res = /^[ა-ჰ]+$/;
+  const ah = /^[ა-ჰ]+$/;
 
   const personInfo = { name, surname, email, team, position, phoneNumber };
   const submitHandler = () => {
     localStorage.setItem("personInfo", JSON.stringify(personInfo));
-    if (!res.test(`${name}`)) {
+    if (!ah.test(`${name}`)) {
       setNameError("გთხოვთ შეიყვანეთ ქართული ასოებით");
     } else if (name.length < 2) {
       setNameError("მინიმუმ ორი ქართული ასო");
-    } else if (!res.test(`${surname}`)) {
+    } else if (!ah.test(`${surname}`)) {
       setSurnameError("გთხოვთ შეიყვანეთ ქართული ასოებით");
     } else if (surname.length < 2) {
       setSurnameError("მინიმუმ ორი ქართული ასო");
@@ -39,14 +40,16 @@ export const WorkerForm = () => {
       setTeamError("error");
     } else if (!position) {
       setPositionError("error");
-    } else if (email.split("@")[1] !== "redberry.ge") {
+    } else if (email.split("@")[1] != "redberry.ge") {
       setEmailError("უნდა მთავრდებოდეს @redberry.ge");
     } else if (!phoneNumber.startsWith("+995")) {
       setPhoneNumberError("ნომერი უნდა იწყებოდეს +995 ით");
     } else if (phoneNumber.length < 13) {
       setPhoneNumberError("არ შეესაბამება ქართული ნომრის ფორმატს");
+    } else if (phoneNumber.includes(" ")) {
+      setPhoneNumberError("შეიყვანეთ ნომერი სფეისის გარეშე");
     } else {
-      navigate("/LaptopInfo");
+      navigate("/laptopinfo");
     }
   };
 
@@ -66,7 +69,7 @@ export const WorkerForm = () => {
     };
     getTeams();
     getPositions();
-  }, [setPositionInfo]);
+  }, []);
 
   useEffect(() => {
     const getPerson = JSON.parse(localStorage.getItem("personInfo"));
@@ -82,44 +85,51 @@ export const WorkerForm = () => {
 
   return (
     <div>
-      <div className="">
+      <div className="infoBody">
         <Link to="/">
-          <button className="">
-            <i class=""></i>
+          <button className="backButton left">
+            <i class="fa-solid fa-chevron-left"></i>
           </button>
         </Link>
-        <div className="">
-          <p className="">თანამშრომლის ინფო</p>
-          <p className="">ლეპტოპის მახასიათებლები</p>
+        <div className="nav">
+          <p className="navTitle">თანამშრომლის ინფო</p>
+          <p className="navTitle">{text}</p>
         </div>
-        <div className="">
-          <div className="">
+        {text && (
+          <div className="navLine">
+            <hr className="navLinehr"></hr>
+            <hr></hr>
+          </div>
+        )}
+        <div className="infobody">
+          <div className="infoPerson">
             <div>
               {nameError ? (
                 <p style={{ color: "#e52f2f", fontWeight: "bold" }}>სახელი</p>
               ) : (
-                <p className="">სახელი</p>
+                <p className="label">სახელი</p>
               )}
               <input
                 type="text"
-                className={nameError ? "inputError" : ""}
+                className={nameError ? "inputError" : "input"}
                 placeholder="გრიშა"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
+
               {nameError ? (
-                <p className="" style={{ color: "#e52f2f" }}>
+                <p className="label3" style={{ color: "#e52f2f" }}>
                   {nameError}
                 </p>
               ) : (
-                <p className="">მინიმუმ 2 სიმბოლო ქართული ასოებით</p>
+                <p className="label3">მინიმუმ 2 სიმბოლო ქართული ასოებით</p>
               )}
             </div>
             <div>
               {surnameError ? (
                 <p style={{ color: "#e52f2f", fontWeight: "bold" }}>გვარი</p>
               ) : (
-                <p className="">გვარი</p>
+                <p className="label">გვარი</p>
               )}
 
               <input
@@ -130,11 +140,11 @@ export const WorkerForm = () => {
                 onChange={(e) => setSurname(e.target.value)}
               />
               {surnameError ? (
-                <p className="" style={{ color: "#e52f2f" }}>
+                <p className="label3" style={{ color: "#e52f2f" }}>
                   {surnameError}
                 </p>
               ) : (
-                <p className="">მინიმუმ 2 სიმბოლო ქართული ასოებით</p>
+                <p className="label3">მინიმუმ 2 სიმბოლო ქართული ასოებით</p>
               )}
             </div>
           </div>
@@ -143,8 +153,9 @@ export const WorkerForm = () => {
               onChange={(e) => setTeam(e.target.value)}
               className={teamError ? "selectError" : "select"}
             >
-              {" "}
-              <option disabled>თიმი</option>
+              <option disabled selected>
+                თიმი
+              </option>
               {teamsInfo.map((team) => (
                 <option value={team.id} key={team.id}>
                   {team.name}
@@ -157,7 +168,9 @@ export const WorkerForm = () => {
               className={positionError ? "selectError" : "select"}
               onChange={(e) => setPosition(e.target.value)}
             >
-              <option disabled>პოზიცია</option>
+              <option disabled selected>
+                პოზიცია
+              </option>
               {positionInfo
                 .filter((position) => position.team_id == team)
                 .map((p) => (
@@ -169,18 +182,18 @@ export const WorkerForm = () => {
           </div>
           <div>
             {emailError ? (
-              <p className="" style={{ color: "#e52f2f" }}>
+              <p className="label1" style={{ color: "#e52f2f" }}>
                 ემაილი
               </p>
             ) : (
-              <p className="">ემაილი</p>
+              <p className="label1">ემაილი</p>
             )}
 
             <input
               type="text"
-              className={emailError ? "errorInput" : ""}
+              className={emailError ? "errorInput" : "input1"}
               value={email}
-              placeholder="grish666@redberry.com"
+              placeholder="grisha666@redberry.ge"
               onChange={(e) => setEmail(e.target.value)}
             />
             {emailError ? (
@@ -191,21 +204,21 @@ export const WorkerForm = () => {
           </div>
           <div>
             {phoneNumberError ? (
-              <p className="" style={{ color: "#e52f2f" }}>
+              <p className="label1" style={{ color: "#e52f2f" }}>
                 ტელეფონის ნომერი
               </p>
             ) : (
-              <p className="">ტელეფონის ნომერი</p>
+              <p className="label1">ტელეფონის ნომერი</p>
             )}
 
             <input
               type="text"
-              className={phoneNumberError ? "errorInput" : ""}
+              className={phoneNumberError ? "errorInput" : "input1"}
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
             {phoneNumberError ? (
-              <p className="" style={{ color: "#e52f2f" }}>
+              <p className="label2" style={{ color: "#e52f2f" }}>
                 {phoneNumberError}
               </p>
             ) : (
@@ -220,7 +233,12 @@ export const WorkerForm = () => {
           </button>
         </div>
         <div>
-          <img className="" src={FooterIMG} style={{ bottom: "0" }} />
+          <img
+            className="footer"
+            src={FooterIMG}
+            alt="footer"
+            style={{ bottom: "0" }}
+          />
         </div>
       </div>
     </div>
