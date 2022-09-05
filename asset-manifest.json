@@ -1,7 +1,7 @@
 {
-  "main.css": "/redberry/static/css/main.66129f3d.chunk.css",
-  "main.js": "/redberry/static/js/main.d257de14.chunk.js",
-  "main.js.map": "/redberry/static/js/main.d257de14.chunk.js.map",
+  "main.css": "/redberry/static/css/main.3b0d182d.chunk.css",
+  "main.js": "/redberry/static/js/main.e97aca00.chunk.js",
+  "main.js.map": "/redberry/static/js/main.e97aca00.chunk.js.map",
   "static/js/1.d73fce75.chunk.js": "/redberry/static/js/1.d73fce75.chunk.js",
   "static/js/1.d73fce75.chunk.js.map": "/redberry/static/js/1.d73fce75.chunk.js.map",
   "runtime~main.js": "/redberry/static/js/runtime~main.50ba566f.js",
@@ -9,8 +9,8 @@
   "static/media/RedberryIMG.jpg": "/redberry/static/media/RedberryIMG.b2d10ea3.jpg",
   "static/media/App.css": "/redberry/static/media/HelveticaNeue.e3a027e9.ttc",
   "static/media/Vector.svg": "/redberry/static/media/Vector.130df018.svg",
-  "static/css/main.66129f3d.chunk.css.map": "/redberry/static/css/main.66129f3d.chunk.css.map",
+  "static/css/main.3b0d182d.chunk.css.map": "/redberry/static/css/main.3b0d182d.chunk.css.map",
   "index.html": "/redberry/index.html",
-  "precache-manifest.bcd6189e711db602152480a8fbdc8026.js": "/redberry/precache-manifest.bcd6189e711db602152480a8fbdc8026.js",
+  "precache-manifest.4369d30319818e0082cf655191884cab.js": "/redberry/precache-manifest.4369d30319818e0082cf655191884cab.js",
   "service-worker.js": "/redberry/service-worker.js"
 }

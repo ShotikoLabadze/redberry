@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "d257de140ec9ebb79b96",
-    "url": "/redberry/static/css/main.66129f3d.chunk.css"
+    "revision": "e97aca00d25134fe2f4b",
+    "url": "/redberry/static/css/main.3b0d182d.chunk.css"
   },
   {
-    "revision": "d257de140ec9ebb79b96",
-    "url": "/redberry/static/js/main.d257de14.chunk.js"
+    "revision": "e97aca00d25134fe2f4b",
+    "url": "/redberry/static/js/main.e97aca00.chunk.js"
   },
   {
     "revision": "d73fce75d7b62164ab65",
@@ -32,7 +32,7 @@ self.__precacheManifest = [
     "url": "/redberry/static/media/HelveticaNeue.e3a027e9.ttc"
   },
   {
-    "revision": "16b02ac84c8ed6a0e7e4eb8708002ec9",
+    "revision": "726e8f8f2a5caf77ee28ecb9cfff5be9",
     "url": "/redberry/index.html"
   }
 ];

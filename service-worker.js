@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/redberry/precache-manifest.bcd6189e711db602152480a8fbdc8026.js"
+  "/redberry/precache-manifest.4369d30319818e0082cf655191884cab.js"
 );
 
 workbox.clientsClaim();
