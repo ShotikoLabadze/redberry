@@ -37,7 +37,7 @@ export const LaptopInfo = () => {
   const [laptopPrice, setLaptopPrice] = useState(0);
   const [laptopCondition, setLaptopCondition] = useState("");
   const inputRef = useRef();
-  const token = "58fb15a2289017f3c82b6d0949bbaf33";
+  const token = "6e411cdd00f5018ed76599c4c3c36bfc";
   const [modalIsOpen, setIsOpen] = useState(false);
 
   const [fileError, setFileError] = useState(null);
@@ -51,7 +51,7 @@ export const LaptopInfo = () => {
   const [laptopPriceError, setLaptopPriceError] = useState(0);
   const [laptopConditionError, setLaptopConditionError] = useState("");
 
-  const nameRegex = /^[~`!@#$%^&*()_+=[\]\{}|;':",.\/<>?a-zA-Z0-9-" +"]+$/;
+  const nameRegex = /^[~`!@#$%^&*()_+=[}|;':",.<>?a-zA-Z0-9-" +"]+$/;
 
   const laptopDetails = {
     laptopName,
@@ -196,6 +196,7 @@ export const LaptopInfo = () => {
                     border: "1px solid white",
                     borderRadius: "10px",
                   }}
+                  alt="img"
                   src={URL.createObjectURL(file)}
                 />
               ) : (
@@ -459,7 +460,7 @@ export const LaptopInfo = () => {
             </div>
           </div>
 
-          <Link to="/workerinfo">
+          <Link to="/workerform">
             <button
               className="button1 backButton1"
               style={{
@@ -488,7 +489,7 @@ export const LaptopInfo = () => {
               style={customStyles}
               contentLabel="Example Modal"
             >
-              <img src={frame} />
+              <img src={frame} alt="frame" />
               <p className="navTitle1">ჩანაწერი დამატებულია !</p>
               <Link to="/laptoplist">
                 <button className="button">სიაში გადაყვანა</button>
@@ -510,7 +511,12 @@ export const LaptopInfo = () => {
           </div>
         </div>
         <div>
-          <img className="footer" src={footerIMG} style={{ bottom: "0" }} />
+          <img
+            className="footer"
+            src={footerIMG}
+            alt="footer"
+            style={{ bottom: "0" }}
+          />
         </div>
       </div>
     </div>

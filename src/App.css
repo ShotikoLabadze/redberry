@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Helvetica Neue";
+  src: url("./assets/fonts/HelveticaNeue.ttc");
+}
+
 body {
   font-family: ttc;
 }
@@ -18,6 +23,8 @@ body {
 
 .landing {
   margin-bottom: 50px;
+  background-image: url("./assets/Group.png");
+  background-repeat: no-repeat;
 }
 
 link {

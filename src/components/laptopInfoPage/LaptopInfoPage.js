@@ -10,19 +10,18 @@ export const LaptopInfoPage = () => {
   const [user, setUser] = useState({});
   const [laptop, setLaptop] = useState({});
   const [laptopCpu, setLaptopCpu] = useState({});
-  const [loading, setLoading] = useState(true);
+
   const params = useParams();
 
   useEffect(() => {
     const getLaptops = async () => {
       const data = await axios.get(
-        `https://pcfy.redberryinternship.ge/api/laptop/${params.id}?token=58fb15a2289017f3c82b6d0949bbaf33`
+        `https://pcfy.redberryinternship.ge/api/laptop/${params.id}?token=6e411cdd00f5018ed76599c4c3c36bfc`
       );
 
       setUser(data.data.data.user);
       setLaptop(data.data.data.laptop);
       setLaptopCpu(data.data.data.laptop.cpu);
-      setLoading(false);
     };
 
     getLaptops();

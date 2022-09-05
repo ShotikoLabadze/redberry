@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FooterIMG from "../../assets/FooterIMG.png";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { BackButton } from "../backButton/BackButton";
 
 export const WorkerForm = () => {
@@ -170,7 +171,7 @@ export const WorkerForm = () => {
                 პოზიცია
               </option>
               {positionInfo
-                .filter((position) => position.team_id === team)
+                .filter((position) => position.team_id == team)
                 .map((p) => (
                   <option value={p.id} key={p.id}>
                     {p.name}
@@ -231,12 +232,7 @@ export const WorkerForm = () => {
           </button>
         </div>
         <div>
-          <img
-            className="footer"
-            src={FooterIMG}
-            alt="footer"
-            style={{ bottom: "0" }}
-          />
+          <img className="footer" src={FooterIMG} style={{ bottom: "0" }} />
         </div>
       </div>
     </div>

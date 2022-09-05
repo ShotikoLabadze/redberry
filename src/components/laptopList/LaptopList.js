@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 import footerIMG from "../../assets/FooterIMG.png";
 import { BackButton } from "../backButton/BackButton";
 
-export const LaptopList = (porps) => {
+export const LaptopList = () => {
   const [loading, setLoading] = useState(true);
   const [laptop, setLaptop] = useState();
 
   useEffect(() => {
     const getLaptops = async () => {
       const data = await axios.get(
-        "https://pcfy.redberryinternship.ge/api/laptops?token=58fb15a2289017f3c82b6d0949bbaf33"
+        "https://pcfy.redberryinternship.ge/api/laptops?token=6e411cdd00f5018ed76599c4c3c36bfc"
       );
 
       console.log();
