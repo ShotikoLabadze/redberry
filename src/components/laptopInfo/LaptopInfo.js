@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import frame from "../../assets/Congratulations.png";
 import footerIMG from "../../assets/FooterIMG.png";
 import Modal from "react-modal";
-import "./LaptopInfo.css";
+import { BackButton } from "../backButton/BackButton";
 
 const customStyles = {
   content: {
@@ -168,11 +168,7 @@ export const LaptopInfo = () => {
   return (
     <div>
       <div className="infoBody1">
-        <Link to="/">
-          <button className="backButton left">
-            <i class="fa-solid fa-chevron-left"></i>
-          </button>
-        </Link>
+        <BackButton />
         <div className="nav" style={{ marginTop: "70px" }}>
           <p className="navTitle">თანამშრომლის ინფო</p>
 

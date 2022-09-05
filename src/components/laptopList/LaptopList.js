@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import footerIMG from "../../assets/FooterIMG.png";
+import { BackButton } from "../backButton/BackButton";
 
 export const LaptopList = (porps) => {
   const [loading, setLoading] = useState(true);
@@ -24,11 +25,7 @@ export const LaptopList = (porps) => {
   return (
     <div>
       <div className="infoBody1" style={{ backgroundColor: "white" }}>
-        <Link to="/">
-          <button className="backButton left">
-            <i className="fa-solid fa-chevron-left"></i>
-          </button>
-        </Link>
+        <BackButton />
         <div className="nav">
           <p className="navTitle1" style={{ marginBottom: "100px" }}>
             ჩანაწერების სია

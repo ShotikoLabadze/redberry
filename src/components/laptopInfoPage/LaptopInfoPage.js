@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
-import { Link } from "react-router-dom";
+import { BackButton } from "../backButton/BackButton";
 
-export const LaptopListPage = () => {
+export const LaptopInfoPage = () => {
   const [team, setTeam] = useState([]);
   const [position, setPosition] = useState([]);
 
@@ -48,11 +48,7 @@ export const LaptopListPage = () => {
 
   return (
     <div className="responsive">
-      <Link to="/laptoplist">
-        <button className="backButton left">
-          <i className="fa-solid fa-chevron-left"></i>
-        </button>
-      </Link>
+      <BackButton />
       <p
         className="navTitle1"
         style={{ width: "20%", margin: "auto", marginTop: "40px" }}

@@ -1,13 +1,17 @@
 import React from "react";
+import LOGO from "../../assets/Logo.png";
 import IMG from "../../assets/RedberryIMG.jpg";
 import { Link } from "react-router-dom";
-import "./Main.css";
 
 export const Main = () => {
   return (
     <div className="container">
       <div className="logo">
-        <img src={IMG} alt="LOGO" />
+        <img src={LOGO} alt="LOGO" />
+      </div>
+
+      <div className="landing">
+        <img src={IMG} alt="RedberryIMG" />
       </div>
 
       <div>

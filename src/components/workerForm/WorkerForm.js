@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import FooterIMG from "../../assets/FooterIMG.png";
 import axios from "axios";
-import "./WorkerForm.css";
+import { BackButton } from "../backButton/BackButton";
 
 export const WorkerForm = () => {
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ export const WorkerForm = () => {
       setTeamError("error");
     } else if (!position) {
       setPositionError("error");
-    } else if (email.split("@")[1] != "redberry.ge") {
+    } else if (email.split("@")[1] !== "redberry.ge") {
       setEmailError("უნდა მთავრდებოდეს @redberry.ge");
     } else if (!phoneNumber.startsWith("+995")) {
       setPhoneNumberError("ნომერი უნდა იწყებოდეს +995 ით");
@@ -83,14 +83,12 @@ export const WorkerForm = () => {
     }
   }, []);
 
+  //Error Classes
+
   return (
     <div>
       <div className="infoBody">
-        <Link to="/">
-          <button className="backButton left">
-            <i class="fa-solid fa-chevron-left"></i>
-          </button>
-        </Link>
+        <BackButton />
         <div className="nav">
           <p className="navTitle">თანამშრომლის ინფო</p>
           <p className="navTitle">{text}</p>
@@ -172,7 +170,7 @@ export const WorkerForm = () => {
                 პოზიცია
               </option>
               {positionInfo
-                .filter((position) => position.team_id == team)
+                .filter((position) => position.team_id === team)
                 .map((p) => (
                   <option value={p.id} key={p.id}>
                     {p.name}
