@@ -1,6 +1,10 @@
 import "./Navbar.css";
 
-const Navbar = () => {
+interface NavbarProps {
+  onLoginClick: () => void;
+}
+
+const Navbar = ({ onLoginClick }: NavbarProps) => {
   const isLoggedIn = false;
 
   return (
@@ -17,7 +21,9 @@ const Navbar = () => {
 
         {!isLoggedIn ? (
           <div className="auth-buttons">
-            <button className="login-btn">Log In</button>
+            <button className="login-btn" onClick={onLoginClick}>
+              Log In
+            </button>
             <button className="signup-btn">Sign Up</button>
           </div>
         ) : (
