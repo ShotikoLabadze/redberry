@@ -1,10 +1,12 @@
-import { useState } from "react";
 import "./App.css";
+import Navbar from "./layout/Navbar";
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  return <></>;
+  return (
+    <div>
+      <Navbar />
+    </div>
+  );
 }
 
 export default App;
