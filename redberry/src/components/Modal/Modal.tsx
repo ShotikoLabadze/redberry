@@ -13,7 +13,7 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
     <div className="overlay" onClick={onClose}>
       <div className="content" onClick={(e) => e.stopPropagation()}>
         <button className="btn" onClick={onClose}>
-          &times;
+          <img src="/CloseVector.png" alt="closebutton" />
         </button>
         {children}
       </div>
