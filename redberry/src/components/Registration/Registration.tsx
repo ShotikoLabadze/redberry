@@ -128,6 +128,7 @@ const Registration = ({ onSwitchToLogin }: RegistrationProps) => {
             </div>
           </div>
 
+          <button
             className="submit-btn"
             onClick={() => console.log("signup clicked")}
           >
