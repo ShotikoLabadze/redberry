@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { register } from "../../api/auth.service";
 import "./Registration.css";
 interface RegistrationProps {
   onSwitchToLogin: () => void;
@@ -13,6 +14,29 @@ const Registration = ({ onSwitchToLogin }: RegistrationProps) => {
 
   const [isVisible, setIsVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    setError("");
+
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("password_confirmation", confirmPassword);
+
+    try {
+      const result = await register(formData);
+      console.log("Registration successful:", result);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleNext = () => {
     if (step === 1) {
@@ -148,9 +172,10 @@ const Registration = ({ onSwitchToLogin }: RegistrationProps) => {
 
           <button
             className="submit-btn"
-            onClick={() => console.log("signup clicked")}
+            onClick={handleSubmit}
+            disabled={isLoading}
           >
-            Sign Up
+            {isLoading ? "Signing Up..." : "Sign Up"}
           </button>
         </div>
       )}
@@ -160,12 +185,13 @@ const Registration = ({ onSwitchToLogin }: RegistrationProps) => {
           <span>or</span>
         </div>
         <p>
-          Already have an account?{" "}
+          Already have an account?
           <span className="link" onClick={onSwitchToLogin}>
             Log In
           </span>
         </p>
       </div>
+      {error && <p className="error-message">{error}</p>}
     </div>
   );
 };
