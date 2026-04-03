@@ -10,15 +10,27 @@ const Registration = ({ onSwitchToLogin }: RegistrationProps) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [username, setUsername] = useState("");
-  const [avatar, setAvatar] = useState<File | null>(null);
+
+  const [isVisible, setIsVisible] = useState(false);
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
 
   const handleNext = () => {
-    if (email.length > 3) {
-      setStep(2);
+    if (step === 1) {
+      if (email.includes("@") && email.length > 3) {
+        setStep(2);
+      } else {
+        alert("Please enter a valid email address.");
+      }
+    } else if (step === 2) {
+      if (password.length >= 3 && password === confirmPassword) {
+        setStep(3);
+      } else {
+        alert("Passwords must match and be at least 3 characters long.");
+      }
     }
   };
 
-  const handleBack = () => setStep(1);
+  const handleBack = () => setStep(step - 1);
   return (
     <div className="container">
       {step > 1 && (
@@ -54,38 +66,44 @@ const Registration = ({ onSwitchToLogin }: RegistrationProps) => {
         </div>
       )}
 
-      {step == 2 && (
+      {step === 2 && (
         <div className="step-content">
           <div className="input">
-            <label htmlFor="password">Password*</label>
+            <label>Password*</label>
             <div className="input-wrapper">
               <input
-                type="password"
+                type={isVisible ? "text" : "password"}
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <img src="/eye.png" alt="toggle view" className="icon" />
+              <img
+                src={isVisible ? "/eye.png" : "/closedEye.png"}
+                alt="toggle"
+                className="icon"
+                onClick={() => setIsVisible(!isVisible)}
+              />
             </div>
           </div>
+
           <div className="input">
-            <label htmlFor="confirmPassword">Confirm Password*</label>
+            <label>Confirm Password*</label>
             <div className="input-wrapper">
               <input
-                type="password"
+                type={isConfirmVisible ? "text" : "password"}
                 placeholder="********"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
-              <img src="/closedEye.png" alt="toggle view" className="icon" />
+              <img
+                src={isConfirmVisible ? "/eye.png" : "/closedEye.png"}
+                alt="toggle"
+                className="icon"
+                onClick={() => setIsConfirmVisible(!isConfirmVisible)}
+              />
             </div>
           </div>
-          <button
-            className="submit-btn"
-            onClick={() => {
-              setStep(3);
-            }}
-          >
+          <button className="submit-btn" onClick={handleNext}>
             Next
           </button>
         </div>
