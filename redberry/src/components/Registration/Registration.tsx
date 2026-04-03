@@ -56,21 +56,27 @@ const Registration = ({ onSwitchToLogin }: RegistrationProps) => {
         <div className="step-content">
           <div className="input">
             <label htmlFor="password">Password*</label>
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="input-wrapper">
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <img src="/eye.png" alt="toggle view" className="icon" />
+            </div>
           </div>
           <div className="input">
             <label htmlFor="confirmPassword">Confirm Password*</label>
-            <input
-              type="password"
-              placeholder="********"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
+            <div className="input-wrapper">
+              <input
+                type="password"
+                placeholder="********"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              <img src="/closedEye.png" alt="toggle view" className="icon" />
+            </div>
           </div>
           <button
             className="submit-btn"

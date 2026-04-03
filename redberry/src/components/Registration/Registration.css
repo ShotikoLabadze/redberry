@@ -111,3 +111,17 @@
   border: none;
   cursor: pointer;
 }
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  position: absolute;
+  right: 16px;
+  height: auto;
+  cursor: pointer;
+  opacity: 0.6;
+}
