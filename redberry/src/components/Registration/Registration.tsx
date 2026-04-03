@@ -9,6 +9,8 @@ const Registration = ({ onSwitchToLogin }: RegistrationProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [avatar, setAvatar] = useState<File | null>(null);
 
   const handleNext = () => {
     if (email.length > 3) {
@@ -85,6 +87,51 @@ const Registration = ({ onSwitchToLogin }: RegistrationProps) => {
             }}
           >
             Next
+          </button>
+        </div>
+      )}
+
+      {step == 3 && (
+        <div className="step-content">
+          <div className="input">
+            <label>Username*</label>
+            <input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <label>Upload Avatar</label>
+          <div className="upload">
+            <div className="drop">
+              <div className="upload-placeholder">
+                <img
+                  className="upload-icon"
+                  src="/uploadIcon.png"
+                  alt="uploadicon"
+                />
+                <p>
+                  Drag and drop or{" "}
+                  <label htmlFor="file-upload" className="upload-link">
+                    Upload File
+                  </label>
+                </p>
+                <span>JPG, PNG or WebP</span>
+              </div>
+              <input
+                type="file"
+                id="file-upload"
+                style={{ display: "none" }}
+                accept="image/*"
+              />
+            </div>
+          </div>
+
+            className="submit-btn"
+            onClick={() => console.log("signup clicked")}
+          >
+            Sign Up
           </button>
         </div>
       )}
