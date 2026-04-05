@@ -29,3 +29,17 @@ export const getMe = async () => {
     throw new Error("Failed to fetch user data");
   }
 };
+
+export const updateProfile = async (data: FormData) => {
+  try {
+    const response = await API.put("/profile", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  } catch (err: any) {
+    const mess = err.response?.data?.message || "Update failed";
+    throw new Error(mess);
+  }
+};

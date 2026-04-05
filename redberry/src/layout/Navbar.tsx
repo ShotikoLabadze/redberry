@@ -52,7 +52,9 @@ const Navbar = ({
                 className="nav-avatar"
               />
 
-              {!user?.profileComplete && <span className="warning-dot"></span>}
+              <span
+                className={`status-indicator ${user?.profileComplete ? "complete" : "incomplete"}`}
+              ></span>
             </div>
           </div>
         )}

@@ -1,28 +1,43 @@
 import type { ChangeEvent } from "react";
 import { useEffect, useState } from "react";
+import { updateProfile } from "../../api/auth.service";
 import "./Profile.css";
 
 interface ProfileProps {
   user: any;
   onClose: () => void;
-  onUpdate: (data: FormData) => void;
+  onUpdate: () => void;
 }
 
-const Profile = ({ user, onUpdate }: ProfileProps) => {
+const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
   const [fullName, setFullName] = useState(user?.fullName || "");
   const [mobileNumber, setMobileNumber] = useState(user?.mobileNumber || "");
   const [age, setAge] = useState(user?.age || "");
   const [avatar, setAvatar] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
-    if (user) {
-      setFullName(user.fullName || "");
-      setMobileNumber(user.mobileNumber || "");
-      setAge(user.age || "");
-    }
-  }, [user]);
+    const cleanPhone = mobileNumber.replace(/\s/g, "");
+    const newErrors: { [key: string]: string } = {};
+
+    if (!fullName.trim()) newErrors.fullName = "Name is required";
+    else if (fullName.length < 3) newErrors.fullName = "Too short";
+
+    if (!cleanPhone) newErrors.mobileNumber = "Required";
+    else if (!cleanPhone.startsWith("5"))
+      newErrors.mobileNumber = "Must start with 5";
+    else if (cleanPhone.length !== 9)
+      newErrors.mobileNumber = "Must be 9 digits";
+
+    if (!age) newErrors.age = "Required";
+    else if (Number(age) < 16) newErrors.age = "16+ only";
+
+    setErrors(newErrors);
+    setIsFormValid(Object.keys(newErrors).length === 0);
+  }, [fullName, mobileNumber, age]);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -33,17 +48,20 @@ const Profile = ({ user, onUpdate }: ProfileProps) => {
   };
 
   const handleUpdate = async () => {
+    if (!isFormValid) return;
     setIsLoading(true);
     try {
       const formData = new FormData();
-      formData.append("fullName", fullName);
-      formData.append("mobileNumber", mobileNumber);
-      formData.append("age", age);
+      formData.append("full_name", fullName);
+      formData.append("mobile_number", mobileNumber.replace(/\s/g, ""));
+      formData.append("age", age.toString());
       if (avatar) formData.append("avatar", avatar);
 
-      await onUpdate(formData);
-    } catch (err) {
-      console.error("Update failed", err);
+      await updateProfile(formData);
+      await onUpdate();
+      onClose();
+    } catch (err: any) {
+      console.error(err);
     } finally {
       setIsLoading(false);
     }
@@ -53,14 +71,6 @@ const Profile = ({ user, onUpdate }: ProfileProps) => {
     <div className="container">
       <div className="header">
         <h1>Profile</h1>
-        <p className={`status-label ${user?.profileComplete ? "active" : ""}`}>
-          {user?.profileComplete
-            ? "Profile is Complete"
-            : "Profile is Incomplete"}
-        </p>
-      </div>
-
-      <div className="step-content">
         <div className="profile-info-section">
           <div className="avatar-preview-wrapper">
             <img
@@ -74,16 +84,33 @@ const Profile = ({ user, onUpdate }: ProfileProps) => {
           </div>
           <div className="user-details-text">
             <h2 className="display-username">{user?.username || "Username"}</h2>
-            <p>{user?.email}</p>
+
+            <p
+              className={`status-text ${user?.profileComplete ? "complete" : "incomplete"}`}
+            >
+              {user?.profileComplete
+                ? "Profile is Complete"
+                : "Profile is Incomplete"}
+            </p>
           </div>
         </div>
+      </div>
 
+      <div className="step-content">
         <div className="input">
           <label>Full Name</label>
-          <div className="input-wrapper">
+          <div
+            className={`input-wrapper ${
+              errors.fullName
+                ? "error-border"
+                : fullName.length >= 3
+                  ? "success-border"
+                  : ""
+            }`}
+          >
             <input
               type="text"
-              placeholder="Full Name"
+              placeholder="Username"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
             />
@@ -93,7 +120,7 @@ const Profile = ({ user, onUpdate }: ProfileProps) => {
 
         <div className="input">
           <label>Email</label>
-          <div className="input-wrapper">
+          <div className="input-wrapper disabled-wrapper">
             <input
               type="email"
               value={user?.email || ""}
@@ -107,10 +134,18 @@ const Profile = ({ user, onUpdate }: ProfileProps) => {
         <div className="form-row">
           <div className="input flex-3">
             <label>Mobile Number</label>
-            <div className="input-wrapper">
+            <div
+              className={`input-wrapper ${
+                errors.mobileNumber
+                  ? "error-border"
+                  : mobileNumber.length >= 9
+                    ? "success-border"
+                    : ""
+              }`}
+            >
               <input
                 type="text"
-                placeholder="+995 599 00 00 00"
+                placeholder="+995 599209820"
                 value={mobileNumber}
                 onChange={(e) => setMobileNumber(e.target.value)}
               />
@@ -119,14 +154,20 @@ const Profile = ({ user, onUpdate }: ProfileProps) => {
           </div>
           <div className="input flex-1">
             <label>Age</label>
-            <select value={age} onChange={(e) => setAge(e.target.value)}>
-              <option value="">Age</option>
-              {[...Array(60)].map((_, i) => (
-                <option key={i} value={18 + i}>
-                  {18 + i}
-                </option>
-              ))}
-            </select>
+            <div
+              className={`input-wrapper ${
+                errors.age ? "error-border" : age >= 16 ? "success-border" : ""
+              }`}
+            >
+              <select value={age} onChange={(e) => setAge(e.target.value)}>
+                <option value="">{user?.age || "Age"}</option>
+                {[...Array(60)].map((_, i) => (
+                  <option key={i} value={16 + i}>
+                    {16 + i}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
 
@@ -154,7 +195,7 @@ const Profile = ({ user, onUpdate }: ProfileProps) => {
         <button
           className="submit-btn"
           onClick={handleUpdate}
-          disabled={isLoading}
+          disabled={isLoading || !isFormValid}
         >
           {isLoading ? "Updating..." : "Update Profile"}
         </button>

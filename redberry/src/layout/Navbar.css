@@ -71,15 +71,24 @@
   border-radius: 50%;
   background-color: #eeeffd;
   padding: 2px;
+  object-fit: cover;
 }
 
-.warning-dot {
+.status-indicator {
   position: absolute;
   bottom: 0;
   right: 0;
   width: 12px;
   height: 12px;
-  background-color: #ff9900;
   border: 2px solid white;
   border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.status-indicator.incomplete {
+  background-color: #f4a316;
+}
+
+.status-indicator.complete {
+  background-color: #1dc31d;
 }

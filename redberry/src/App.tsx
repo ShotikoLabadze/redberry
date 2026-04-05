@@ -8,22 +8,26 @@ import Navbar from "./layout/Navbar";
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [user, setUser] = useState(null);
-
+  const [user, setUser] = useState<any>(null);
   const [modalType, setModalType] = useState<"login" | "register" | "profile">(
     "login",
   );
-
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
 
   const fetchUserData = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
     try {
       const res = await getMe();
-      setUser(res.data);
+
+      setUser(res.data || res);
+      setIsLoggedIn(true);
     } catch (err: any) {
-      console.error("Auth failed or no token", err);
+      console.error("Auth failed", err);
       setIsLoggedIn(false);
       localStorage.removeItem("token");
+      setUser(null);
     }
   };
 
@@ -33,25 +37,15 @@ function App() {
     }
   }, [isLoggedIn]);
 
-  const openLogin = () => {
-    setModalType("login");
-    setIsModalOpen(true);
-  };
-
-  const openRegister = () => {
-    setModalType("register");
-    setIsModalOpen(true);
-  };
-
-  const openProfile = () => {
-    setModalType("profile");
-    setIsModalOpen(true);
-  };
-
-  const handleSuccess = () => {
+  const handleAuthSuccess = () => {
     setIsLoggedIn(true);
     setIsModalOpen(false);
     fetchUserData();
+  };
+
+  const openModal = (type: "login" | "register" | "profile") => {
+    setModalType(type);
+    setIsModalOpen(true);
   };
 
   return (
@@ -59,18 +53,24 @@ function App() {
       <Navbar
         isLoggedIn={isLoggedIn}
         user={user}
-        onLoginClick={openLogin}
-        onSignUpClick={openRegister}
-        onProfileClick={openProfile}
+        onLoginClick={() => openModal("login")}
+        onSignUpClick={() => openModal("register")}
+        onProfileClick={() => openModal("profile")}
       />
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {modalType === "login" && (
-          <Login onSwitchToSignUp={openRegister} onSuccess={handleSuccess} />
+          <Login
+            onSwitchToSignUp={() => openModal("register")}
+            onSuccess={handleAuthSuccess}
+          />
         )}
 
         {modalType === "register" && (
-          <Registration onSwitchToLogin={openLogin} onSuccess={handleSuccess} />
+          <Registration
+            onSwitchToLogin={() => openModal("login")}
+            onSuccess={handleAuthSuccess}
+          />
         )}
 
         {modalType === "profile" && (
