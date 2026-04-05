@@ -57,3 +57,29 @@
   font-weight: 600;
   transition: 0.2s;
 }
+
+.avatar-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.nav-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #eeeffd;
+  padding: 2px;
+}
+
+.warning-dot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  background-color: #ff9900;
+  border: 2px solid white;
+  border-radius: 50%;
+}

@@ -20,3 +20,12 @@ export const login = async (email: string, password: string) => {
     throw new Error(mess);
   }
 };
+
+export const getMe = async () => {
+  try {
+    const response = await API.get("/me");
+    return response.data;
+  } catch (err: any) {
+    throw new Error("Failed to fetch user data");
+  }
+};

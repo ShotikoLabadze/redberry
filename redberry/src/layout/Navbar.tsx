@@ -1,13 +1,20 @@
 import "./Navbar.css";
 
 interface NavbarProps {
+  isLoggedIn: boolean;
+  user: any;
   onLoginClick: () => void;
   onSignUpClick: () => void;
+  onProfileClick: () => void;
 }
 
-const Navbar = ({ onLoginClick, onSignUpClick }: NavbarProps) => {
-  const isLoggedIn = false;
-
+const Navbar = ({
+  isLoggedIn,
+  user,
+  onLoginClick,
+  onSignUpClick,
+  onProfileClick,
+}: NavbarProps) => {
   return (
     <nav className="navbar">
       <div className="nav-left">
@@ -20,6 +27,13 @@ const Navbar = ({ onLoginClick, onSignUpClick }: NavbarProps) => {
           <span> Browse Courses</span>
         </a>
 
+        {isLoggedIn && (
+          <a href="/enrolled" className="enrolled-link">
+            <img src="/book-icon.png" alt="Books" />
+            <span> Enrolled Courses</span>
+          </a>
+        )}
+
         {!isLoggedIn ? (
           <div className="auth-buttons">
             <button className="login-btn" onClick={onLoginClick}>
@@ -30,8 +44,16 @@ const Navbar = ({ onLoginClick, onSignUpClick }: NavbarProps) => {
             </button>
           </div>
         ) : (
-          <div className="user-profile">
-            <span>Profile Icon</span>
+          <div className="user-profile-trigger" onClick={onProfileClick}>
+            <div className="avatar-wrapper">
+              <img
+                src={user?.avatar || "/defAvatar.png"}
+                alt="Profile"
+                className="nav-avatar"
+              />
+
+              {!user?.profileComplete && <span className="warning-dot"></span>}
+            </div>
           </div>
         )}
       </div>
