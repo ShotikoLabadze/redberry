@@ -1,7 +1,5 @@
 import API from "./axios";
 
-const BASE_URL = "https://api.redclass.redberryinternship.ge/api";
-
 export const register = async (data: FormData) => {
   try {
     const response = await API.post("/register", data);
@@ -9,6 +7,16 @@ export const register = async (data: FormData) => {
     return response.data;
   } catch (err: any) {
     const mess = err.response?.data?.message || "Registration failed";
+    throw new Error(mess);
+  }
+};
+
+export const login = async (email: string, password: string) => {
+  try {
+    const response = await API.post("/login", { email, password });
+    return response.data;
+  } catch (err: any) {
+    const mess = err.response?.data?.message || "Login failed";
     throw new Error(mess);
   }
 };

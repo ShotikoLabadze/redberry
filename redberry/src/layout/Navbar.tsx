@@ -2,9 +2,10 @@ import "./Navbar.css";
 
 interface NavbarProps {
   onLoginClick: () => void;
+  onSignUpClick: () => void;
 }
 
-const Navbar = ({ onLoginClick }: NavbarProps) => {
+const Navbar = ({ onLoginClick, onSignUpClick }: NavbarProps) => {
   const isLoggedIn = false;
 
   return (
@@ -24,7 +25,9 @@ const Navbar = ({ onLoginClick }: NavbarProps) => {
             <button className="login-btn" onClick={onLoginClick}>
               Log In
             </button>
-            <button className="signup-btn">Sign Up</button>
+            <button className="signup-btn" onClick={onSignUpClick}>
+              Sign Up
+            </button>
           </div>
         ) : (
           <div className="user-profile">
