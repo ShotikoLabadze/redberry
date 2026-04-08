@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getMe } from "./api/auth.service";
+import Dashboard from "./components/Dashboard/Dashboard";
 import Login from "./components/Login/Login";
 import Modal from "./components/Modal/Modal";
 import Profile from "./components/Profile/Profile";
@@ -20,7 +21,6 @@ function App() {
 
     try {
       const res = await getMe();
-
       setUser(res.data || res);
       setIsLoggedIn(true);
     } catch (err: any) {
@@ -57,6 +57,10 @@ function App() {
         onSignUpClick={() => openModal("register")}
         onProfileClick={() => openModal("profile")}
       />
+
+      <main>
+        <Dashboard />
+      </main>
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {modalType === "login" && (

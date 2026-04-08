@@ -1,0 +1,134 @@
+.featured-card {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid #f0f0f0;
+  transition: transform 0.2s ease;
+}
+
+.featured-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.card-image-container {
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.card-body {
+  padding: 0 16px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  flex-grow: 1;
+}
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.lecturer-name {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: #8a8a8a;
+}
+
+.rating {
+  font-family: "Inter", sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #8a8a8a;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.rating img {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+.card-title {
+  font-family: "Inter", sans-serif;
+  font-size: 19px;
+  font-weight: 800;
+  color: #141414;
+  margin: 0 0 8px 0;
+  line-height: 1.2;
+}
+
+.card-description {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: #666666;
+  line-height: 1.5;
+  margin-bottom: 16px;
+
+  overflow: hidden;
+  max-height: 4.5em;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.price-container {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.price-label {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  color: #8a8a8a;
+}
+
+.price-value {
+  font-family: "Inter", sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: #141414;
+}
+
+.details-button {
+  background-color: #4f46e5;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.details-button:hover {
+  background-color: #4338ca;
+}
