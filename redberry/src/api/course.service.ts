@@ -16,6 +16,6 @@ export const getInProgress = async () => {
 };
 
 export const GetCourseById = async (id: string | number) => {
-  const response = await API.get(`/course/${id}`);
+  const response = await API.get(`/courses/${id}`);
   return response.data;
 };
