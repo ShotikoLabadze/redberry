@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { getMe } from "./api/auth.service";
+import CourseDetails from "./components/CourseDetails/CourseDetails";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Login from "./components/Login/Login";
 import Modal from "./components/Modal/Modal";
@@ -50,7 +52,7 @@ function App() {
   };
 
   return (
-    <div>
+    <BrowserRouter>
       <Navbar
         isLoggedIn={isLoggedIn}
         user={user}
@@ -60,7 +62,10 @@ function App() {
       />
 
       <main>
-        <Dashboard />
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/course/:id" element={<CourseDetails />} />
+        </Routes>
       </main>
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
@@ -88,7 +93,7 @@ function App() {
       </Modal>
 
       <Footer />
-    </div>
+    </BrowserRouter>
   );
 }
 

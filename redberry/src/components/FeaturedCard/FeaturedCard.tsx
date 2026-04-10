@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./FeaturedCard.css";
 
 interface CourseProps {
@@ -16,6 +17,12 @@ interface CourseProps {
 }
 
 const FeaturedCard: React.FC<CourseProps> = ({ course }) => {
+  const navigate = useNavigate();
+
+  const handleDetails = () => {
+    navigate(`/course/${course.id}`);
+  };
+
   return (
     <div className="featured-card">
       <div className="card-image-container">
@@ -47,7 +54,9 @@ const FeaturedCard: React.FC<CourseProps> = ({ course }) => {
             </p>
           </div>
 
-          <button className="details-button">Details</button>
+          <button className="details-button" onClick={handleDetails}>
+            Details
+          </button>
         </div>
       </div>
     </div>
