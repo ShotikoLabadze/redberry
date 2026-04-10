@@ -5,6 +5,7 @@ import Login from "./components/Login/Login";
 import Modal from "./components/Modal/Modal";
 import Profile from "./components/Profile/Profile";
 import Registration from "./components/Registration/Registration";
+import Footer from "./layout/Footer";
 import Navbar from "./layout/Navbar";
 
 function App() {
@@ -85,6 +86,8 @@ function App() {
           />
         )}
       </Modal>
+
+      <Footer />
     </div>
   );
 }
