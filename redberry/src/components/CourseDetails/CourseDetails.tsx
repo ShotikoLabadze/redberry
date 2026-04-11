@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { GetCourseById } from "../../api/course.service";
+import Enrollment from "../Enrollment/Enrollment";
 import "./CourseDetails.css";
 
 interface CourseDetailsProps {
@@ -86,37 +87,14 @@ const CourseDetails: React.FC<CourseDetailsProps> = ({
           <div
             className={`sidebar-card ${(!isLoggedIn || !isProfileComplete) && !isEnrolled ? "locked" : ""}`}
           >
-            <div className="step-item">
-              <div className="step-header">
-                <span className="step-circle">1</span>
-                <h4>Weekly Schedule</h4>
+            {isEnrolled ? (
+              <div className="enrolled-status">
+                <h3>You are enrolled!</h3>
+                <p>Check your dashboard for course materials.</p>
               </div>
-              <div className="options-grid">
-                <button className="opt-btn active">Mon - Wed</button>
-                <button className="opt-btn disabled">Tue - Thu</button>
-                <button className="opt-btn">Wed - Fri</button>
-                <button className="opt-btn disabled">Weekend</button>
-              </div>
-            </div>
-
-            <div className="price-footer">
-              <div className="price-main">
-                <span>Total Price</span>
-                <span className="price-val">${Math.round(data.basePrice)}</span>
-              </div>
-              <div className="price-sub">
-                <span>Base Price: +$0</span>
-              </div>
-              <div className="price-sub">
-                <span>Session Type: +$0</span>
-              </div>
-              <button
-                className="enroll-btn"
-                disabled={!isLoggedIn || !isProfileComplete || isEnrolled}
-              >
-                {isEnrolled ? "Already Enrolled" : "Enroll Now"}
-              </button>
-            </div>
+            ) : (
+              <Enrollment courseId={data.id} />
+            )}
           </div>
 
           {!isLoggedIn ? (
