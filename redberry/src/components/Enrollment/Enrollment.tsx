@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getWeeklySchedules } from "../../api/course.service";
+import { getTimeSlots, getWeeklySchedules } from "../../api/course.service";
 import "./Enrollment.css";
 
 interface EnrollmentProps {
@@ -11,8 +11,12 @@ const Enrollment = ({ courseId }: EnrollmentProps) => {
   const [selectedSchedule, setSelectedSchedule] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
+  const [availableTimes, setAvailableTimes] = useState<any[]>([]);
+  const [selectedTime, setSelectedTime] = useState<any>(null);
+  const [loadingSlots, setLoadingSlots] = useState(false);
+
   useEffect(() => {
-    const fetch = async () => {
+    const fetchSchedules = async () => {
       try {
         const response = await getWeeklySchedules(courseId);
         setSchedules(response.data);
@@ -22,14 +26,36 @@ const Enrollment = ({ courseId }: EnrollmentProps) => {
         setLoading(false);
       }
     };
-    fetch();
+    fetchSchedules();
   }, [courseId]);
+
+  useEffect(() => {
+    const fetchSlots = async () => {
+      if (!selectedSchedule) {
+        setAvailableTimes([]);
+        return;
+      }
+
+      setLoadingSlots(true);
+      try {
+        const response = await getTimeSlots(courseId, selectedSchedule.id);
+        setAvailableTimes(response.data);
+      } catch (err) {
+        console.error("error fetching slots", err);
+      } finally {
+        setLoadingSlots(false);
+      }
+    };
+
+    fetchSlots();
+  }, [selectedSchedule, courseId]);
 
   const handleSelect = (schedule: any) => {
     setSelectedSchedule(schedule);
+    setSelectedTime(null);
   };
 
-  if (loading) return <div>Loading Schedules...</div>;
+  if (loading) return <div className="loading-state">Loading Schedules...</div>;
 
   return (
     <div className="enrollment-system">
@@ -41,10 +67,7 @@ const Enrollment = ({ courseId }: EnrollmentProps) => {
             <div className="step-circle">1</div>
             <h4>Weekly Schedule</h4>
           </div>
-
-          <span className="step-status-icon">
-            {selectedSchedule ? "✓" : "↓"}
-          </span>
+          <img src="/Icon_Set.png" alt="toggle" className="step-icon" />
         </div>
 
         <div className="step-content">
@@ -62,11 +85,53 @@ const Enrollment = ({ courseId }: EnrollmentProps) => {
         </div>
       </div>
 
-      <div className="step-container disabled">
+      <div
+        className={`step-container ${selectedTime ? "filled" : selectedSchedule ? "active" : "disabled"}`}
+      >
         <div className="step-header">
           <div className="step-info">
             <div className="step-circle">2</div>
             <h4>Time Slot</h4>
+          </div>
+          <img
+            src={selectedSchedule ? "/Icon_Set.png" : "/Icon_Title.png"}
+            alt="toggle"
+            className="step-icon"
+          />
+        </div>
+
+        {selectedSchedule && (
+          <div className="step-content">
+            {loadingSlots ? (
+              <div className="loading-text">Loading Slots...</div>
+            ) : (
+              <div className="options-grid">
+                {availableTimes.map((slot) => (
+                  <button
+                    key={slot.id}
+                    className={`opt-btn slot-btn ${selectedTime?.id === slot.id ? "selected" : ""}`}
+                    onClick={() => setSelectedTime(slot)}
+                  >
+                    <div className="slot-wrapper">
+                      <span className="slot-label">{slot.label}</span>
+                      <span className="slot-hours">
+                        {slot.startTime.slice(0, 5)} -{" "}
+                        {slot.endTime.slice(0, 5)}
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      <div className="step-container disabled">
+        <div className="step-header">
+          <div className="step-info">
+            <div className="step-circle">3</div>
+            <h4>Session Type</h4>
           </div>
         </div>
       </div>
