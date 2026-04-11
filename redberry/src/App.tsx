@@ -64,7 +64,17 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/course/:id" element={<CourseDetails />} />
+          <Route
+            path="/course/:id"
+            element={
+              <CourseDetails
+                user={user}
+                onProfileClick={() => openModal("profile")}
+                isLoggedIn={isLoggedIn}
+                onLoginClick={() => openModal("login")}
+              />
+            }
+          />
         </Routes>
       </main>
 
