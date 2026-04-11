@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { getTimeSlots, getWeeklySchedules } from "../../api/course.service";
+import {
+  getSessionTypes,
+  getTimeSlots,
+  getWeeklySchedules,
+} from "../../api/course.service";
 import shortDay from "../../utils/shortDay";
 import "./Enrollment.css";
 
@@ -15,6 +19,10 @@ const Enrollment = ({ courseId }: EnrollmentProps) => {
   const [availableTimes, setAvailableTimes] = useState<any[]>([]);
   const [selectedTime, setSelectedTime] = useState<any>(null);
   const [loadingSlots, setLoadingSlots] = useState(false);
+
+  const [sessions, setSessions] = useState<any[]>([]);
+  const [selectedSession, setSelectedSession] = useState<any>(null);
+  const [loadingSessions, setLoadingSessions] = useState(false);
 
   useEffect(() => {
     const fetchSchedules = async () => {
@@ -36,7 +44,6 @@ const Enrollment = ({ courseId }: EnrollmentProps) => {
         setAvailableTimes([]);
         return;
       }
-
       setLoadingSlots(true);
       try {
         const response = await getTimeSlots(courseId, selectedSchedule.id);
@@ -47,13 +54,36 @@ const Enrollment = ({ courseId }: EnrollmentProps) => {
         setLoadingSlots(false);
       }
     };
-
     fetchSlots();
   }, [selectedSchedule, courseId]);
+
+  useEffect(() => {
+    const fetchSessions = async () => {
+      if (!selectedTime) {
+        setSessions([]);
+        return;
+      }
+      setLoadingSessions(true);
+      try {
+        const response = await getSessionTypes(
+          courseId,
+          selectedSchedule.id,
+          selectedTime.id,
+        );
+        setSessions(response.data);
+      } catch (err) {
+        console.error("error fetching sessions", err);
+      } finally {
+        setLoadingSessions(false);
+      }
+    };
+    fetchSessions();
+  }, [selectedTime, selectedSchedule, courseId]);
 
   const handleSelect = (schedule: any) => {
     setSelectedSchedule(schedule);
     setSelectedTime(null);
+    setSelectedSession(null);
   };
 
   if (loading) return <div className="loading-state">Loading Schedules...</div>;
@@ -70,7 +100,6 @@ const Enrollment = ({ courseId }: EnrollmentProps) => {
           </div>
           <img src="/Icon_Set.png" alt="toggle" className="step-icon" />
         </div>
-
         <div className="step-content">
           <div className="options-grid">
             {schedules.map((s) => (
@@ -100,7 +129,6 @@ const Enrollment = ({ courseId }: EnrollmentProps) => {
             className="step-icon"
           />
         </div>
-
         {selectedSchedule && (
           <div className="step-content">
             {loadingSlots ? (
@@ -128,13 +156,73 @@ const Enrollment = ({ courseId }: EnrollmentProps) => {
         )}
       </div>
 
-      <div className="step-container disabled">
+      <div
+        className={`step-container ${selectedSession ? "filled" : selectedTime ? "active" : "disabled"}`}
+      >
         <div className="step-header">
           <div className="step-info">
             <div className="step-circle">3</div>
             <h4>Session Type</h4>
           </div>
+          <img
+            src={selectedTime ? "/Icon_Set.png" : "/Icon_Title.png"}
+            alt="toggle"
+            className="step-icon"
+          />
         </div>
+        {selectedTime && (
+          <div className="step-content">
+            <div className="options-grid session-grid">
+              {" "}
+              {/* გამოვიყენოთ იგივე grid კლასი */}
+              {sessions.map((session) => (
+                <div key={session.id} className="opt-wrapper">
+                  <button
+                    disabled={session.availableSeats === 0}
+                    className={`opt-btn opt-card ${selectedSession?.id === session.id ? "selected" : ""}`}
+                    onClick={() => setSelectedSession(session)}
+                  >
+                    <div className="opt-icon">
+                      <img
+                        src={`/${session.name}-icon.png`}
+                        alt={session.name}
+                      />
+                    </div>
+                    <span className="opt-title">
+                      {session.name.charAt(0).toUpperCase() +
+                        session.name.slice(1)}
+                    </span>
+                    <span className="opt-subtitle">
+                      {session.name === "online"
+                        ? "Google Meet"
+                        : session.location || "Chavchavadze St.34"}
+                    </span>
+                    <span
+                      className={`opt-price ${session.name === "online" ? "is-included" : ""}`}
+                    >
+                      {Number(session.priceModifier) > 0
+                        ? `+ $${Number(session.priceModifier).toFixed(0)}`
+                        : "Included"}
+                    </span>
+                  </button>
+
+                  <div
+                    className={`opt-status ${session.availableSeats <= 5 ? "warning" : ""}`}
+                  >
+                    {session.availableSeats <= 5 && (
+                      <span className="status-icon">⚠️</span>
+                    )}
+                    {session.availableSeats === 0
+                      ? "No Seats Remaining"
+                      : session.availableSeats <= 5
+                        ? `Only ${session.availableSeats} Seats Remaining`
+                        : `${session.availableSeats} Seats Available`}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
