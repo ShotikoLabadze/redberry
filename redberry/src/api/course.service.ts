@@ -19,3 +19,29 @@ export const GetCourseById = async (id: string | number) => {
   const response = await API.get(`/courses/${id}`);
   return response.data;
 };
+
+export const getWeeklySchedules = async (courseId: string | number) => {
+  const response = await API.get(`/courses/${courseId}/weekly-schedules`);
+  return response.data;
+};
+
+export const getTimeSlots = async (
+  courseId: string | number,
+  scheduleId: number,
+) => {
+  const response = await API.get(
+    `/courses/${courseId}/time-slots?weekly_schedule_id=${scheduleId}`,
+  );
+  return response.data;
+};
+
+export const getSessionTypes = async (
+  courseId: string | number,
+  scheduleId: number,
+  slotId: number,
+) => {
+  const response = await API.get(
+    `/courses/${courseId}/session-types?weekly_schedule_id=${scheduleId}&time_slot_id=${slotId}`,
+  );
+  return response.data;
+};
