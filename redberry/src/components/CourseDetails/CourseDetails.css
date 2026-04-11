@@ -71,6 +71,11 @@
   border-radius: 50%;
 }
 
+.sidebar-card {
+  border-radius: 15px;
+  padding: 25px;
+}
+
 .sidebar-card.locked {
   opacity: 0.5;
   pointer-events: none;

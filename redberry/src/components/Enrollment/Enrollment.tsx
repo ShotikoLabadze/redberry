@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getTimeSlots, getWeeklySchedules } from "../../api/course.service";
+import shortDay from "../../utils/shortDay";
 import "./Enrollment.css";
 
 interface EnrollmentProps {
@@ -78,7 +79,7 @@ const Enrollment = ({ courseId }: EnrollmentProps) => {
                 className={`opt-btn ${selectedSchedule?.id === s.id ? "selected" : ""}`}
                 onClick={() => handleSelect(s)}
               >
-                {s.label}
+                {shortDay(s.label)}
               </button>
             ))}
           </div>
