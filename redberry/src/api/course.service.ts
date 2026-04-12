@@ -54,3 +54,8 @@ export const enrollCourse = async (data: {
   const response = await API.post("/enrollments", data);
   return response.data;
 };
+
+export const completeCourse = async (enrollmentId: number) => {
+  const response = await API.patch(`/enrollments/${enrollmentId}/complete`);
+  return response.data;
+};
