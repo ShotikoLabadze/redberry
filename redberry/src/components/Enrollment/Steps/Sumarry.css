@@ -1,0 +1,81 @@
+.enrollment-summary-card {
+  margin-top: 30px;
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 16px;
+
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f0f0f0;
+}
+
+.price-main-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.price-main-row .label {
+  font-size: 18px;
+  font-weight: 500;
+  color: #999999;
+}
+
+.total-amount {
+  font-size: 36px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.price-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+  padding-top: 16px;
+}
+
+.breakdown-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  color: #6b7280;
+}
+
+.breakdown-item .value {
+  font-weight: 600;
+  color: #374151;
+}
+
+.enroll-submit-btn {
+  width: 100%;
+  padding: 18px;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.enroll-submit-btn:hover:not(:disabled) {
+  background-color: #281ed2;
+  transform: translateY(-1px);
+}
+
+.enroll-submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.enroll-submit-btn.disabled {
+  background-color: #eeedfc;
+  color: #b7b3f4;
+  cursor: not-allowed;
+}
+
+.enroll-submit-btn:disabled:not(.disabled) {
+  opacity: 0.8;
+  cursor: wait;
+}

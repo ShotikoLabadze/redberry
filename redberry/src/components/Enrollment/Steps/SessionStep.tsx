@@ -3,6 +3,7 @@ interface SessionStepProps {
   selectedSession: any;
   sessions: any[];
   onSelect: (session: any) => void;
+  loadingSessions: boolean;
 }
 
 const SessionStep = ({
@@ -10,6 +11,7 @@ const SessionStep = ({
   selectedSession,
   sessions,
   onSelect,
+  loadingSessions,
 }: SessionStepProps) => {
   const isActive = !!selectedTime;
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  enrollCourse,
   getSessionTypes,
   getTimeSlots,
   getWeeklySchedules,
@@ -7,13 +8,15 @@ import {
 import "./Enrollment.css";
 import ScheduleStep from "./Steps/ScheduleStep";
 import SessionStep from "./Steps/SessionStep";
+import Summary from "./Steps/Sumarry";
 import TimeStep from "./Steps/TimeStep";
 
 interface EnrollmentProps {
   courseId: string | number;
+  basePrice: string | number;
 }
 
-const Enrollment = ({ courseId }: EnrollmentProps) => {
+const Enrollment = ({ courseId, basePrice }: EnrollmentProps) => {
   const [schedules, setSchedules] = useState<any[]>([]);
   const [selectedSchedule, setSelectedSchedule] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -25,6 +28,8 @@ const Enrollment = ({ courseId }: EnrollmentProps) => {
   const [sessions, setSessions] = useState<any[]>([]);
   const [selectedSession, setSelectedSession] = useState<any>(null);
   const [loadingSessions, setLoadingSessions] = useState(false);
+
+  const [isEnrolling, setIsEnrolling] = useState(false);
 
   useEffect(() => {
     const fetchSchedules = async () => {
@@ -62,7 +67,7 @@ const Enrollment = ({ courseId }: EnrollmentProps) => {
 
   useEffect(() => {
     const fetchSessions = async () => {
-      if (!selectedTime) {
+      if (!selectedTime || !selectedSchedule) {
         setSessions([]);
         return;
       }
@@ -89,6 +94,41 @@ const Enrollment = ({ courseId }: EnrollmentProps) => {
     setSelectedSession(null);
   };
 
+  const handleEnroll = async (forceEnroll = false) => {
+    if (!selectedSession) return;
+
+    setIsEnrolling(true);
+    try {
+      const scheduleIdToSend =
+        selectedSession.courseScheduleId || selectedSession.id;
+
+      const payload = {
+        courseId: Number(courseId),
+        courseScheduleId: Number(scheduleIdToSend),
+        force: forceEnroll,
+      };
+
+      console.log("🚀 საბოლოო Payload:", payload);
+
+      const response = await enrollCourse(payload);
+      console.log("Success Response:", response);
+      alert("წარმატებით ჩაირიცხეთ!");
+      window.location.reload();
+    } catch (err: any) {
+      console.log("❌ ERROR DATA:", err.response?.data);
+
+      const msg = err.response?.data?.message || "ჩაწერა ვერ მოხერხდა";
+      alert(msg);
+
+      if (err.response?.status === 409) {
+        if (window.confirm("კონფლიქტია, მაინც გავაგრძელოთ?"))
+          handleEnroll(true);
+      }
+    } finally {
+      setIsEnrolling(false);
+    }
+  };
+
   if (loading) return <div className="loading-state">Loading Schedules...</div>;
 
   return (
@@ -104,7 +144,10 @@ const Enrollment = ({ courseId }: EnrollmentProps) => {
         selectedTime={selectedTime}
         loadingSlots={loadingSlots}
         availableTimes={availableTimes}
-        onSelect={setSelectedTime}
+        onSelect={(slot) => {
+          setSelectedTime(slot);
+          setSelectedSession(null);
+        }}
       />
 
       <SessionStep
@@ -112,6 +155,15 @@ const Enrollment = ({ courseId }: EnrollmentProps) => {
         selectedSession={selectedSession}
         sessions={sessions}
         onSelect={setSelectedSession}
+        loadingSessions={loadingSessions}
+      />
+
+      <Summary
+        basePrice={Number(basePrice)}
+        selectedSession={selectedSession}
+        onEnroll={() => handleEnroll(false)}
+        isLoading={isEnrolling}
+        isDisabled={!selectedSession}
       />
     </div>
   );

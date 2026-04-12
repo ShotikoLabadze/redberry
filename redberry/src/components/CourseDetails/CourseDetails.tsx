@@ -93,7 +93,7 @@ const CourseDetails: React.FC<CourseDetailsProps> = ({
                 <p>Check your dashboard for course materials.</p>
               </div>
             ) : (
-              <Enrollment courseId={data.id} />
+              <Enrollment courseId={data.id} basePrice={data.basePrice} />
             )}
           </div>
 

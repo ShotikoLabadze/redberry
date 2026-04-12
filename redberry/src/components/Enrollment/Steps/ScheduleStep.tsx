@@ -24,7 +24,7 @@ const ScheduleStep = ({
         {schedules.map((s) => (
           <button
             key={s.id}
-            className={`opt-btn ${selectedSchedule === s.id ? "selected" : ""}`}
+            className={`opt-btn ${selectedSchedule?.id === s.id ? "selected" : ""}`}
             onClick={() => onSelect(s)}
           >
             {shortDay(s.label)}
