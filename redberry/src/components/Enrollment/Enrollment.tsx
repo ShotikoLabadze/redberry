@@ -4,8 +4,10 @@ import {
   getTimeSlots,
   getWeeklySchedules,
 } from "../../api/course.service";
-import shortDay from "../../utils/shortDay";
 import "./Enrollment.css";
+import ScheduleStep from "./Steps/ScheduleStep";
+import SessionStep from "./Steps/SessionStep";
+import TimeStep from "./Steps/TimeStep";
 
 interface EnrollmentProps {
   courseId: string | number;
@@ -27,6 +29,7 @@ const Enrollment = ({ courseId }: EnrollmentProps) => {
   useEffect(() => {
     const fetchSchedules = async () => {
       try {
+        setLoading(true);
         const response = await getWeeklySchedules(courseId);
         setSchedules(response.data);
       } catch (err) {
@@ -80,7 +83,7 @@ const Enrollment = ({ courseId }: EnrollmentProps) => {
     fetchSessions();
   }, [selectedTime, selectedSchedule, courseId]);
 
-  const handleSelect = (schedule: any) => {
+  const handleScheduleSelect = (schedule: any) => {
     setSelectedSchedule(schedule);
     setSelectedTime(null);
     setSelectedSession(null);
@@ -90,140 +93,26 @@ const Enrollment = ({ courseId }: EnrollmentProps) => {
 
   return (
     <div className="enrollment-system">
-      <div
-        className={`step-container ${selectedSchedule ? "filled" : "active"}`}
-      >
-        <div className="step-header">
-          <div className="step-info">
-            <div className="step-circle">1</div>
-            <h4>Weekly Schedule</h4>
-          </div>
-          <img src="/Icon_Set.png" alt="toggle" className="step-icon" />
-        </div>
-        <div className="step-content">
-          <div className="options-grid">
-            {schedules.map((s) => (
-              <button
-                key={s.id}
-                className={`opt-btn ${selectedSchedule?.id === s.id ? "selected" : ""}`}
-                onClick={() => handleSelect(s)}
-              >
-                {shortDay(s.label)}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+      <ScheduleStep
+        schedules={schedules}
+        selectedSchedule={selectedSchedule}
+        onSelect={handleScheduleSelect}
+      />
 
-      <div
-        className={`step-container ${selectedTime ? "filled" : selectedSchedule ? "active" : "disabled"}`}
-      >
-        <div className="step-header">
-          <div className="step-info">
-            <div className="step-circle">2</div>
-            <h4>Time Slot</h4>
-          </div>
-          <img
-            src={selectedSchedule ? "/Icon_Set.png" : "/Icon_Title.png"}
-            alt="toggle"
-            className="step-icon"
-          />
-        </div>
-        {selectedSchedule && (
-          <div className="step-content">
-            {loadingSlots ? (
-              <div className="loading-text">Loading Slots...</div>
-            ) : (
-              <div className="options-grid">
-                {availableTimes.map((slot) => (
-                  <button
-                    key={slot.id}
-                    className={`opt-btn slot-btn ${selectedTime?.id === slot.id ? "selected" : ""}`}
-                    onClick={() => setSelectedTime(slot)}
-                  >
-                    <div className="slot-wrapper">
-                      <span className="slot-label">{slot.label}</span>
-                      <span className="slot-hours">
-                        {slot.startTime.slice(0, 5)} -{" "}
-                        {slot.endTime.slice(0, 5)}
-                      </span>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+      <TimeStep
+        selectedSchedule={selectedSchedule}
+        selectedTime={selectedTime}
+        loadingSlots={loadingSlots}
+        availableTimes={availableTimes}
+        onSelect={setSelectedTime}
+      />
 
-      <div
-        className={`step-container ${selectedSession ? "filled" : selectedTime ? "active" : "disabled"}`}
-      >
-        <div className="step-header">
-          <div className="step-info">
-            <div className="step-circle">3</div>
-            <h4>Session Type</h4>
-          </div>
-          <img
-            src={selectedTime ? "/Icon_Set.png" : "/Icon_Title.png"}
-            alt="toggle"
-            className="step-icon"
-          />
-        </div>
-        {selectedTime && (
-          <div className="step-content">
-            <div className="options-grid session-grid">
-              {" "}
-              {/* გამოვიყენოთ იგივე grid კლასი */}
-              {sessions.map((session) => (
-                <div key={session.id} className="opt-wrapper">
-                  <button
-                    disabled={session.availableSeats === 0}
-                    className={`opt-btn opt-card ${selectedSession?.id === session.id ? "selected" : ""}`}
-                    onClick={() => setSelectedSession(session)}
-                  >
-                    <div className="opt-icon">
-                      <img
-                        src={`/${session.name}-icon.png`}
-                        alt={session.name}
-                      />
-                    </div>
-                    <span className="opt-title">
-                      {session.name.charAt(0).toUpperCase() +
-                        session.name.slice(1)}
-                    </span>
-                    <span className="opt-subtitle">
-                      {session.name === "online"
-                        ? "Google Meet"
-                        : session.location || "Chavchavadze St.34"}
-                    </span>
-                    <span
-                      className={`opt-price ${session.name === "online" ? "is-included" : ""}`}
-                    >
-                      {Number(session.priceModifier) > 0
-                        ? `+ $${Number(session.priceModifier).toFixed(0)}`
-                        : "Included"}
-                    </span>
-                  </button>
-
-                  <div
-                    className={`opt-status ${session.availableSeats <= 5 ? "warning" : ""}`}
-                  >
-                    {session.availableSeats <= 5 && (
-                      <span className="status-icon">⚠️</span>
-                    )}
-                    {session.availableSeats === 0
-                      ? "No Seats Remaining"
-                      : session.availableSeats <= 5
-                        ? `Only ${session.availableSeats} Seats Remaining`
-                        : `${session.availableSeats} Seats Available`}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
+      <SessionStep
+        selectedTime={selectedTime}
+        selectedSession={selectedSession}
+        sessions={sessions}
+        onSelect={setSelectedSession}
+      />
     </div>
   );
 };
