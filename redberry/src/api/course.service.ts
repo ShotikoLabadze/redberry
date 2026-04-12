@@ -45,3 +45,14 @@ export const getSessionTypes = async (
   );
   return response.data;
 };
+
+export const enrollCourse = async (data: {
+  course_id: number | string;
+  weekly_schedule_id: number;
+  time_slot_id: number;
+  session_type_id: number;
+  force?: boolean;
+}) => {
+  const response = await API.post("/enrollments", data);
+  return response.data;
+};
