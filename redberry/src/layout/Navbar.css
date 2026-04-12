@@ -1,13 +1,18 @@
 .navbar {
+  width: 100%;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #e9ecef;
+  font-family: "Inter", sans-serif;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 60px;
-  background-color: #f5f5f5;
-  border-bottom: 1px solid #e9ecef;
-  font-family: sans-serif;
 }
-
 .nav-left {
   display: flex;
   align-items: center;
