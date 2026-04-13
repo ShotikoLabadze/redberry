@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { completeCourse } from "../../../api/course.service";
+import { completeCourse, deleteEnrollment } from "../../../api/course.service";
 import "./EnrolledStatus.css";
 
 interface EnrolledStatusProps {
@@ -10,24 +10,45 @@ interface EnrolledStatusProps {
 const EnrolledStatus = ({ enrollment, onUpdate }: EnrolledStatusProps) => {
   const [isUpdating, setIsUpdating] = useState(false);
 
+  const { schedule, progress, id } = enrollment;
+  const isCompleted = progress === 100;
+
   const handleComplete = async () => {
     setIsUpdating(true);
     try {
-      await completeCourse(enrollment.id);
+      await completeCourse(id);
       onUpdate();
     } catch (err: any) {
-      alert(err.message || "Something went wrong");
+      alert(err.message || "Failed to complete course");
     } finally {
       setIsUpdating(false);
     }
   };
 
-  const { schedule, progress } = enrollment;
+  const handleRetake = async () => {
+    if (
+      window.confirm(
+        "Are you sure you want to retake this course? Current progress will be lost.",
+      )
+    ) {
+      setIsUpdating(true);
+      try {
+        await deleteEnrollment(id);
+        onUpdate();
+      } catch (err: any) {
+        alert(err.message || "Failed to restart course");
+      } finally {
+        setIsUpdating(false);
+      }
+    }
+  };
 
   return (
     <div className="enrolled-view">
       <div className="enrolled-badge-wrapper">
-        <span className="enrolled-badge">Enrolled</span>
+        <span className={`enrolled-badge ${isCompleted ? "completed" : ""}`}>
+          {isCompleted ? "Completed" : "Enrolled"}
+        </span>
       </div>
 
       <div className="enrolled-details">
@@ -62,17 +83,17 @@ const EnrolledStatus = ({ enrollment, onUpdate }: EnrolledStatusProps) => {
         </div>
       </div>
 
-      {progress < 100 ? (
-        <button
-          className="complete-course-btn"
-          onClick={handleComplete}
-          disabled={isUpdating}
-        >
-          {isUpdating ? "Updating..." : "Complete Course ✓"}
-        </button>
-      ) : (
-        <div className="completed-status-badge">Completed ✓</div>
-      )}
+      <button
+        className="main-action-btn"
+        onClick={isCompleted ? handleRetake : handleComplete}
+        disabled={isUpdating}
+      >
+        {isUpdating
+          ? "Processing..."
+          : isCompleted
+            ? "Retake Course ↺"
+            : "Complete Course ✓"}
+      </button>
     </div>
   );
 };

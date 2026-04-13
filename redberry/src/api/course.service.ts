@@ -59,3 +59,8 @@ export const completeCourse = async (enrollmentId: number) => {
   const response = await API.patch(`/enrollments/${enrollmentId}/complete`);
   return response.data;
 };
+
+export const deleteEnrollment = async (enrollmentId: number) => {
+  const response = await API.delete(`/enrollments/${enrollmentId}`);
+  return response.data;
+};
