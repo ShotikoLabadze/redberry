@@ -14,9 +14,10 @@ import TimeStep from "./Steps/TimeStep";
 interface EnrollmentProps {
   courseId: string | number;
   basePrice: string | number;
+  courseTitle?: string;
 }
 
-const Enrollment = ({ courseId, basePrice }: EnrollmentProps) => {
+const Enrollment = ({ courseId, basePrice, courseTitle }: EnrollmentProps) => {
   const [schedules, setSchedules] = useState<any[]>([]);
   const [selectedSchedule, setSelectedSchedule] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -30,6 +31,7 @@ const Enrollment = ({ courseId, basePrice }: EnrollmentProps) => {
   const [loadingSessions, setLoadingSessions] = useState(false);
 
   const [isEnrolling, setIsEnrolling] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
     const fetchSchedules = async () => {
@@ -108,21 +110,17 @@ const Enrollment = ({ courseId, basePrice }: EnrollmentProps) => {
         force: forceEnroll,
       };
 
-      console.log("🚀 საბოლოო Payload:", payload);
-
-      const response = await enrollCourse(payload);
-      console.log("Success Response:", response);
-      alert("წარმატებით ჩაირიცხეთ!");
-      window.location.reload();
+      await enrollCourse(payload);
+      setShowSuccess(true);
     } catch (err: any) {
       console.log("❌ ERROR DATA:", err.response?.data);
-
       const msg = err.response?.data?.message || "ჩაწერა ვერ მოხერხდა";
-      alert(msg);
 
       if (err.response?.status === 409) {
         if (window.confirm("კონფლიქტია, მაინც გავაგრძელოთ?"))
           handleEnroll(true);
+      } else {
+        alert(msg);
       }
     } finally {
       setIsEnrolling(false);
@@ -133,6 +131,32 @@ const Enrollment = ({ courseId, basePrice }: EnrollmentProps) => {
 
   return (
     <div className="enrollment-system">
+      {showSuccess && (
+        <div className="success-modal-overlay">
+          <div className="success-modal-content">
+            <img
+              src="/enroll-confirmed.png"
+              alt="Checkmark"
+              className="success-modal-icon"
+            />
+            <h2 className="success-modal-title">Enrollment Confirmed!</h2>
+            <p className="success-modal-text">
+              You've successfully enrolled to the <br />
+              <strong>
+                "{courseTitle || "Advanced React & TypeScript Development"}"
+              </strong>{" "}
+              Course!
+            </p>
+            <button
+              className="success-modal-done-btn"
+              onClick={() => window.location.reload()}
+            >
+              Done
+            </button>
+          </div>
+        </div>
+      )}
+
       <ScheduleStep
         schedules={schedules}
         selectedSchedule={selectedSchedule}
