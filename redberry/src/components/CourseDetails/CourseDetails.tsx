@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { GetCourseById } from "../../api/course.service";
+import { useCourse } from "../../context/CourseContext";
 import Enrollment from "../Enrollment/Enrollment";
 import EnrolledStatus from "../Enrollment/Steps/EnrolledStatus";
 import "./CourseDetails.css";
@@ -21,15 +22,18 @@ const CourseDetails: React.FC<CourseDetailsProps> = ({
   const { id } = useParams<{ id: string }>();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const { setCourseData } = useCourse();
 
   const fetchCourse = async () => {
     if (id) {
       try {
         setLoading(true);
         const response = await GetCourseById(id);
-        setData(response.data || response);
+        const courseData = response.data || response;
+        setData(courseData);
+        setCourseData(courseData.id, courseData.title);
       } catch (err) {
-        console.error(err);
+        // Error handled silently
       } finally {
         setLoading(false);
       }
@@ -96,7 +100,11 @@ const CourseDetails: React.FC<CourseDetailsProps> = ({
                 onUpdate={fetchCourse}
               />
             ) : (
-              <Enrollment courseId={data.id} basePrice={data.basePrice} />
+              <Enrollment
+                courseId={data.id}
+                basePrice={data.basePrice}
+                courseTitle={data.title}
+              />
             )}
           </div>
 

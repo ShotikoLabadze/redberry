@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { completeCourse, deleteEnrollment } from "../../../api/course.service";
+import CourseCompletedModal from "./CourseCompletedModal";
 import "./EnrolledStatus.css";
 
 interface EnrolledStatusProps {
@@ -9,6 +10,7 @@ interface EnrolledStatusProps {
 
 const EnrolledStatus = ({ enrollment, onUpdate }: EnrolledStatusProps) => {
   const [isUpdating, setIsUpdating] = useState(false);
+  const [showCompletedModal, setShowCompletedModal] = useState(false);
 
   const { schedule, progress, id } = enrollment;
   const isCompleted = progress === 100;
@@ -17,9 +19,8 @@ const EnrolledStatus = ({ enrollment, onUpdate }: EnrolledStatusProps) => {
     setIsUpdating(true);
     try {
       await completeCourse(id);
-      onUpdate();
+      setShowCompletedModal(true);
     } catch (err: any) {
-      alert(err.message || "Failed to complete course");
     } finally {
       setIsUpdating(false);
     }
@@ -36,7 +37,6 @@ const EnrolledStatus = ({ enrollment, onUpdate }: EnrolledStatusProps) => {
         await deleteEnrollment(id);
         onUpdate();
       } catch (err: any) {
-        alert(err.message || "Failed to restart course");
       } finally {
         setIsUpdating(false);
       }
@@ -45,6 +45,15 @@ const EnrolledStatus = ({ enrollment, onUpdate }: EnrolledStatusProps) => {
 
   return (
     <div className="enrolled-view">
+      {showCompletedModal && (
+        <CourseCompletedModal
+          onClose={() => {
+            setShowCompletedModal(false);
+            onUpdate();
+          }}
+        />
+      )}
+
       <div className="enrolled-badge-wrapper">
         <span className={`enrolled-badge ${isCompleted ? "completed" : ""}`}>
           {isCompleted ? "Completed" : "Enrolled"}
@@ -53,7 +62,7 @@ const EnrolledStatus = ({ enrollment, onUpdate }: EnrolledStatusProps) => {
 
       <div className="enrolled-details">
         <div className="detail-row">
-          <img src="/calendat-icon.png" alt="calendar" />
+          <img src="/calendar-icon.png" alt="calendar" />
           <span>{schedule.weeklySchedule.label}</span>
         </div>
         <div className="detail-row">

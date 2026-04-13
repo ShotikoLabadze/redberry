@@ -64,3 +64,10 @@ export const deleteEnrollment = async (enrollmentId: number) => {
   const response = await API.delete(`/enrollments/${enrollmentId}`);
   return response.data;
 };
+
+export const addCourseReview = async (courseId: number, rating: number) => {
+  const response = await API.post(`/courses/${courseId}/reviews`, {
+    rating: rating,
+  });
+  return response.data;
+};

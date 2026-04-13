@@ -1,0 +1,103 @@
+.completed-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  backdrop-filter: blur(2px);
+}
+
+.completed-modal-content {
+  background: white;
+  padding: 40px 32px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  animation: modalPopIn 0.3s ease-out;
+}
+
+@keyframes modalPopIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.confetti-icon-wrapper img {
+  width: 70px;
+  height: auto;
+  margin-bottom: 24px;
+}
+
+.completed-modal-content h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #2d2d2d;
+  margin-bottom: 12px;
+}
+
+.completed-modal-content p {
+  color: #525252;
+  font-size: 15px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.rate-experience-section p {
+  color: #736bea;
+  font-weight: 600;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.star-rating {
+  font-size: 36px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 30px;
+}
+
+.star {
+  cursor: pointer;
+  color: #e5e7eb;
+  transition:
+    color 0.2s,
+    transform 0.1s;
+}
+
+.star.filled {
+  color: #fbbf24;
+}
+
+.star:hover {
+  transform: scale(1.1);
+}
+
+.done-btn {
+  width: 100%;
+  padding: 14px;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.done-btn:hover {
+  background-color: #4338ca;
+}
