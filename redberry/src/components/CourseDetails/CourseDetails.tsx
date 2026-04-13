@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { GetCourseById } from "../../api/course.service";
 import Enrollment from "../Enrollment/Enrollment";
+import EnrolledStatus from "../Enrollment/Steps/EnrolledStatus";
 import "./CourseDetails.css";
 
 interface CourseDetailsProps {
@@ -21,19 +22,21 @@ const CourseDetails: React.FC<CourseDetailsProps> = ({
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchCourse = async () => {
-      if (id) {
-        try {
-          const response = await GetCourseById(id);
-          setData(response.data || response);
-        } catch (err) {
-          console.error(err);
-        } finally {
-          setLoading(false);
-        }
+  const fetchCourse = async () => {
+    if (id) {
+      try {
+        setLoading(true);
+        const response = await GetCourseById(id);
+        setData(response.data || response);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
-    };
+    }
+  };
+
+  useEffect(() => {
     fetchCourse();
   }, [id]);
 
@@ -88,10 +91,10 @@ const CourseDetails: React.FC<CourseDetailsProps> = ({
             className={`sidebar-card ${(!isLoggedIn || !isProfileComplete) && !isEnrolled ? "locked" : ""}`}
           >
             {isEnrolled ? (
-              <div className="enrolled-status">
-                <h3>You are enrolled!</h3>
-                <p>Check your dashboard for course materials.</p>
-              </div>
+              <EnrolledStatus
+                enrollment={data.enrollment}
+                onUpdate={fetchCourse}
+              />
             ) : (
               <Enrollment courseId={data.id} basePrice={data.basePrice} />
             )}
@@ -110,7 +113,7 @@ const CourseDetails: React.FC<CourseDetailsProps> = ({
                 Sign In →
               </button>
             </div>
-          ) : !isProfileComplete ? (
+          ) : !isProfileComplete && !isEnrolled ? (
             <div className="alert-card">
               <div className="alert-text">
                 <h5>! Complete Your Profile</h5>
