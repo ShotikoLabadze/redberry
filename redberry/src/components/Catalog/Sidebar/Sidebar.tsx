@@ -1,24 +1,32 @@
 import { useEffect, useState } from "react";
-import { getCategories, getTopics } from "../../../api/course.service";
+import {
+  getCategories,
+  getInstructors,
+  getTopics,
+} from "../../../api/course.service";
 import "./Sidebar.css";
 
 const Sidebar = () => {
   const [categories, setCategories] = useState<any[]>([]);
   const [topics, setTopics] = useState<any[]>([]);
+  const [instructors, setInstructors] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [selectedCats, setSelectedCats] = useState<any[]>([]);
-  const [selectedTops, setSelectedTops] = useState<any[]>([]);
+  const [selectedCats, setSelectedCats] = useState<number[]>([]);
+  const [selectedTops, setSelectedTops] = useState<number[]>([]);
+  const [selectedInsts, setSelectedInsts] = useState<number[]>([]);
 
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        const [catsRes, topsRes] = await Promise.all([
+        const [catsRes, topsRes, instRes] = await Promise.all([
           getCategories(),
           getTopics(),
+          getInstructors(),
         ]);
         setCategories(catsRes.data);
         setTopics(topsRes.data);
+        setInstructors(instRes.data);
       } catch (err) {
         console.error("cant fetch data", err);
       } finally {
@@ -28,15 +36,15 @@ const Sidebar = () => {
     fetchInitialData();
   }, []);
 
-  const handleCategory = (id: number) => {
-    setSelectedCats((prev) =>
-      prev.includes(id) ? prev.filter((catId) => catId !== id) : [...prev, id],
-    );
-  };
-
-  const handleTopic = (id: number) => {
-    setSelectedTops((prev) =>
-      prev.includes(id) ? prev.filter((topId) => topId !== id) : [...prev, id],
+  const toggleFilter = (
+    id: number,
+    selectedItems: number[],
+    setSelectedItems: (items: number[]) => void,
+  ) => {
+    setSelectedItems(
+      selectedItems.includes(id)
+        ? selectedItems.filter((itemId) => itemId !== id)
+        : [...selectedItems, id],
     );
   };
 
@@ -48,6 +56,7 @@ const Sidebar = () => {
   const handleClearAll = () => {
     setSelectedCats([]);
     setSelectedTops([]);
+    setSelectedInsts([]);
   };
 
   if (loading) return <div className="loading">loading...</div>;
@@ -70,7 +79,9 @@ const Sidebar = () => {
               <button
                 key={cat.id}
                 className={`filter-chip ${selectedCats.includes(cat.id) ? "active" : ""}`}
-                onClick={() => handleCategory(cat.id)}
+                onClick={() =>
+                  toggleFilter(cat.id, selectedCats, setSelectedCats)
+                }
               >
                 <div className="chip-icon">
                   <img src={`/${cat.icon}.png`} alt={cat.name} />
@@ -88,9 +99,35 @@ const Sidebar = () => {
               <button
                 key={topic.id}
                 className={`filter-chip no-icon ${selectedTops.includes(topic.id) ? "active" : ""}`}
-                onClick={() => handleTopic(topic.id)}
+                onClick={() =>
+                  toggleFilter(topic.id, selectedTops, setSelectedTops)
+                }
               >
                 <span className="chip-text">{topic.name}</span>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <section className="filter-section">
+          <h3 className="section-label">Instructor</h3>
+          <div className="filter-wrapper">
+            {instructors.map((inst) => (
+              <button
+                key={inst.id}
+                className={`filter-chip ${selectedInsts.includes(inst.id) ? "active" : ""}`}
+                onClick={() =>
+                  toggleFilter(inst.id, selectedInsts, setSelectedInsts)
+                }
+              >
+                <div className="chip-icon instructor-avatar-wrapper">
+                  <img
+                    src={inst.avatar}
+                    alt={inst.name}
+                    className="instructor-avatar-img"
+                  />
+                </div>
+                <span className="chip-text">{inst.name}</span>
               </button>
             ))}
           </div>
@@ -100,7 +137,8 @@ const Sidebar = () => {
       <div className="sidebar-footer">
         <div className="footer-line"></div>
         <span className="active-count">
-          {selectedCats.length + selectedTops.length} Filters Active
+          {selectedCats.length + selectedTops.length + selectedInsts.length}{" "}
+          Filters Active
         </span>
       </div>
     </aside>

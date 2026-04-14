@@ -140,3 +140,15 @@
 .filter-chip.active .chip-text {
   color: #4f46e5;
 }
+
+.instructor-avatar-wrapper img {
+  border-radius: 4px;
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+}
+
+.instructor-section .filter-wrapper {
+  flex-direction: column;
+  align-items: flex-start;
+}
