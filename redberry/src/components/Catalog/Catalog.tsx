@@ -5,14 +5,16 @@ import Sidebar from "./Sidebar/Sidebar";
 
 const Catalog: React.FC = () => {
   return (
-    <div>
-      <div>
-        <nav>Home</nav>
+    <div className="catalog-page">
+      <div className="catalog-container">
+        <nav className="catalog-breadcrumb">
+          Home <span>/</span> <span className="active-path">Browse</span>
+        </nav>
 
-        <div>
+        <div className="catalog-layout">
           <Sidebar />
 
-          <main>
+          <main className="catalog-main-content">
             <Courses />
           </main>
         </div>
