@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getCourses } from "../../../api/course.service";
+import CourseCard from "./CourseCard/CourseCard";
 import "./Courses.css";
 
 const Courses = () => {
@@ -29,22 +30,10 @@ const Courses = () => {
   if (loading) return <div>loading...</div>;
 
   return (
-    <div>
-      {courses.length > 0 ? (
-        courses.map((course) => (
-          <div key={course.id}>
-            <img
-              src={course.image}
-              alt={course.title}
-              style={{ width: "100px" }}
-            />
-            <p>{course.title}</p>
-            <span>${course.basePrice}</span>
-          </div>
-        ))
-      ) : (
-        <div>No courses found</div>
-      )}
+    <div className="courses-grid">
+      {courses.map((courseItem) => (
+        <CourseCard key={courseItem.id} course={courseItem} />
+      ))}
     </div>
   );
 };
