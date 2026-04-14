@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getCourses } from "../../../api/course.service";
 import CourseCard from "./CourseCard/CourseCard";
 import "./Courses.css";
+import Pagination from "./Pagination/Pagination";
 
 const Courses = () => {
   const [courses, setCourses] = useState<any[]>([]);
@@ -27,13 +28,21 @@ const Courses = () => {
     fetchCourses();
   }, [sort, page]);
 
-  if (loading) return <div>loading...</div>;
-
   return (
-    <div className="courses-grid">
-      {courses.map((courseItem) => (
-        <CourseCard key={courseItem.id} course={courseItem} />
-      ))}
+    <div className="courses-wrapper">
+      <div className="courses-grid">
+        {courses.map((courseItem) => (
+          <CourseCard key={courseItem.id} course={courseItem} />
+        ))}
+      </div>
+
+      {meta && meta.lastPage > 1 && (
+        <Pagination
+          currentPage={page}
+          totalPages={meta.lastPage}
+          onPageChange={(newPage) => setPage(newPage)}
+        />
+      )}
     </div>
   );
 };
