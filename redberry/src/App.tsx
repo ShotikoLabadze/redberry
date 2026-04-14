@@ -63,7 +63,15 @@ function App() {
 
       <main>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route
+            path="/"
+            element={
+              <Dashboard
+                isLoggedIn={isLoggedIn}
+                onLoginClick={() => openModal("login")}
+              />
+            }
+          />
           <Route
             path="/course/:id"
             element={

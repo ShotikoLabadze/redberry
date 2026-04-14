@@ -1,0 +1,201 @@
+.continue-learning-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.learning-header {
+  width: 100%;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.main-title {
+  font-family: "Inter";
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 48px;
+  color: #0a0a0a;
+  margin: 0;
+}
+
+.sub-title {
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: #3d3d3d;
+  margin: 6px 0 0 0;
+}
+
+.see-all-link {
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  text-decoration: underline;
+  color: #4f46e5;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.cards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: flex-start;
+}
+
+.figma-course-card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  gap: 8px;
+
+  width: 506px;
+  height: 219px;
+
+  background: #ffffff;
+  border: 0.5px solid #f5f5f5;
+  box-shadow: 0px 0px 11.7px rgba(0, 0, 0, 0.04);
+  border-radius: 12px;
+  flex: none;
+}
+
+.card-top-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 16px;
+  width: 466px;
+  height: 123px;
+}
+
+.course-thumb {
+  width: 140px;
+  height: 123px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.course-text-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px 4px 0px 16px;
+  gap: 9px;
+  width: 326px;
+  height: 123px;
+  flex-grow: 1;
+}
+
+.lecturer-rating-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.lecturer-name {
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #8a8a8a;
+}
+
+.rating-pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.star-icon {
+  color: #f4a316;
+}
+
+.rating-val {
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 14px;
+  color: #525252;
+}
+
+.course-title {
+  font-family: "Inter";
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: #141414;
+  margin: 0;
+}
+
+.card-bottom-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 466px;
+  height: 48px;
+}
+
+.progress-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 336px;
+}
+
+.progress-text {
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 12px;
+  color: #141414;
+}
+
+.progress-track {
+  width: 336px;
+  height: 15px;
+  background: #dddbfa;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #4f46e5;
+  border-radius: 30px;
+}
+
+.view-btn {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90px;
+  height: 48px;
+  border: 2px solid #958fef;
+  border-radius: 8px;
+  background: white;
+  color: #4f46e5;
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.is-blurred {
+  filter: blur(5px);
+  pointer-events: none;
+}

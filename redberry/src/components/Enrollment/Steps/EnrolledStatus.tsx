@@ -62,7 +62,7 @@ const EnrolledStatus = ({ enrollment, onUpdate }: EnrolledStatusProps) => {
 
       <div className="enrolled-details">
         <div className="detail-row">
-          <img src="/calendar-icon.png" alt="calendar" />
+          <img src="/calendat-icon.png" alt="calendar" />
           <span>{schedule.weeklySchedule.label}</span>
         </div>
         <div className="detail-row">

@@ -71,3 +71,8 @@ export const addCourseReview = async (courseId: number, rating: number) => {
   });
   return response.data;
 };
+
+export const getMyEnrollments = async () => {
+  const response = await API.get("/enrollments");
+  return response.data;
+};
