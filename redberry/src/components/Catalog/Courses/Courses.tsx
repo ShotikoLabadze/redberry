@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { getCourses } from "../../../api/course.service";
 import CourseCard from "./CourseCard/CourseCard";
 import "./Courses.css";
@@ -6,28 +7,37 @@ import Dropdown from "./DropDown/DropDown";
 import Pagination from "./Pagination/Pagination";
 
 const Courses = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [courses, setCourses] = useState<any[]>([]);
   const [meta, setMeta] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-
-  const [sort, setSort] = useState("newest");
-  const [page, setPage] = useState(1);
 
   useEffect(() => {
     const fetchCourses = async () => {
       setLoading(true);
       try {
-        const response = await getCourses(sort, page);
+        const response = await getCourses(searchParams.toString());
         setCourses(response.data);
         setMeta(response.meta);
       } catch (err) {
-        console.error("error fetching courses", err);
+        console.error(err);
       } finally {
         setLoading(false);
       }
     };
     fetchCourses();
-  }, [sort, page]);
+  }, [searchParams]);
+  const handleSortChange = (value: string) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("sort", value);
+    setSearchParams(newParams);
+  };
+
+  const handlePageChange = (page: number) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("page", page.toString());
+    setSearchParams(newParams);
+  };
 
   return (
     <div className="courses-wrapper">
@@ -35,21 +45,23 @@ const Courses = () => {
         <p className="results-counter">
           Showing {courses.length} out of {meta?.total || 0}
         </p>
-
-        <Dropdown currentSort={sort} onSortChange={(value) => setSort(value)} />
+        <Dropdown
+          currentSort={searchParams.get("sort") || "newest"}
+          onSortChange={handleSortChange}
+        />
       </div>
 
       <div className={`courses-grid ${loading ? "fetching" : ""}`}>
-        {courses.map((courseItem) => (
-          <CourseCard key={courseItem.id} course={courseItem} />
+        {courses.map((course) => (
+          <CourseCard key={course.id} course={course} />
         ))}
       </div>
 
       {meta && meta.lastPage > 1 && (
         <Pagination
-          currentPage={page}
+          currentPage={Number(searchParams.get("page")) || 1}
           totalPages={meta.lastPage}
-          onPageChange={(newPage) => setPage(newPage)}
+          onPageChange={handlePageChange}
         />
       )}
     </div>

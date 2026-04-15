@@ -1,7 +1,7 @@
 import API from "./axios";
 
-export const getCourses = async (sort = "newest", page = 1) => {
-  const response = await API.get(`/courses?sort=${sort}&page=${page}`);
+export const getCourses = async (queryString: string) => {
+  const response = await API.get(`/courses?${queryString}`);
   return response.data;
 };
 

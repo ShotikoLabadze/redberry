@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   getCategories,
   getInstructors,
@@ -7,14 +8,11 @@ import {
 import "./Sidebar.css";
 
 const Sidebar = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [categories, setCategories] = useState<any[]>([]);
   const [topics, setTopics] = useState<any[]>([]);
   const [instructors, setInstructors] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-
-  const [selectedCats, setSelectedCats] = useState<number[]>([]);
-  const [selectedTops, setSelectedTops] = useState<number[]>([]);
-  const [selectedInsts, setSelectedInsts] = useState<number[]>([]);
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -28,7 +26,7 @@ const Sidebar = () => {
         setTopics(topsRes.data);
         setInstructors(instRes.data);
       } catch (err) {
-        console.error("cant fetch data", err);
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -36,38 +34,39 @@ const Sidebar = () => {
     fetchInitialData();
   }, []);
 
-  const toggleFilter = (
-    id: number,
-    selectedItems: number[],
-    setSelectedItems: (items: number[]) => void,
-  ) => {
-    setSelectedItems(
-      selectedItems.includes(id)
-        ? selectedItems.filter((itemId) => itemId !== id)
-        : [...selectedItems, id],
-    );
+  const toggleFilter = (key: string, id: number) => {
+    const newParams = new URLSearchParams(searchParams);
+    const currentValues = newParams.getAll(key);
+    const idStr = id.toString();
+
+    if (currentValues.includes(idStr)) {
+      const filtered = currentValues.filter((v) => v !== idStr);
+      newParams.delete(key);
+      filtered.forEach((v) => newParams.append(key, v));
+    } else {
+      newParams.append(key, idStr);
+    }
+    newParams.set("page", "1");
+    setSearchParams(newParams);
   };
+
+  const selectedCats = searchParams.getAll("categories[]").map(Number);
+  const selectedTops = searchParams.getAll("topics[]").map(Number);
+  const selectedInsts = searchParams.getAll("instructors[]").map(Number);
 
   const showTopics =
     selectedCats.length > 0
       ? topics.filter((topic) => selectedCats.includes(topic.categoryId))
       : topics;
 
-  const handleClearAll = () => {
-    setSelectedCats([]);
-    setSelectedTops([]);
-    setSelectedInsts([]);
-  };
-
-  if (loading) return <div className="loading">loading...</div>;
+  if (loading) return <div>Loading...</div>;
 
   return (
     <aside className="sidebar-container">
       <div className="sidebar-header">
         <h1 className="filters-title">Filters</h1>
-        <button className="clear-all-btn" onClick={handleClearAll}>
-          Clear All Filters
-          <img src="/CloseVector.png" alt="clear" className="vector-icon" />
+        <button className="clear-all-btn" onClick={() => setSearchParams({})}>
+          Clear All <img src="/CloseVector.png" alt="clear" />
         </button>
       </div>
 
@@ -79,12 +78,10 @@ const Sidebar = () => {
               <button
                 key={cat.id}
                 className={`filter-chip ${selectedCats.includes(cat.id) ? "active" : ""}`}
-                onClick={() =>
-                  toggleFilter(cat.id, selectedCats, setSelectedCats)
-                }
+                onClick={() => toggleFilter("categories[]", cat.id)}
               >
                 <div className="chip-icon">
-                  <img src={`/${cat.icon}.png`} alt={cat.name} />
+                  <img src={`/${cat.icon}.png`} alt="" />
                 </div>
                 <span className="chip-text">{cat.name}</span>
               </button>
@@ -99,9 +96,7 @@ const Sidebar = () => {
               <button
                 key={topic.id}
                 className={`filter-chip no-icon ${selectedTops.includes(topic.id) ? "active" : ""}`}
-                onClick={() =>
-                  toggleFilter(topic.id, selectedTops, setSelectedTops)
-                }
+                onClick={() => toggleFilter("topics[]", topic.id)}
               >
                 <span className="chip-text">{topic.name}</span>
               </button>
@@ -116,14 +111,12 @@ const Sidebar = () => {
               <button
                 key={inst.id}
                 className={`filter-chip ${selectedInsts.includes(inst.id) ? "active" : ""}`}
-                onClick={() =>
-                  toggleFilter(inst.id, selectedInsts, setSelectedInsts)
-                }
+                onClick={() => toggleFilter("instructors[]", inst.id)}
               >
-                <div className="chip-icon instructor-avatar-wrapper">
+                <div className="chip-icon">
                   <img
                     src={inst.avatar}
-                    alt={inst.name}
+                    alt=""
                     className="instructor-avatar-img"
                   />
                 </div>
@@ -132,14 +125,6 @@ const Sidebar = () => {
             ))}
           </div>
         </section>
-      </div>
-
-      <div className="sidebar-footer">
-        <div className="footer-line"></div>
-        <span className="active-count">
-          {selectedCats.length + selectedTops.length + selectedInsts.length}{" "}
-          Filters Active
-        </span>
       </div>
     </aside>
   );
