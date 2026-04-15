@@ -8,9 +8,22 @@ import {
 } from "react-icons/fa";
 import { IoRocketSharp } from "react-icons/io5";
 import { MdEmail, MdLocationOn, MdPhone } from "react-icons/md";
+import { Link } from "react-router-dom";
 import "./Footer.css";
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  onProfileClick: () => void;
+  onEnrolledClick: () => void;
+  isLoggedIn: boolean;
+  onLoginClick: () => void;
+}
+
+const Footer: React.FC<FooterProps> = ({
+  onProfileClick,
+  onEnrolledClick,
+  isLoggedIn,
+  onLoginClick,
+}) => {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -41,13 +54,30 @@ const Footer: React.FC = () => {
           <div className="footer-nav">
             <div className="nav-col">
               <h4>Explore</h4>
-              <a href="#">Enrolled Courses</a>
-              <a href="#">Browse Courses</a>
+
+              <button
+                className="footer-link-btn"
+                onClick={isLoggedIn ? onEnrolledClick : onLoginClick}
+              >
+                Enrolled Courses
+              </button>
+
+              <Link to="/catalog" className="footer-link-btn">
+                Browse Courses
+              </Link>
             </div>
+
             <div className="nav-col">
               <h4>Account</h4>
-              <a href="#">My Profile</a>
+
+              <button
+                className="footer-link-btn"
+                onClick={isLoggedIn ? onProfileClick : onLoginClick}
+              >
+                My Profile
+              </button>
             </div>
+
             <div className="nav-col">
               <h4>Contact</h4>
               <div className="contact-item">

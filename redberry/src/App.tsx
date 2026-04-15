@@ -140,7 +140,12 @@ function App() {
         )}
       </Modal>
 
-      <Footer />
+      <Footer
+        isLoggedIn={isLoggedIn}
+        onLoginClick={() => openModal("login")}
+        onProfileClick={() => openModal("profile")}
+        onEnrolledClick={() => setIsSidebarOpen(true)}
+      />
     </BrowserRouter>
   );
 }
