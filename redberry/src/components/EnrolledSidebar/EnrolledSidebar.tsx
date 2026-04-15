@@ -19,98 +19,83 @@ const EnrolledSidebar: React.FC<Props> = ({ isOpen, onClose, enrollments }) => {
   return (
     <>
       <div
-        className={`sidebar-overlay ${isOpen ? "active" : ""}`}
+        className={`es-overlay ${isOpen ? "active" : ""}`}
         onClick={onClose}
       />
 
-      <aside className={`enrolled-sidebar ${isOpen ? "open" : ""}`}>
-        <div className="sidebar-header-wrapper">
-          <div className="header-top">
+      <aside className={`es-sidebar ${isOpen ? "open" : ""}`}>
+        <div className="es-header">
+          <div className="es-header-txt">
             <h2>Enrolled Courses</h2>
-            <span className="total-enrollments">
+            <span className="es-total">
               Total Enrollments {enrollments.length}
             </span>
           </div>
-          <button className="close-x" onClick={onClose}>
+          <button className="es-close" onClick={onClose}>
             ×
           </button>
         </div>
 
-        <div className="sidebar-scroll-content">
+        <div className="es-content">
           {enrollments.map((item) => (
-            <div key={item.id} className="enrolled-side-card">
-              <div className="card-main-info">
+            <div key={item.id} className="es-card">
+              <div className="es-card-main">
                 <div
-                  className="side-card-img"
+                  className="es-card-img"
                   style={{ backgroundImage: `url(${item.course?.image})` }}
                 />
 
-                <div className="side-card-text">
-                  <div className="side-lecturer-line">
-                    <span className="side-lecturer">
+                <div className="es-card-info">
+                  <div className="es-card-meta">
+                    <span className="es-instructor">
                       Instructor: {item.course?.instructor?.name}
                     </span>
-                    <div className="side-rating">
-                      <img src="/Star.png" alt="starPhoto" />
+                    <div className="es-rating">
+                      <img src="/Star.png" alt="star" />
                       <span>{item.course?.rating || "4.9"}</span>
                     </div>
                   </div>
-                  <h3 className="side-course-title">{item.course?.title}</h3>
+                  <h3 className="es-course-title">{item.course?.title}</h3>
 
-                  <div className="side-schedule-info">
-                    <div className="schedule-row">
-                      <img src="/calendat-icon.png" alt="calendar" />
+                  <div className="es-schedule">
+                    <div className="es-row">
+                      <img src="/calendat-icon.png" alt="cal" />
                       <span>
-                        {item.schedule?.weeklySchedule?.label ||
-                          "განრიგი არაა მითითებული"}
+                        {item.schedule?.weeklySchedule?.label || "TBA"}
                       </span>
                     </div>
-
-                    <div className="schedule-row">
+                    <div className="es-row">
                       <img src="/clock-icon.png" alt="clock" />
-                      <span>
-                        {item.schedule?.timeSlot?.label ||
-                          "დრო არაა მითითებული"}
-                      </span>
+                      <span>{item.schedule?.timeSlot?.label || "TBA"}</span>
                     </div>
-
-                    <div className="schedule-row">
-                      <img src="/online-icon.png" alt="online" />
-                      <span>
-                        {item.schedule?.sessionType?.name
-                          ? item.schedule.sessionType.name
-                              .charAt(0)
-                              .toUpperCase() +
-                            item.schedule.sessionType.name.slice(1)
-                          : "ტიპი არაა მითითებული"}
-                      </span>
+                    <div className="es-row">
+                      <img src="/online-icon.png" alt="type" />
+                      <span>{item.schedule?.sessionType?.name || "TBA"}</span>
                     </div>
-
-                    <div className="schedule-row">
-                      <img src="/location-icon.png" alt="location" />
+                    <div className="es-row">
+                      <img src="/location-icon.png" alt="loc" />
                       <span>
-                        {item.schedule?.location ||
-                          "Tbilisi, Chavchavadze St.30"}
+                        {item.schedule?.location || "Tbilisi, Chavchavadze"}
                       </span>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="side-card-footer">
-                <div className="side-progress-block">
-                  <span className="side-progress-label">
+              <div className="es-card-footer">
+                <div className="es-progress-box">
+                  <span className="es-progress-txt">
                     {item.progress}% Complete
                   </span>
-                  <div className="side-progress-track">
+                  <div className="es-track">
                     <div
-                      className="side-progress-fill"
+                      className="es-fill"
                       style={{ width: `${item.progress}%` }}
                     />
                   </div>
                 </div>
                 <button
-                  className="side-view-btn"
+                  className="es-view-btn"
                   onClick={() => handleView(item.course?.id)}
                 >
                   View

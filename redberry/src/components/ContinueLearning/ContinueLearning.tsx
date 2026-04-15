@@ -15,31 +15,46 @@ const ContinueLearning: React.FC<Props> = ({
   onSeeAll,
 }) => {
   const [displayData, setDisplayData] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
+    setIsLoading(true);
     if (isLoggedIn) {
       getMyEnrollments()
         .then((data) => {
           const list = data.data || data;
           setDisplayData(list.slice(0, 3));
+          setIsLoading(false);
         })
-        .catch((err) => console.error("Failed to fetch enrollments:", err));
+        .catch((err) => {
+          console.error("Failed to fetch enrollments:", err);
+          setIsLoading(false);
+        });
     } else {
       getCourses("")
         .then((data) => {
           const list = data.data || data;
-
           const formatted = list.slice(0, 3).map((course: any) => ({
             id: `temp-${course.id}`,
             progress: 0,
             course: course,
           }));
           setDisplayData(formatted);
+          setIsLoading(false);
         })
-        .catch((err) => console.error("Failed to fetch random courses:", err));
+        .catch((err) => {
+          console.error("Failed to fetch random courses:", err);
+          setIsLoading(false);
+        });
     }
   }, [isLoggedIn]);
+
+  if (isLoading) return null;
+
+  if (isLoggedIn && displayData.length === 0) {
+    return null;
+  }
 
   const handleViewCourse = (courseId: number) => {
     if (!isLoggedIn) return;
