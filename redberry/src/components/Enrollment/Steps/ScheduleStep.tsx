@@ -1,4 +1,6 @@
+import React from "react";
 import shortDay from "../../../utils/shortDay";
+import "./ScheduleStep.css";
 
 interface ScheduleStepProps {
   schedules: any[];
@@ -6,33 +8,42 @@ interface ScheduleStepProps {
   onSelect: (schedule: any) => void;
 }
 
-const ScheduleStep = ({
+const ScheduleStep: React.FC<ScheduleStepProps> = ({
   schedules,
   selectedSchedule,
   onSelect,
-}: ScheduleStepProps) => (
-  <div className={`step-container ${selectedSchedule ? "filled" : "active"}`}>
-    <div className="step-header">
-      <div className="step-info">
-        <div className="step-circle">1</div>
-        <h4>Weekly Schedule</h4>
+}) => {
+  const isFilled = !!selectedSchedule;
+
+  return (
+    <div
+      className={`weekly-schedule-container ${isFilled ? "filled" : "active"}`}
+    >
+      <div className="step-header-frame">
+        <div className="header-info-group">
+          <div className="step-number-circle">1</div>
+          <h4 className="step-title-text">Weekly Schedule</h4>
+        </div>
+        <img src="/Icon_Set.png" alt="toggle" className="step-toggle-icon" />
       </div>
-      <img src="/Icon_Set.png" alt="toggle" className="step-icon" />
-    </div>
-    <div className="step-content">
-      <div className="options-grid">
-        {schedules.map((s) => (
-          <button
-            key={s.id}
-            className={`opt-btn ${selectedSchedule?.id === s.id ? "selected" : ""}`}
-            onClick={() => onSelect(s)}
-          >
-            {shortDay(s.label)}
-          </button>
-        ))}
+
+      <div className="week-options-grid">
+        {schedules.map((s) => {
+          const isSelected = selectedSchedule?.id === s.id;
+          return (
+            <button
+              key={s.id}
+              className={`week-opt-btn ${isSelected ? "selected" : ""}`}
+              onClick={() => onSelect(s)}
+              type="button"
+            >
+              <span className="week-label-text">{shortDay(s.label)}</span>
+            </button>
+          );
+        })}
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default ScheduleStep;
