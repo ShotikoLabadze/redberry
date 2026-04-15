@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import "./CourseCard.css";
 
 interface CourseCardProps {
@@ -5,6 +6,11 @@ interface CourseCardProps {
 }
 
 const CourseCard = ({ course }: CourseCardProps) => {
+  const navigate = useNavigate();
+
+  const handleDetailsClick = () => {
+    navigate(`/course/${course.id}`);
+  };
   return (
     <div className="course-card">
       <div className="card-main-content">
@@ -46,7 +52,9 @@ const CourseCard = ({ course }: CourseCardProps) => {
           <span className="price-label">Starting from</span>
           <span className="price-value">${course.basePrice}</span>
         </div>
-        <button className="cta-button">Details</button>
+        <button className="cta-button" onClick={handleDetailsClick}>
+          Details
+        </button>
       </div>
     </div>
   );

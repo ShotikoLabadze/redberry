@@ -33,7 +33,6 @@ const CourseDetails: React.FC<CourseDetailsProps> = ({
         setData(courseData);
         setCourseData(courseData.id, courseData.title);
       } catch (err) {
-        // Error handled silently
       } finally {
         setLoading(false);
       }
