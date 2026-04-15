@@ -1,0 +1,180 @@
+.enrolled-sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 794px;
+  height: 100vh;
+  background: #f5f5f5;
+  z-index: 1000;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.05);
+}
+
+.enrolled-sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  z-index: 999;
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.sidebar-header-wrapper {
+  padding: 60px 80px 20px 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.header-top h2 {
+  font-size: 40px;
+  font-weight: 600;
+  color: #0a0a0a;
+  margin: 0;
+}
+
+.total-enrollments {
+  font-size: 16px;
+  color: #0a0a0a;
+  display: block;
+  margin-top: 8px;
+}
+
+.close-x {
+  background: none;
+  border: none;
+  font-size: 32px;
+  cursor: pointer;
+  color: #0a0a0a;
+}
+
+.sidebar-scroll-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.enrolled-side-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card-main-info {
+  display: flex;
+  gap: 18px;
+}
+
+.side-card-img {
+  width: 269px;
+  height: 191px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.side-card-text {
+  flex: 1;
+}
+
+.side-lecturer-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #8a8a8a;
+  margin-bottom: 8px;
+}
+
+.side-course-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #141414;
+  margin: 0 0 12px 0;
+}
+
+.side-schedule-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.schedule-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #666666;
+}
+
+.schedule-row img {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}
+
+.side-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 15px;
+}
+
+.side-progress-block {
+  flex: 1;
+}
+
+.side-progress-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #141414;
+}
+
+.side-progress-track {
+  height: 8px;
+  background: #dddbfa;
+  border-radius: 30px;
+  margin-top: 6px;
+}
+
+.side-progress-fill {
+  height: 100%;
+  background: #4f46e5;
+  border-radius: 30px;
+}
+
+.side-view-btn {
+  width: 117px;
+  height: 48px;
+  border: 2px solid #958fef;
+  border-radius: 8px;
+  background: white;
+  color: #4f46e5;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+}

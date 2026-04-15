@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getMyEnrollments } from "../api/course.service";
+import { getMyEnrollments } from "../../api/course.service";
 import "./ContinueLearning.css";
 
 interface Props {
   isLoggedIn: boolean;
   onLoginClick: () => void;
+  onSeeAll: () => void;
 }
 
-const ContinueLearning: React.FC<Props> = ({ isLoggedIn, onLoginClick }) => {
+const ContinueLearning: React.FC<Props> = ({
+  isLoggedIn,
+  onLoginClick,
+  onSeeAll,
+}) => {
   const [enrollments, setEnrollments] = useState<any[]>([]);
   const navigate = useNavigate();
 
@@ -32,7 +37,9 @@ const ContinueLearning: React.FC<Props> = ({ isLoggedIn, onLoginClick }) => {
             <h2 className="main-title">Continue Learning</h2>
             <p className="sub-title">Pick up where you left off</p>
           </div>
-          <button className="see-all-link">See All</button>
+          <button className="see-all-link" onClick={onSeeAll}>
+            See All
+          </button>
         </div>
       </header>
 
@@ -52,7 +59,7 @@ const ContinueLearning: React.FC<Props> = ({ isLoggedIn, onLoginClick }) => {
                     Lecturer {item.course?.instructor?.name}
                   </span>
                   <div className="rating-pill">
-                    <span className="star-icon">★</span>
+                    <img src="/Star.png" alt="starPhoto" />
                     <span className="rating-val">
                       {item.course?.rating || "4.9"}
                     </span>
