@@ -1,0 +1,165 @@
+.time-step-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 18px;
+  width: 530px;
+  transition: all 0.3s ease;
+}
+
+.step-header-frame {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px;
+  gap: 8px;
+  width: 530px;
+  height: 29px;
+}
+
+.header-info-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.step-number-circle {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: 14px;
+  border: 1.5px solid #8a8a8a;
+  color: #8a8a8a;
+  transition: all 0.2s ease;
+}
+
+.active .step-number-circle,
+.filled .step-number-circle {
+  border-color: #130e67;
+  color: #130e67;
+}
+
+.filled .step-number-circle {
+  background-color: #130e67;
+  color: #ffffff;
+}
+
+.step-title-text {
+  font-family: "Inter";
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  color: #8a8a8a;
+  transition: color 0.2s ease;
+}
+
+.active .step-title-text,
+.filled .step-title-text {
+  color: #130e67;
+}
+
+.step-toggle-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.time-options-grid {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 6px;
+  width: 530px;
+}
+
+.time-opt-card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  width: 172.67px;
+  height: 61px;
+  background: #ffffff;
+  border: 1px solid #d1d1d1;
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.time-opt-card:not(.disabled):hover,
+.time-opt-card.selected {
+  background: #dddbfa;
+  border: 1px solid #958fef;
+  transform: translateY(-1px);
+}
+
+.time-card-internal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.time-card-icon {
+  width: 26px;
+  height: 26px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.time-text-bundle {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.time-label {
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #666666;
+  transition: color 0.2s ease;
+}
+
+.time-hours {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #666666;
+  transition: color 0.2s ease;
+}
+
+.time-opt-card:not(.disabled):hover .time-label,
+.time-opt-card.selected .time-label,
+.time-opt-card:not(.disabled):hover .time-hours,
+.time-opt-card.selected .time-hours {
+  color: #4f46e5;
+}
+
+.time-opt-card:not(.disabled):hover .time-card-icon,
+.time-opt-card.selected .time-card-icon {
+  opacity: 1;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  background: #f5f5f5;
+  border-color: #d1d1d1;
+}
