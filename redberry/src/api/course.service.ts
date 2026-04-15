@@ -76,3 +76,18 @@ export const getMyEnrollments = async () => {
   const response = await API.get("/enrollments");
   return response.data;
 };
+
+export const getCategories = async () => {
+  const response = await API.get("/categories");
+  return response.data;
+};
+
+export const getTopics = async () => {
+  const response = await API.get("/topics");
+  return response.data;
+};
+
+export const getInstructors = async () => {
+  const response = await API.get("/instructors");
+  return response.data;
+};
