@@ -6,10 +6,11 @@
 }
 
 .dashboard-container {
-  max-width: 80%;
+  max-width: 1566px;
   margin: 0 auto;
   padding: 0 20px;
   display: flex;
   flex-direction: column;
   gap: 60px;
+  width: 100%;
 }

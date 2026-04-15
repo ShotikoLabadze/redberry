@@ -19,6 +19,8 @@ const Dashboard: React.FC<DashboardProps> = ({ isLoggedIn, onLoginClick }) => {
       getMyEnrollments()
         .then((data) => setEnrollments(data.data || data))
         .catch(() => {});
+    } else {
+      setEnrollments([]);
     }
   }, [isLoggedIn]);
 
@@ -31,11 +33,13 @@ const Dashboard: React.FC<DashboardProps> = ({ isLoggedIn, onLoginClick }) => {
       />
 
       <div className="dashboard-container">
-        <ContinueLearning
-          isLoggedIn={isLoggedIn}
-          onLoginClick={onLoginClick}
-          onSeeAll={() => setIsSidebarOpen(true)}
-        />
+        {isLoggedIn && (
+          <ContinueLearning
+            isLoggedIn={isLoggedIn}
+            onLoginClick={onLoginClick}
+            onSeeAll={() => setIsSidebarOpen(true)}
+          />
+        )}
 
         <section className="start-learning-today">
           <div className="section-header">
@@ -46,6 +50,14 @@ const Dashboard: React.FC<DashboardProps> = ({ isLoggedIn, onLoginClick }) => {
           </div>
           <FeaturedCourses />
         </section>
+
+        {!isLoggedIn && (
+          <ContinueLearning
+            isLoggedIn={isLoggedIn}
+            onLoginClick={onLoginClick}
+            onSeeAll={() => setIsSidebarOpen(true)}
+          />
+        )}
       </div>
     </div>
   );
