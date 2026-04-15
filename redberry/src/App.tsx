@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { getMe } from "./api/auth.service";
+import Catalog from "./components/Catalog/Catalog";
 import CourseDetails from "./components/CourseDetails/CourseDetails";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Login from "./components/Login/Login";
@@ -72,6 +73,8 @@ function App() {
               />
             }
           />
+          <Route path="/catalog" element={<Catalog />} />
+
           <Route
             path="/course/:id"
             element={

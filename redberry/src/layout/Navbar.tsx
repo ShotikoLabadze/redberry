@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 interface NavbarProps {
@@ -23,10 +24,10 @@ const Navbar = ({
         </div>
 
         <div className="nav-right">
-          <a href="/" className="browse-link">
+          <Link to="/catalog" className="browse-link">
             <img src="/Vector.png" alt="Stars" />
             <span> Browse Courses</span>
-          </a>
+          </Link>
 
           {isLoggedIn && (
             <a href="/enrolled" className="enrolled-link">
