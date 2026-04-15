@@ -1,134 +1,161 @@
 .featured-card {
-  background: #ffffff;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  border: 1px solid #f0f0f0;
-  transition: transform 0.2s ease;
-}
+  align-items: flex-start;
+  padding: 20px;
+  gap: 24px;
+  width: 506px;
+  height: 576px;
+  background: #ffffff;
+  border: 1px solid #f5f5f5;
+  border-radius: 12px;
 
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  cursor: pointer;
+}
 .featured-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transform: none;
+  border: 1px solid #958fef;
+
+  box-shadow: 0px 0px 35px rgba(138, 130, 212, 0.25);
 }
 
 .card-image-container {
-  width: 100%;
-  padding: 16px;
-  box-sizing: border-box;
+  width: 466px;
+  height: 262px;
+  flex: none;
+  order: 0;
 }
 
 .card-image {
   width: 100%;
-  height: 200px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 10px;
 }
 
 .card-body {
-  padding: 0 16px 16px 16px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  text-align: left;
+  padding: 0px;
+  gap: 16px;
+  width: 466px;
+  height: auto;
   flex-grow: 1;
 }
 
 .card-meta {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  margin-bottom: 8px;
+  width: 466px;
+  height: 18px;
 }
 
 .lecturer-name {
   font-family: "Inter", sans-serif;
+  font-weight: 500;
   font-size: 14px;
+  line-height: 17px;
   color: #8a8a8a;
 }
 
 .rating {
-  font-family: "Inter", sans-serif;
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 4px;
-  color: #8a8a8a;
-  font-weight: 600;
-  font-size: 14px;
 }
 
-.rating img {
-  width: 16px;
-  height: 16px;
-  display: block;
+.rating span {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #525252;
 }
 
 .card-title {
+  width: 466px;
+  height: 58px;
   font-family: "Inter", sans-serif;
-  font-size: 19px;
-  font-weight: 800;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
   color: #141414;
-  margin: 0 0 8px 0;
-  line-height: 1.2;
+  margin: 0;
+  overflow: hidden;
 }
 
 .card-description {
+  width: 412px;
+  height: 72px;
   font-family: "Inter", sans-serif;
-  font-size: 14px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
   color: #666666;
-  line-height: 1.5;
-  margin-bottom: 16px;
+  margin: 0;
 
   overflow: hidden;
-  max-height: 4.5em;
 }
 
 .card-footer {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  margin-top: auto;
-  padding-top: 10px;
+  width: 466px;
+  height: 58px;
+  padding-top: 0;
 }
 
 .price-container {
   display: flex;
   flex-direction: row;
-  align-items: baseline;
-  gap: 6px;
+  align-items: center;
+  gap: 8px;
 }
 
 .price-label {
   font-family: "Inter", sans-serif;
+  font-weight: 500;
   font-size: 12px;
+  line-height: 15px;
   color: #8a8a8a;
 }
 
 .price-value {
   font-family: "Inter", sans-serif;
-  font-size: 22px;
-  font-weight: 800;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 39px;
   color: #141414;
 }
 
 .details-button {
-  background-color: #4f46e5;
-  color: #ffffff;
-  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 17px 25px;
+  width: 116px;
+  height: 58px;
+  background: #4f46e5;
   border-radius: 8px;
   border: none;
   font-family: "Inter", sans-serif;
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  color: #ffffff;
   cursor: pointer;
   transition: background-color 0.2s;
-}
-
-.details-button:hover {
-  background-color: #4338ca;
 }

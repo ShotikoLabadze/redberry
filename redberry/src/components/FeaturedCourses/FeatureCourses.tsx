@@ -24,16 +24,11 @@ const FeaturedCourses: React.FC = () => {
   if (loading) return <div className="loading">Loading courses...</div>;
 
   return (
-    <section className="featured">
-      <div className="container">
-        <h2 className="section-title">Start Learning Today</h2>
-        <div className="courses-grid">
-          {courses.map((course) => (
-            <FeaturedCard key={course.id} course={course} />
-          ))}
-        </div>
-      </div>
-    </section>
+    <div className="courses-grid">
+      {courses.map((course) => (
+        <FeaturedCard key={course.id} course={course} />
+      ))}
+    </div>
   );
 };
 

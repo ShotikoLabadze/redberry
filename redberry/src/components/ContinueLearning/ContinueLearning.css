@@ -75,13 +75,25 @@
   align-items: flex-start;
   padding: 20px;
   gap: 8px;
+
   flex: 0 0 506px;
   height: 219px;
 
   background: #ffffff;
-  border: 0.5px solid #f5f5f5;
+  border: 1px solid #f5f5f5;
   box-shadow: 0px 0px 11.7px rgba(0, 0, 0, 0.04);
   border-radius: 12px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.figma-course-card:hover {
+  transform: none;
+  border: 1px solid #958fef;
+  box-shadow: 0px 0px 35px rgba(138, 130, 212, 0.25);
 }
 
 .card-top-row {
@@ -222,8 +234,10 @@
   align-items: center;
   padding: 32px 56px;
   gap: 24px;
+
   width: 418px;
   height: 233px;
+
   background: #ffffff;
   border: 1px solid #adadad;
   border-radius: 12px;
@@ -238,6 +252,11 @@
   height: 77px;
   background: #dddbfa;
   border-radius: 50px;
+}
+
+.lock-icon-container img {
+  width: 34px;
+  height: 37px;
 }
 
 .login-overlay-card p {
@@ -266,4 +285,9 @@
   font-weight: 500;
   font-size: 16px;
   cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.overlay-login-button:hover {
+  background: #3f38c2;
 }

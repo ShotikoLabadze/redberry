@@ -11,48 +11,49 @@ const CourseCard = ({ course }: CourseCardProps) => {
   const handleDetailsClick = () => {
     navigate(`/course/${course.id}`);
   };
+
   return (
-    <div className="course-card">
-      <div className="card-main-content">
+    <div className="cc-card">
+      <div className="cc-main">
         <div
-          className="course-thumbnail"
+          className="cc-thumb"
           style={{ backgroundImage: `url(${course.image})` }}
         ></div>
 
-        <div className="card-details-wrapper">
-          <div className="card-meta-row">
-            <div className="meta-info-left">
-              <span className="instructor-name">{course.instructor.name}</span>
-              <div className="separator-dot"></div>
-              <span className="duration">{course.durationWeeks} Weeks</span>
+        <div className="cc-details">
+          <div className="cc-meta">
+            <div className="cc-meta-left">
+              <span className="cc-instructor">{course.instructor.name}</span>
+              <div className="cc-dot"></div>
+              <span className="cc-weeks">{course.durationWeeks} Weeks</span>
             </div>
-            <div className="rating-box">
-              <img src="/Star.png" alt="star" className="star-icon" />
-              <span className="rating-value">{course.avgRating}</span>
+            <div className="cc-rating">
+              <img src="/Star.png" alt="star" className="cc-star-icon" />
+              <span className="cc-rating-val">{course.avgRating}</span>
             </div>
           </div>
 
-          <h3 className="course-title">{course.title}</h3>
+          <h3 className="cc-title">{course.title}</h3>
 
-          <div className="category-chip-wrapper">
-            <div className="category-chip">
+          <div className="cc-chip-wrapper">
+            <div className="cc-chip">
               <img
                 src={`/${course.category.icon}.png`}
                 alt="icon"
-                className="chip-icon"
+                className="cc-chip-icon"
               />
-              <span className="chip-label">{course.category.name}</span>
+              <span className="cc-chip-label">{course.category.name}</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="card-footer">
-        <div className="price-container">
-          <span className="price-label">Starting from</span>
-          <span className="price-value">${course.basePrice}</span>
+      <div className="cc-footer">
+        <div className="cc-price">
+          <span className="cc-price-label">Starting from</span>
+          <span className="cc-price-val">${course.basePrice}</span>
         </div>
-        <button className="cta-button" onClick={handleDetailsClick}>
+        <button className="cc-btn" onClick={handleDetailsClick}>
           Details
         </button>
       </div>
