@@ -7,6 +7,7 @@ interface NavbarProps {
   onLoginClick: () => void;
   onSignUpClick: () => void;
   onProfileClick: () => void;
+  onEnrolledClick: () => void;
 }
 
 const Navbar = ({
@@ -15,47 +16,51 @@ const Navbar = ({
   onLoginClick,
   onSignUpClick,
   onProfileClick,
+  onEnrolledClick,
 }: NavbarProps) => {
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        <div className="nav-left">
-          <img src="/Logo.png" alt="Redberry Logo" />
+    <nav className="nv-bar">
+      <div className="nv-container">
+        <div className="nv-left">
+          <Link to="/" className="nv-logo-link">
+            <img src="/Logo.png" alt="Logo" />
+          </Link>
         </div>
 
-        <div className="nav-right">
-          <Link to="/catalog" className="browse-link">
-            <img src="/Vector.png" alt="Stars" />
-            <span> Browse Courses</span>
-          </Link>
+        <div className="nv-right">
+          <div className="nv-links-group">
+            <Link to="/catalog" className="nv-link nv-browse">
+              <img src="/Vector.png" alt="Stars" />
+              <span>Browse Courses</span>
+            </Link>
 
-          {isLoggedIn && (
-            <a href="/enrolled" className="enrolled-link">
-              <img src="/book-icon.png" alt="Books" />
-              <span> Enrolled Courses</span>
-            </a>
-          )}
+            {isLoggedIn && (
+              <div className="nv-link nv-enrolled" onClick={onEnrolledClick}>
+                <img src="/book.png" alt="Books" />
+                <span>Enrolled Courses</span>
+              </div>
+            )}
+          </div>
 
           {!isLoggedIn ? (
-            <div className="auth-buttons">
-              <button className="login-btn" onClick={onLoginClick}>
+            <div className="nv-auth">
+              <button className="nv-btn nv-login" onClick={onLoginClick}>
                 Log In
               </button>
-              <button className="signup-btn" onClick={onSignUpClick}>
+              <button className="nv-btn nv-signup" onClick={onSignUpClick}>
                 Sign Up
               </button>
             </div>
           ) : (
-            <div className="user-profile-trigger" onClick={onProfileClick}>
-              <div className="avatar-wrapper">
+            <div className="nv-profile" onClick={onProfileClick}>
+              <div className="nv-avatar-container">
                 <img
                   src={user?.avatar || "/defAvatar.png"}
                   alt="Profile"
-                  className="nav-avatar"
+                  className="nv-avatar-img"
                 />
-
                 <span
-                  className={`status-indicator ${user?.profileComplete ? "complete" : "incomplete"}`}
+                  className={`nv-status ${user?.profileComplete ? "complete" : "incomplete"}`}
                 ></span>
               </div>
             </div>

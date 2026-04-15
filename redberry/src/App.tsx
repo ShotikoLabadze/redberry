@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { getMe } from "./api/auth.service";
+import { getMyEnrollments } from "./api/course.service";
 import Catalog from "./components/Catalog/Catalog";
 import CourseDetails from "./components/CourseDetails/CourseDetails";
 import Dashboard from "./components/Dashboard/Dashboard";
+import EnrolledSidebar from "./components/EnrolledSidebar/EnrolledSidebar";
 import Login from "./components/Login/Login";
 import Modal from "./components/Modal/Modal";
 import Profile from "./components/Profile/Profile";
@@ -13,11 +15,22 @@ import Navbar from "./layout/Navbar";
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [enrollments, setEnrollments] = useState<any[]>([]);
   const [modalType, setModalType] = useState<"login" | "register" | "profile">(
     "login",
   );
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+
+  const fetchEnrollments = async () => {
+    try {
+      const res = await getMyEnrollments();
+      setEnrollments(res.data || res);
+    } catch (err) {
+      console.error("Failed to fetch enrollments", err);
+    }
+  };
 
   const fetchUserData = async () => {
     const token = localStorage.getItem("token");
@@ -27,17 +40,23 @@ function App() {
       const res = await getMe();
       setUser(res.data || res);
       setIsLoggedIn(true);
+
+      fetchEnrollments();
     } catch (err: any) {
       console.error("Auth failed", err);
       setIsLoggedIn(false);
       localStorage.removeItem("token");
       setUser(null);
+      setEnrollments([]);
     }
   };
 
   useEffect(() => {
     if (isLoggedIn) {
       fetchUserData();
+    } else {
+      setEnrollments([]);
+      setUser(null);
     }
   }, [isLoggedIn]);
 
@@ -60,6 +79,13 @@ function App() {
         onLoginClick={() => openModal("login")}
         onSignUpClick={() => openModal("register")}
         onProfileClick={() => openModal("profile")}
+        onEnrolledClick={() => setIsSidebarOpen(true)}
+      />
+
+      <EnrolledSidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        enrollments={enrollments}
       />
 
       <main>
@@ -70,6 +96,7 @@ function App() {
               <Dashboard
                 isLoggedIn={isLoggedIn}
                 onLoginClick={() => openModal("login")}
+                onSeeAllClick={() => setIsSidebarOpen(true)}
               />
             }
           />

@@ -1,43 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { getMyEnrollments } from "../../api/course.service";
+import React from "react";
 import ContinueLearning from "../ContinueLearning/ContinueLearning";
-import EnrolledSidebar from "../EnrolledSidebar/EnrolledSidebar";
 import FeaturedCourses from "../FeaturedCourses/FeatureCourses";
 import "./Dashboard.css";
 
 interface DashboardProps {
   isLoggedIn: boolean;
   onLoginClick: () => void;
+  onSeeAllClick: () => void;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ isLoggedIn, onLoginClick }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [enrollments, setEnrollments] = useState<any[]>([]);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      getMyEnrollments()
-        .then((data) => setEnrollments(data.data || data))
-        .catch(() => {});
-    } else {
-      setEnrollments([]);
-    }
-  }, [isLoggedIn]);
-
+const Dashboard: React.FC<DashboardProps> = ({
+  isLoggedIn,
+  onLoginClick,
+  onSeeAllClick,
+}) => {
   return (
     <div className="dashboard-wrapper">
-      <EnrolledSidebar
-        isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
-        enrollments={enrollments}
-      />
-
       <div className="dashboard-container">
         {isLoggedIn && (
           <ContinueLearning
             isLoggedIn={isLoggedIn}
             onLoginClick={onLoginClick}
-            onSeeAll={() => setIsSidebarOpen(true)}
+            onSeeAll={onSeeAllClick}
           />
         )}
 
@@ -55,7 +39,7 @@ const Dashboard: React.FC<DashboardProps> = ({ isLoggedIn, onLoginClick }) => {
           <ContinueLearning
             isLoggedIn={isLoggedIn}
             onLoginClick={onLoginClick}
-            onSeeAll={() => setIsSidebarOpen(true)}
+            onSeeAll={onSeeAllClick}
           />
         )}
       </div>
