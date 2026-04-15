@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getCourses } from "../../../api/course.service";
 import CourseCard from "./CourseCard/CourseCard";
 import "./Courses.css";
+import Dropdown from "./DropDown/DropDown";
 import Pagination from "./Pagination/Pagination";
 
 const Courses = () => {
@@ -30,7 +31,15 @@ const Courses = () => {
 
   return (
     <div className="courses-wrapper">
-      <div className="courses-grid">
+      <div className="courses-header-main">
+        <p className="results-counter">
+          Showing {courses.length} out of {meta?.total || 0}
+        </p>
+
+        <Dropdown currentSort={sort} onSortChange={(value) => setSort(value)} />
+      </div>
+
+      <div className={`courses-grid ${loading ? "fetching" : ""}`}>
         {courses.map((courseItem) => (
           <CourseCard key={courseItem.id} course={courseItem} />
         ))}

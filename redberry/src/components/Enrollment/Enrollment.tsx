@@ -113,7 +113,6 @@ const Enrollment = ({ courseId, basePrice, courseTitle }: EnrollmentProps) => {
       await enrollCourse(payload);
       setShowSuccess(true);
     } catch (err: any) {
-      console.log("❌ ERROR DATA:", err.response?.data);
       const msg = err.response?.data?.message || "ჩაწერა ვერ მოხერხდა";
 
       if (err.response?.status === 409) {
