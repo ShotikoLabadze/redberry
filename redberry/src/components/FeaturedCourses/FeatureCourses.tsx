@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getFeatured } from "../../api/course.service";
-import FeaturedCard from "../FeaturedCard/FeaturedCard";
+import FeaturedCard from "./FeaturedCard/FeaturedCard";
 import "./FeaturedCourses.css";
 
 const FeaturedCourses: React.FC = () => {

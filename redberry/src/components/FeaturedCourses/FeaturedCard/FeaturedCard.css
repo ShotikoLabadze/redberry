@@ -159,3 +159,7 @@
   cursor: pointer;
   transition: background-color 0.2s;
 }
+
+.details-button:hover {
+  background: #3f38c2;
+}
