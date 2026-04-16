@@ -6,6 +6,7 @@ import {
   getWeeklySchedules,
 } from "../../api/course.service";
 import "./Enrollment.css";
+import ConflictModal from "./Steps/ConflictModal";
 import ScheduleStep from "./Steps/ScheduleStep";
 import SessionStep from "./Steps/SessionStep";
 import Summary from "./Steps/Sumarry";
@@ -33,6 +34,8 @@ const Enrollment = ({ courseId, basePrice, courseTitle }: EnrollmentProps) => {
   const [isEnrolling, setIsEnrolling] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
+  const [conflictData, setConflictData] = useState<any>(null);
+
   useEffect(() => {
     const fetchSchedules = async () => {
       try {
@@ -40,7 +43,7 @@ const Enrollment = ({ courseId, basePrice, courseTitle }: EnrollmentProps) => {
         const response = await getWeeklySchedules(courseId);
         setSchedules(response.data);
       } catch (err) {
-        console.error("error fetching schedules:", err);
+        console.error("Error fetching schedules:", err);
       } finally {
         setLoading(false);
       }
@@ -59,7 +62,7 @@ const Enrollment = ({ courseId, basePrice, courseTitle }: EnrollmentProps) => {
         const response = await getTimeSlots(courseId, selectedSchedule.id);
         setAvailableTimes(response.data);
       } catch (err) {
-        console.error("error fetching slots", err);
+        console.error("Error fetching slots:", err);
       } finally {
         setLoadingSlots(false);
       }
@@ -82,7 +85,7 @@ const Enrollment = ({ courseId, basePrice, courseTitle }: EnrollmentProps) => {
         );
         setSessions(response.data);
       } catch (err) {
-        console.error("error fetching sessions", err);
+        console.error("Error fetching sessions:", err);
       } finally {
         setLoadingSessions(false);
       }
@@ -112,13 +115,21 @@ const Enrollment = ({ courseId, basePrice, courseTitle }: EnrollmentProps) => {
 
       await enrollCourse(payload);
       setShowSuccess(true);
+      setConflictData(null);
     } catch (err: any) {
-      const msg = err.response?.data?.message || "ჩაწერა ვერ მოხერხდა";
-
       if (err.response?.status === 409) {
-        if (window.confirm("კონფლიქტია, მაინც გავაგრძელოთ?"))
-          handleEnroll(true);
+        const conflictRaw = err.response.data?.data?.[0] || err.response.data;
+
+        if (conflictRaw) {
+          setConflictData({
+            courseName: conflictRaw.course?.title || "Existing Course",
+            schedule:
+              conflictRaw.schedule?.weeklySchedule?.label || "Same Days",
+            time: conflictRaw.schedule?.timeSlot?.label || "Same Time",
+          });
+        }
       } else {
+        const msg = err.response?.data?.message || "ჩაწერა ვერ მოხერხდა";
         alert(msg);
       }
     } finally {
@@ -135,16 +146,13 @@ const Enrollment = ({ courseId, basePrice, courseTitle }: EnrollmentProps) => {
           <div className="success-modal-content">
             <img
               src="/enroll-confirmed.png"
-              alt="Checkmark"
+              alt="Success"
               className="success-modal-icon"
             />
             <h2 className="success-modal-title">Enrollment Confirmed!</h2>
             <p className="success-modal-text">
               You've successfully enrolled to the <br />
-              <strong>
-                "{courseTitle || "Advanced React & TypeScript Development"}"
-              </strong>{" "}
-              Course!
+              <strong>"{courseTitle || "Course"}"</strong> Course!
             </p>
             <button
               className="success-modal-done-btn"
@@ -154,6 +162,14 @@ const Enrollment = ({ courseId, basePrice, courseTitle }: EnrollmentProps) => {
             </button>
           </div>
         </div>
+      )}
+
+      {conflictData && (
+        <ConflictModal
+          conflictData={conflictData}
+          onCancel={() => setConflictData(null)}
+          onConfirm={() => handleEnroll(true)}
+        />
       )}
 
       <ScheduleStep

@@ -1,0 +1,154 @@
+.conflict-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.feedback-modal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 60px;
+  gap: 10px;
+  width: 476px;
+  height: 495px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-sizing: border-box;
+}
+
+.frame-120,
+.frame-119 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 42px;
+  width: 356px;
+  height: 375px;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 1;
+}
+
+.frame-103 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 24px;
+  width: 356px;
+  height: 277px;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+}
+
+.modal-icons {
+  width: 94px;
+  height: 94px;
+  flex: none;
+  order: 0;
+}
+
+.frame-102 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 24px;
+  width: 356px;
+  height: 159px;
+  flex: none;
+  order: 1;
+  align-self: stretch;
+}
+
+.modal-title {
+  font-family: "Inter";
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 39px;
+  text-align: center;
+  color: #3d3d3d;
+  margin: 0;
+}
+
+.modal-description {
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  color: #3d3d3d;
+  margin: 0;
+}
+
+.frame-482 {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 8px;
+  width: 356px;
+  height: 58px;
+  flex: none;
+  order: 2;
+  align-self: stretch;
+}
+
+.cta-button-secondary {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 16px;
+  width: 174px;
+  height: 58px;
+  border: 2px solid #958fef;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  flex-grow: 1;
+}
+
+.cta-button-primary {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 17px 25px;
+  width: 174px;
+  height: 58px;
+  background: #4f46e5;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  flex-grow: 1;
+}
+
+.btn-text-purple {
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 16px;
+  color: #4f46e5;
+}
+
+.btn-text-white {
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 16px;
+  color: #ffffff;
+}

@@ -35,32 +35,47 @@ const CourseCompletedModal: React.FC<Props> = ({ onClose }) => {
     <div className="completed-modal-overlay">
       <div className="completed-modal-content">
         <div className="confetti-icon-wrapper">
-          <img src="/complete-course.png" alt="Congratulations" />
+          <img
+            src="/complete-course.png"
+            alt="Congratulations"
+            className="modal-main-icon"
+          />
         </div>
 
-        <h2>Congratulations!</h2>
-        <p>You've completed “{courseTitle}” Course!</p>
+        <div className="modal-text-container">
+          <h2>Congratulations!</h2>
+          <p>You've completed “{courseTitle}” Course!</p>
+        </div>
 
         <div className="rate-experience-section">
-          <p>Rate your experience</p>
           <div className="star-rating">
             {[1, 2, 3, 4, 5].map((star) => (
-              <span
+              <img
                 key={star}
-                className={`star ${(hoverRating || rating) >= star ? "filled" : ""}`}
+                src={
+                  (hoverRating || rating) >= star
+                    ? "/ActiveStar.png"
+                    : "/InactiveStar.png"
+                }
+                alt={`Star ${star}`}
+                className="star-img"
                 onClick={() => handleRate(star)}
                 onMouseEnter={() => !isSubmitting && setHoverRating(star)}
                 onMouseLeave={() => !isSubmitting && setHoverRating(0)}
-              >
-                ★
-              </span>
+              />
             ))}
           </div>
         </div>
 
-        <button className="done-btn" onClick={onClose} disabled={isSubmitting}>
-          {isSubmitting ? "Saving..." : "Done"}
-        </button>
+        <div className="modal-actions">
+          <button
+            className="done-btn"
+            onClick={onClose}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Saving..." : "Done"}
+          </button>
+        </div>
       </div>
     </div>
   );

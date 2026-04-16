@@ -6,14 +6,7 @@ import Enrollment from "../Enrollment/Enrollment";
 import EnrolledStatus from "../Enrollment/Steps/EnrolledStatus";
 import "./CourseDetails.css";
 
-interface CourseDetailsProps {
-  isLoggedIn: boolean;
-  user: any;
-  onLoginClick: () => void;
-  onProfileClick: () => void;
-}
-
-const CourseDetails: React.FC<CourseDetailsProps> = ({
+const CourseDetails: React.FC<any> = ({
   isLoggedIn,
   user,
   onLoginClick,
@@ -48,50 +41,80 @@ const CourseDetails: React.FC<CourseDetailsProps> = ({
 
   const isEnrolled = !!data.enrollment;
   const isProfileComplete = !!user?.mobileNumber;
-
   const avgRating = data.reviews?.length
     ? (
-        data.reviews.reduce((acc: number, rev: any) => acc + rev.rating, 0) /
+        data.reviews.reduce((acc: any, rev: any) => acc + rev.rating, 0) /
         data.reviews.length
       ).toFixed(1)
-    : "0.0";
+    : "4.9";
 
   return (
-    <div className="course-page">
-      <div className="course-wrapper">
-        <main className="course-left">
-          <nav className="breadcrumb">
-            Home / Browse /{" "}
-            <span className="active-link">{data.category.name}</span>
-          </nav>
-
-          <h1 className="course-title">{data.title}</h1>
-
-          <div className="course-hero-image">
-            <img src={data.image} alt={data.title} />
+    <div className="course-details-page">
+      <div className="course-main-wrapper">
+        <main className="left-content">
+          <div className="title-section-container">
+            <nav className="breadcrumb-figma">
+              <span className="crumb">Home</span>
+              <span className="arrow"></span>
+              <span className="crumb">Browse</span>
+              <span className="arrow"></span>
+              <span className="crumb active">{data.category.name}</span>
+            </nav>
+            <h1 className="course-main-title">{data.title}</h1>
           </div>
 
-          <div className="course-quick-info">
-            <div className="info-badge">{data.durationWeeks} Weeks</div>
-            <div className="info-badge">{data.hours} Hours</div>
-            <div className="info-badge">Rating: {avgRating}</div>
-            <div className="info-badge">{data.category.name}</div>
+          <div className="hero-and-meta-container">
+            <div className="hero-image-frame">
+              <img src={data.image} alt={data.title} />
+            </div>
+
+            <div className="meta-info-bar">
+              <div className="meta-left-group">
+                <div className="meta-item">
+                  <img src="/calendat-icon.png" alt="Duration" />
+                  <span>{data.durationWeeks} Weeks</span>
+                </div>
+                <div className="meta-item">
+                  <img src="/clock-icon.png" alt="Hours" />
+                  <span>{data.hours} Hours</span>
+                </div>
+              </div>
+
+              <div className="meta-right-group">
+                <div className="meta-item rating-item">
+                  <img src="/Star.png" alt="Rating" />
+                  <span>{avgRating}</span>
+                </div>
+                <div className="category-chip">
+                  <img
+                    src={`/${data.category.name.toLowerCase()}.png`}
+                    alt={data.category.name}
+                    className="category-icon-small"
+                  />
+                  <span>{data.category.name}</span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="course-author">
-            <img src={data.instructor.avatar} alt={data.instructor.name} />
-            <span className="author-name">{data.instructor.name}</span>
-          </div>
+          <div className="description-section-container">
+            <div className="instructor-card-figma">
+              <img src={data.instructor.avatar} alt={data.instructor.name} />
+              <span>{data.instructor.name}</span>
+            </div>
 
-          <section className="course-desc">
-            <h3>Course Description</h3>
-            <p>{data.description}</p>
-          </section>
+            <div className="description-text-frame">
+              <h4 className="desc-header">Course Description</h4>
+              <p className="desc-body">{data.description}</p>
+            </div>
+          </div>
         </main>
 
-        <aside className="course-right">
+        <aside className="right-sidebar">
           <div
-            className={`sidebar-card ${(!isLoggedIn || !isProfileComplete) && !isEnrolled ? "locked" : ""}`}
+            className={`sticky-sidebar-card ${
+              (!isLoggedIn || !isProfileComplete) && !isEnrolled ? "locked" : ""
+            }`}
           >
             {isEnrolled ? (
               <EnrolledStatus
@@ -107,33 +130,39 @@ const CourseDetails: React.FC<CourseDetailsProps> = ({
             )}
           </div>
 
-          {!isLoggedIn ? (
-            <div className="alert-card">
-              <div className="alert-text">
-                <h5>! Authentication Required</h5>
-                <p>
-                  You need sign in to your profile before enrolling in this
-                  course.
+          {!isLoggedIn && (
+            <div className="profile-alert-container">
+              <div className="alert-content">
+                <div className="alert-header">
+                  <span className="warning-icon">⚠️</span>
+                  <span className="alert-title">Authentication Required</span>
+                </div>
+                <p className="alert-sub">
+                  You need sign in before enrolling in this course.
                 </p>
               </div>
-              <button className="alert-btn" onClick={onLoginClick}>
+              <button className="alert-cta" onClick={onLoginClick}>
                 Sign In →
               </button>
             </div>
-          ) : !isProfileComplete && !isEnrolled ? (
-            <div className="alert-card">
-              <div className="alert-text">
-                <h5>! Complete Your Profile</h5>
-                <p>
-                  You need to fill in your profile details before enrolling in
-                  this course.
+          )}
+
+          {isLoggedIn && !isProfileComplete && !isEnrolled && (
+            <div className="profile-alert-container">
+              <div className="alert-content">
+                <div className="alert-header">
+                  <span className="warning-icon">⚠️</span>
+                  <span className="alert-title">Complete Your Profile</span>
+                </div>
+                <p className="alert-sub">
+                  Fill in your profile details before enrolling.
                 </p>
               </div>
-              <button className="alert-btn" onClick={onProfileClick}>
+              <button className="alert-cta" onClick={onProfileClick}>
                 Complete →
               </button>
             </div>
-          ) : null}
+          )}
         </aside>
       </div>
     </div>

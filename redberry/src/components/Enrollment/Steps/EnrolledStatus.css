@@ -1,99 +1,205 @@
-.enrolled-view {
-  background: transparent;
+.enrolled-view-container {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  width: 100%;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 48px;
+  width: 473px;
+  background: transparent;
 }
 
-.enrolled-badge-wrapper {
-  margin-bottom: 4px;
-}
-
-.enrolled-badge {
-  background-color: #736bea1a;
-  color: #736bea;
-  padding: 6px 14px;
+.status-badge-figma {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  width: 111px;
+  height: 56px;
+  background: rgba(115, 107, 234, 0.1);
   border-radius: 100px;
-  font-size: 13px;
-  font-weight: 600;
-  display: inline-block;
+  margin-bottom: 22px;
 }
 
-.enrolled-badge.completed {
-  background-color: #1dc31d1a;
+.status-badge-figma.completed {
+  background: rgba(29, 195, 29, 0.1);
+}
+
+.badge-text {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: #736bea;
+}
+
+.status-badge-figma.completed .badge-text {
   color: #1dc31d;
 }
 
-.enrolled-details {
+.details-stack-figma {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.detail-row-figma {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  height: 24px;
+}
+
+.icon-24 {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.detail-text {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  color: #525252;
+}
+
+.enrolled-actions-group {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+}
+
+.progress-section-figma {
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-.detail-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #525252;
-  font-size: 15px;
-}
-
-.detail-row img {
-  width: 18px;
-  height: 18px;
-  opacity: 0.6;
-}
-
-.progress-container {
-  margin-top: 8px;
-}
-
-.progress-container p {
-  font-size: 14px;
-  font-weight: 600;
-  color: #525252;
-  margin-bottom: 10px;
-}
-
-.progress-bar {
   width: 100%;
-  height: 8px;
-  background: #736bea1a;
-  border-radius: 10px;
+}
+
+.progress-label-figma {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  color: #666666;
+  margin: 0;
+}
+
+.progress-bar-bg-figma {
+  position: relative;
+  width: 100%;
+  height: 23.45px;
+  background: #dddbfa;
+  border-radius: 30px;
   overflow: hidden;
 }
 
-.progress-fill {
+.progress-bar-fill-figma {
   height: 100%;
   background: #4f46e5;
-  border-radius: 10px;
+  border-radius: 30px;
   transition: width 0.4s ease;
 }
 
-.main-action-btn {
-  width: 100%;
-  padding: 14px;
-  background-color: #4f46e5;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
+.cta-button-figma {
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: center;
-  gap: 8px;
-  margin-top: 8px;
+  align-items: center;
+  padding: 17px 25px;
+  gap: 10px;
+  width: 473px;
+  height: 58px;
+  background: #4f46e5;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
   transition: opacity 0.2s ease;
 }
 
-.main-action-btn:hover:not(:disabled) {
+.cta-button-figma:hover:not(:disabled) {
   opacity: 0.9;
 }
 
-.main-action-btn:disabled {
-  opacity: 0.7;
+.cta-button-figma:disabled {
+  opacity: 0.6;
   cursor: not-allowed;
+}
+
+.btn-label-text {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.btn-icon {
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.rating-card-figma {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 50px;
+  gap: 18px;
+  width: 473px;
+  height: 172px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+  margin-top: 24px;
+}
+
+.rate-title {
+  width: 373px;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  color: #525252;
+  margin: 0;
+}
+
+.star-row-figma {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+}
+
+.star-asset-figma {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out;
+  object-fit: contain;
+}
+
+.star-asset-figma:hover {
+  transform: scale(1.1);
+}
+
+.close-rating-btn {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  right: 15px;
+  top: 15px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.close-rating-btn img {
+  width: 14px;
+  height: 14px;
+  opacity: 0.5;
 }

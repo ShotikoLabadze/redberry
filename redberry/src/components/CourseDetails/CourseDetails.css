@@ -1,180 +1,231 @@
-.course-page {
+.course-details-page {
   background-color: #f5f5f5;
   min-height: 100vh;
-  font-family: "Inter", sans-serif;
-  padding-top: 40px;
-}
-.course-wrapper {
-  display: flex;
-  max-width: 1200px;
-  margin: auto;
-  gap: 50px;
-  padding: 0 20px;
-}
-
-.course-left {
-  flex: 2;
-}
-.course-right {
-  flex: 1;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
 }
 
-.breadcrumb {
-  color: #64748b;
-  font-size: 14px;
-  margin-bottom: 20px;
+.course-main-wrapper {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 1180px;
+  flex: 1;
 }
-.active-link {
+
+.left-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 24px;
+  position: absolute;
+  width: 903px;
+  height: 1055.15px;
+  left: 176.5px;
+  top: 64px;
+}
+
+.right-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 11px;
+  position: absolute;
+  width: 530px;
+  height: 711px;
+  left: 1212.5px;
+  top: 302px;
+}
+
+.title-section-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+}
+
+.breadcrumb-figma {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  color: #666666;
+}
+
+.breadcrumb-figma .active {
   color: #4f46e5;
 }
 
-.course-title {
-  font-size: 32px;
-  color: #130e67;
-  font-weight: 800;
-  margin-bottom: 25px;
+.course-main-title {
+  font-family: "Inter";
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 48px;
+  color: #141414;
+  margin: 0;
 }
 
-.course-hero-image img {
-  width: 100%;
-  height: 400px;
-  object-fit: cover;
-  border-radius: 15px;
-  margin-bottom: 20px;
-}
-
-.course-quick-info {
+.hero-and-meta-container {
   display: flex;
-  gap: 12px;
-  margin-bottom: 30px;
-}
-.info-badge {
-  background: white;
-  border: 1px solid #e2e8f0;
-  padding: 8px 15px;
-  border-radius: 8px;
-  font-size: 14px;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
 }
 
-.course-author {
+.hero-image-frame img {
+  width: 903px;
+  height: 474px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.meta-info-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 903px;
+  height: 39px;
+}
+
+.meta-left-group,
+.meta-right-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+}
+
+.meta-right-group {
+  gap: 16px;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+
+.meta-item img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.meta-item span {
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 14px;
+  color: #525252;
+}
+
+.category-chip {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 12px;
+  gap: 10px;
+  background: #ffffff;
+  border-radius: 12px;
+  height: 39px;
+  border: 1px solid #e2e8f0;
+}
+
+.category-icon-small {
+  width: 24px;
+  height: 24px;
+}
+
+.description-section-container {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 20px;
+}
+
+.instructor-card-figma {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 40px;
-}
-.course-author img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  padding: 8px 12px;
+  background: #ffffff;
+  border-radius: 12px;
+  width: fit-content;
 }
 
-.sidebar-card {
-  border-radius: 15px;
-  padding: 25px;
+.instructor-card-figma img {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
 }
 
-.sidebar-card.locked {
-  opacity: 0.5;
+.description-text-frame {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.desc-header {
+  font-size: 20px;
+  color: #8a8a8a;
+  font-weight: 600;
+  margin: 0;
+}
+
+.desc-body {
+  font-size: 16px;
+  line-height: 24px;
+  color: #525252;
+  margin: 0;
+}
+
+.sticky-sidebar-card.locked {
+  opacity: 0.4;
   pointer-events: none;
 }
 
-.step-circle {
-  border: 1px solid #130e67;
-  border-radius: 50%;
-  width: 22px;
-  height: 22px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  margin-right: 10px;
-  font-weight: bold;
-}
-
-.options-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin: 15px 0;
-}
-.opt-btn {
-  padding: 10px;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  background: white;
-  cursor: pointer;
-  font-size: 13px;
-}
-.opt-btn.active {
-  border-color: #130e67;
-  font-weight: bold;
-}
-.opt-btn.disabled {
-  background: #f1f5f9;
-  color: #94a3b8;
-}
-
-.price-main {
+.profile-alert-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 25px;
-}
-.price-val {
-  font-size: 28px;
-  font-weight: 800;
-  color: #130e67;
-}
-.price-sub {
-  font-size: 13px;
-  color: #64748b;
-  margin-top: 5px;
-}
-
-.enroll-btn {
-  width: 100%;
-  background: #eef2ff;
-  color: #4f46e5;
-  border: none;
-  padding: 15px;
-  border-radius: 10px;
-  font-weight: bold;
-  margin-top: 20px;
-  cursor: pointer;
-}
-
-.alert-card {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
   padding: 20px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
   border-radius: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.alert-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
 }
 
-.alert-text h5 {
-  margin: 0;
-  color: #1e293b;
-  font-weight: bold;
-}
-.alert-text p {
-  margin: 5px 0 0 0;
-  font-size: 12px;
-  color: #64748b;
-  max-width: 200px;
-}
-
-.alert-btn {
-  background: #eef2ff;
-  color: #4f46e5;
-  border: 1px solid #e0e7ff;
-  padding: 10px 15px;
-  border-radius: 8px;
+.alert-title {
   font-weight: 600;
+  font-size: 16px;
+  color: #292929;
+}
+
+.alert-sub {
+  font-size: 12px;
+  color: #8a8a8a;
+  margin: 0;
+}
+
+.alert-cta {
+  background: #eeedfc;
+  border: 1px solid #b7b3f4;
+  color: #281ed2;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
   cursor: pointer;
-  white-space: nowrap;
 }
