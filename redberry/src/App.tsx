@@ -53,10 +53,14 @@ function App() {
   useEffect(() => {
     if (isLoggedIn) {
       fetchUserData();
-    } else {
-      setEnrollments([]);
-      setUser(null);
     }
+
+    const handleRefresh = () => fetchEnrollments();
+    window.addEventListener("refreshEnrollments", handleRefresh);
+
+    return () => {
+      window.removeEventListener("refreshEnrollments", handleRefresh);
+    };
   }, [isLoggedIn]);
 
   const handleAuthSuccess = () => {
@@ -85,7 +89,6 @@ function App() {
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
         enrollments={enrollments}
-        onUpdate={fetchEnrollments}
       />
 
       <main>
@@ -109,7 +112,6 @@ function App() {
                 onProfileClick={() => openModal("profile")}
                 isLoggedIn={isLoggedIn}
                 onLoginClick={() => openModal("login")}
-                onEnrollSuccess={fetchEnrollments}
               />
             }
           />

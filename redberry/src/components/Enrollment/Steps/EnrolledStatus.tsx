@@ -23,10 +23,8 @@ interface EnrolledStatusProps {
 
 const EnrolledStatus = ({ enrollment, onUpdate }: EnrolledStatusProps) => {
   const { courseId } = useCourse();
-
   const [isUpdating, setIsUpdating] = useState(false);
   const [showCompletedModal, setShowCompletedModal] = useState(false);
-
   const [showRating, setShowRating] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
   const [rating, setRating] = useState(0);
@@ -39,11 +37,12 @@ const EnrolledStatus = ({ enrollment, onUpdate }: EnrolledStatusProps) => {
     setIsUpdating(true);
     try {
       await completeCourse(id);
+
+      window.dispatchEvent(new Event("refreshEnrollments"));
+
       setShowCompletedModal(true);
       setShowRating(true);
       setIsDismissed(false);
-
-      onUpdate();
     } catch (err: any) {
       console.error("Completion failed", err);
     } finally {
@@ -65,10 +64,7 @@ const EnrolledStatus = ({ enrollment, onUpdate }: EnrolledStatusProps) => {
     setIsUpdating(true);
     try {
       await deleteEnrollment(id);
-      setShowRating(false);
-      setIsDismissed(false);
-      setRating(0);
-
+      window.dispatchEvent(new Event("refreshEnrollments"));
       onUpdate();
     } catch (err: any) {
       console.error("Retake failed", err);
