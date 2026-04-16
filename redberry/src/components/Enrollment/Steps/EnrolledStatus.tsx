@@ -52,23 +52,17 @@ const EnrolledStatus = ({ enrollment, onUpdate }: EnrolledStatusProps) => {
   };
 
   const handleRetake = async () => {
-    if (
-      window.confirm(
-        "Are you sure you want to retake this course? Current progress will be lost.",
-      )
-    ) {
-      setIsUpdating(true);
-      try {
-        await deleteEnrollment(id);
-        setShowRating(false);
-        setIsDismissed(false);
-        setRating(0);
-        onUpdate();
-      } catch (err: any) {
-        console.error("Retake failed", err);
-      } finally {
-        setIsUpdating(false);
-      }
+    setIsUpdating(true);
+    try {
+      await deleteEnrollment(id);
+      setShowRating(false);
+      setIsDismissed(false);
+      setRating(0);
+      onUpdate();
+    } catch (err: any) {
+      console.error("Retake failed", err);
+    } finally {
+      setIsUpdating(false);
     }
   };
 

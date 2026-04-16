@@ -1,6 +1,7 @@
 import React from "react";
 import ContinueLearning from "../ContinueLearning/ContinueLearning";
 import FeaturedCourses from "../FeaturedCourses/FeatureCourses";
+import Hero from "../Hero/Hero";
 import "./Dashboard.css";
 
 interface DashboardProps {
@@ -17,6 +18,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   return (
     <div className="dashboard-wrapper">
       <div className="dashboard-container">
+        <Hero />
         {isLoggedIn && (
           <ContinueLearning
             isLoggedIn={isLoggedIn}
