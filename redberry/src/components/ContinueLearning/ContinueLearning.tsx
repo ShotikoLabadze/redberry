@@ -102,7 +102,6 @@ const ContinueLearning: React.FC<Props> = ({
                       Lecturer {item.course?.instructor?.name}
                     </span>
                     <div className="rating-pill">
-                      {/* შეცვლილია აქ */}
                       <img src={Star} alt="star" />
                       <span className="rating-val">
                         {item.course?.rating || "4.9"}

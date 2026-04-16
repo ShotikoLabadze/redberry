@@ -42,10 +42,9 @@ const CourseDetails: React.FC<any> = ({
   }, [id]);
 
   const getCategoryIcon = (categoryName: string) => {
-    return new URL(
-      `../../assets/${categoryName.toLowerCase()}.png`,
-      import.meta.url,
-    ).href;
+    const fileName = categoryName.toLowerCase().replace(/\s+/g, "-");
+
+    return new URL(`../../assets/${fileName}.png`, import.meta.url).href;
   };
 
   if (loading) return <div className="loading">Loading...</div>;
