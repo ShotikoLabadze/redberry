@@ -1,5 +1,5 @@
-import type { ChangeEvent } from "react";
-import { useState } from "react";
+import type { ChangeEvent, DragEvent } from "react";
+import { useRef, useState } from "react";
 import { register } from "../../api/auth.service";
 import "./Registration.css";
 
@@ -24,24 +24,48 @@ const Registration = ({ onSwitchToLogin, onSuccess }: RegistrationProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const formatFileSize = (bytes: number) => {
+    if (bytes === 0) return "0 Bytes";
+    const k = 1024;
+    const sizes = ["Bytes", "KB", "MB", "GB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+  };
+
+  const processFile = (file: File) => {
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+    if (!allowedTypes.includes(file.type)) {
+      setError("Please upload a valid image (JPG, PNG, or WebP).");
+      return;
+    }
+
+    setAvatar(file);
+    setError("");
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
-      if (!allowedTypes.includes(file.type)) {
-        setError("Please upload a valid image (JPG, PNG, or WebP).");
-        return;
-      }
+    if (file) processFile(file);
+  };
 
-      setAvatar(file);
-      setError("");
+  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
 
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
+  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const file = e.dataTransfer.files?.[0];
+    if (file) processFile(file);
   };
 
   const handleSubmit = async () => {
@@ -60,11 +84,9 @@ const Registration = ({ onSwitchToLogin, onSuccess }: RegistrationProps) => {
 
     try {
       const result = await register(formData);
-
       if (result.data?.token) {
         localStorage.setItem("token", result.data.token);
       }
-
       onSuccess?.();
     } catch (err: any) {
       setError(err.response?.data?.message || "Registration failed");
@@ -111,22 +133,20 @@ const Registration = ({ onSwitchToLogin, onSuccess }: RegistrationProps) => {
         <div className={`step ${step >= 3 ? "active" : ""}`}></div>
       </div>
 
-      {error && (
-        <p className="error-message" style={{ color: "red", fontSize: "12px" }}>
-          {error}
-        </p>
-      )}
-
       {step === 1 && (
         <div className="step-content">
-          <div className="input">
+          <div className={`input ${error ? "error-state" : ""}`}>
             <label>Email*</label>
             <input
               type="email"
               placeholder="you@example.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (error) setError("");
+              }}
             />
+            {error && <p className="error-message">{error}</p>}
           </div>
           <button className="submit-btn" onClick={handleNext}>
             Next
@@ -136,14 +156,17 @@ const Registration = ({ onSwitchToLogin, onSuccess }: RegistrationProps) => {
 
       {step === 2 && (
         <div className="step-content">
-          <div className="input">
+          <div className={`input ${error ? "error-state" : ""}`}>
             <label>Password*</label>
             <div className="input-wrapper">
               <input
                 type={isVisible ? "text" : "password"}
                 placeholder="Password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  if (error) setError("");
+                }}
               />
               <img
                 src={isVisible ? "/eye.png" : "/closedEye.png"}
@@ -154,14 +177,17 @@ const Registration = ({ onSwitchToLogin, onSuccess }: RegistrationProps) => {
             </div>
           </div>
 
-          <div className="input">
+          <div className={`input ${error ? "error-state" : ""}`}>
             <label>Confirm Password*</label>
             <div className="input-wrapper">
               <input
                 type={isConfirmVisible ? "text" : "password"}
                 placeholder="********"
                 value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                  if (error) setError("");
+                }}
               />
               <img
                 src={isConfirmVisible ? "/eye.png" : "/closedEye.png"}
@@ -170,6 +196,7 @@ const Registration = ({ onSwitchToLogin, onSuccess }: RegistrationProps) => {
                 onClick={() => setIsConfirmVisible(!isConfirmVisible)}
               />
             </div>
+            {error && <p className="error-message">{error}</p>}
           </div>
           <button className="submit-btn" onClick={handleNext}>
             Next
@@ -179,40 +206,50 @@ const Registration = ({ onSwitchToLogin, onSuccess }: RegistrationProps) => {
 
       {step === 3 && (
         <div className="step-content">
-          <div className="input">
+          <div className={`input ${error ? "error-state" : ""}`}>
             <label>Username*</label>
             <input
               type="text"
               placeholder="Username"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => {
+                setUsername(e.target.value);
+                if (error) setError("");
+              }}
             />
+            {error && <p className="error-message">{error}</p>}
           </div>
 
           <label>Upload Avatar</label>
           <div className="upload">
-            <div className="drop">
-              {preview ? (
-                <div className="preview-container">
+            <div
+              className={`drop ${avatar ? "uploaded" : ""}`}
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
+              onClick={() => !avatar && fileInputRef.current?.click()}
+            >
+              {avatar && preview ? (
+                <div className="uploaded-content">
                   <img
                     src={preview}
                     alt="Avatar Preview"
                     className="avatar-preview-img"
-                    style={{
-                      width: "50px",
-                      height: "50px",
-                      borderRadius: "50%",
-                    }}
                   />
-                  <button
-                    onClick={() => {
-                      setPreview(null);
-                      setAvatar(null);
-                    }}
-                    className="remove-avatar"
-                  >
-                    Remove
-                  </button>
+                  <div className="file-info">
+                    <span className="file-name">{avatar.name}</span>
+                    <span className="file-size">
+                      Size - {formatFileSize(avatar.size)}
+                    </span>
+                    <span
+                      className="change-link"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        fileInputRef.current?.click();
+                      }}
+                    >
+                      Change
+                    </span>
+                  </div>
                 </div>
               ) : (
                 <div className="upload-placeholder">
@@ -223,16 +260,14 @@ const Registration = ({ onSwitchToLogin, onSuccess }: RegistrationProps) => {
                   />
                   <p>
                     Drag and drop or{" "}
-                    <label htmlFor="file-upload" className="upload-link">
-                      Upload File
-                    </label>
+                    <span className="upload-link">Upload File</span>
                   </p>
                   <span>JPG, PNG or WebP</span>
                 </div>
               )}
               <input
                 type="file"
-                id="file-upload"
+                ref={fileInputRef}
                 style={{ display: "none" }}
                 accept="image/jpeg, image/png, image/webp"
                 onChange={handleFileChange}
@@ -250,7 +285,7 @@ const Registration = ({ onSwitchToLogin, onSuccess }: RegistrationProps) => {
         </div>
       )}
 
-      <div className="footer">
+      <div className="rg-footer">
         <div className="divider">
           <span>or</span>
         </div>

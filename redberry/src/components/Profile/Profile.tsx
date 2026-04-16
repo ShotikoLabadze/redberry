@@ -1,5 +1,5 @@
-import type { ChangeEvent } from "react";
-import { useEffect, useState } from "react";
+import type { ChangeEvent, DragEvent } from "react";
+import { useEffect, useRef, useState } from "react";
 import { updateProfile } from "../../api/auth.service";
 import "./Profile.css";
 
@@ -15,9 +15,12 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
   const [age, setAge] = useState(user?.age || "");
   const [avatar, setAvatar] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isFormValid, setIsFormValid] = useState(false);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const cleanPhone = mobileNumber.replace(/\s/g, "");
@@ -39,12 +42,44 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
     setIsFormValid(Object.keys(newErrors).length === 0);
   }, [fullName, mobileNumber, age]);
 
+  const formatFileSize = (bytes: number) => {
+    if (bytes === 0) return "0 Bytes";
+    const k = 1024;
+    const sizes = ["Bytes", "KB", "MB", "GB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+  };
+
+  const processFile = (file: File) => {
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+    if (!allowedTypes.includes(file.type)) {
+      alert("Please upload a valid image (JPG, PNG, or WebP).");
+      return;
+    }
+
+    setAvatar(file);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setAvatar(file);
-      setPreview(URL.createObjectURL(file));
-    }
+    if (file) processFile(file);
+  };
+
+  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const file = e.dataTransfer.files?.[0];
+    if (file) processFile(file);
   };
 
   const handleUpdate = async () => {
@@ -84,9 +119,10 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
           </div>
           <div className="user-details-text">
             <h2 className="display-username">{user?.username || "Username"}</h2>
-
             <p
-              className={`status-text ${user?.profileComplete ? "complete" : "incomplete"}`}
+              className={`status-text ${
+                user?.profileComplete ? "complete" : "incomplete"
+              }`}
             >
               {user?.profileComplete
                 ? "Profile is Complete"
@@ -159,7 +195,11 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
                 errors.age ? "error-border" : age >= 16 ? "success-border" : ""
               }`}
             >
-              <select value={age} onChange={(e) => setAge(e.target.value)}>
+              <select
+                className="age-select"
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+              >
                 <option value="">{user?.age || "Age"}</option>
                 {[...Array(60)].map((_, i) => (
                   <option key={i} value={16 + i}>
@@ -173,22 +213,56 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
 
         <div className="upload">
           <label>Upload Avatar</label>
-          <div className="drop">
+          <div
+            className={`drop ${avatar ? "uploaded" : ""}`}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+            onClick={() => !avatar && fileInputRef.current?.click()}
+          >
+            {avatar && preview ? (
+              <div className="uploaded-content">
+                <img
+                  src={preview}
+                  alt="Avatar Preview"
+                  className="avatar-preview-img"
+                />
+                <div className="file-info">
+                  <span className="file-name">{avatar.name}</span>
+                  <span className="file-size">
+                    Size - {formatFileSize(avatar.size)}
+                  </span>
+                  <span
+                    className="change-link"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      fileInputRef.current?.click();
+                    }}
+                  >
+                    Change
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <div className="upload-placeholder">
+                <img
+                  src="/uploadIcon.png"
+                  alt="upload"
+                  className="upload-icon"
+                />
+                <p>
+                  Drag and drop or{" "}
+                  <span className="upload-link">Upload file</span>
+                </p>
+                <span>JPG, PNG or WebP</span>
+              </div>
+            )}
             <input
               type="file"
-              id="avatar-upload"
-              hidden
-              accept="image/*"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              accept="image/jpeg, image/png, image/webp"
               onChange={handleFileChange}
             />
-            <label htmlFor="avatar-upload" className="upload-placeholder">
-              <img src="/uploadIcon.png" alt="upload" className="upload-icon" />
-              <p>
-                Drag and drop or{" "}
-                <span className="upload-link">Upload file</span>
-              </p>
-              <span>JPG, PNG or WebP</span>
-            </label>
           </div>
         </div>
 

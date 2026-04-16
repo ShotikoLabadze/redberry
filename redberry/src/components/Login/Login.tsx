@@ -84,7 +84,7 @@ const Login = ({ onSwitchToSignUp, onSuccess }: LoginProps) => {
         </button>
       </div>
 
-      <div className="footer">
+      <div className="rg-footer">
         <div className="divider">
           <span>or</span>
         </div>
