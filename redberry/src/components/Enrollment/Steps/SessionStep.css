@@ -1,0 +1,179 @@
+.session-step-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 18px;
+  width: 530px;
+}
+
+.step-header-frame {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px;
+  width: 530px;
+  height: 29px;
+}
+
+.step-number-circle {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1.5px solid #8a8a8a;
+  color: #8a8a8a;
+  font-weight: 600;
+}
+
+.active .step-number-circle,
+.filled .step-number-circle {
+  border-color: #130e67;
+  color: #130e67;
+}
+
+.filled .step-number-circle {
+  background: #130e67;
+  color: #ffffff;
+}
+
+.step-title-text {
+  font-family: "Inter";
+  font-weight: 600;
+  font-size: 24px;
+  color: #8a8a8a;
+}
+
+.active .step-title-text,
+.filled .step-title-text {
+  color: #130e67;
+}
+
+.sessions-content-grid {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 8px;
+  width: 530px;
+  height: 155px;
+}
+
+.session-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+  width: 171.33px;
+  flex: none;
+}
+
+.session-type-card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 20px;
+  width: 171.33px;
+  height: 131px;
+  background: #ffffff;
+  border: 1px solid #d1d1d1;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.session-type-card:not(:disabled):hover,
+.session-type-card.selected {
+  background: #dddbfa;
+  border: 1px solid #958fef;
+  transform: translateY(-1px);
+}
+
+.card-main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.session-icon-main {
+  width: 26px;
+  height: 26px;
+}
+
+.session-text-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.session-name-title {
+  font-family: "Inter";
+  font-weight: 600;
+  font-size: 16px;
+  color: #525252;
+  text-align: center;
+}
+
+.location-text {
+  font-family: "Inter";
+  font-size: 12px;
+  color: #525252;
+  text-align: center;
+}
+
+.session-price-modifier {
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 14px;
+  color: #736bea;
+  text-align: center;
+}
+
+.session-status-tag {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.status-text {
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 12px;
+  color: #3d3d3d;
+}
+
+.session-status-tag.warning .status-text {
+  color: #f4a316;
+}
+
+.session-type-card:not(:disabled):hover .session-name-title,
+.session-type-card.selected .session-name-title,
+.session-type-card:not(:disabled):hover .location-text,
+.session-type-card.selected .location-text,
+.session-type-card:not(:disabled):hover .session-price-modifier,
+.session-type-card.selected .session-price-modifier {
+  color: #4f46e5; /* Purple/500 */
+}
+
+.session-type-card:disabled {
+  background: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.6;
+}

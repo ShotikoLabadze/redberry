@@ -23,31 +23,42 @@ const Summary: React.FC<SummaryProps> = ({
 
   return (
     <div className="enrollment-summary-card">
-      <div className="price-main-row">
-        <span className="label">Total Price</span>
-        <span className="total-amount">${totalPrice}</span>
-      </div>
-
-      <div className="price-breakdown">
-        <div className="breakdown-item">
-          <span>Base Price</span>
-          <span className="value">+ $0</span>
+      <div className="summary-inner-frame">
+        <div className="summary-total-price-row">
+          <span className="total-label">Total Price</span>
+          <div className="total-amount-wrapper">
+            <span className="total-amount-text">${totalPrice}</span>
+          </div>
         </div>
-        <div className="breakdown-item">
-          <span>Session Type</span>
-          <span className="value">
-            {sessionModifier > 0 ? `+ $${sessionModifier}` : "+ $0"}
+
+        <div className="summary-breakdown-group">
+          <div className="breakdown-line">
+            <span className="breakdown-label">Base Price</span>
+            <div className="breakdown-value-wrapper">
+              <span className="breakdown-value">+ ${basePrice}</span>
+            </div>
+          </div>
+
+          <div className="breakdown-line">
+            <span className="breakdown-label">Session Type</span>
+            <div className="breakdown-value-wrapper">
+              <span className="breakdown-value">
+                {sessionModifier > 0 ? `+ $${sessionModifier}` : "+ $0"}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <button
+          className={`enroll-submit-btn ${isDisabled ? "disabled" : ""}`}
+          onClick={onEnroll}
+          disabled={isDisabled || isLoading}
+        >
+          <span className="btn-text">
+            {isLoading ? "Processing..." : "Enroll Now"}
           </span>
-        </div>
+        </button>
       </div>
-
-      <button
-        className={`enroll-submit-btn ${isDisabled ? "disabled" : ""}`}
-        onClick={onEnroll}
-        disabled={isDisabled || isLoading}
-      >
-        {isLoading ? "Processing..." : "Enroll Now"}
-      </button>
     </div>
   );
 };

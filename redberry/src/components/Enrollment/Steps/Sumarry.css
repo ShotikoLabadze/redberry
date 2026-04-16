@@ -1,81 +1,137 @@
 .enrollment-summary-card {
-  margin-top: 30px;
-  padding: 24px;
-  background-color: #ffffff;
-  border-radius: 16px;
-
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  border: 1px solid #f0f0f0;
-}
-
-.price-main-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
-
-.price-main-row .label {
-  font-size: 18px;
-  font-weight: 500;
-  color: #999999;
-}
-
-.total-amount {
-  font-size: 36px;
-  font-weight: 800;
-  color: #111827;
-}
-
-.price-breakdown {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 32px;
-  padding-top: 16px;
+  align-items: flex-start;
+  padding: 40px;
+  gap: 24px;
+  width: 530px;
+  height: 306px;
+  background: #ffffff;
+  border: 1px solid #f5f5f5;
+  border-radius: 12px;
 }
 
-.breakdown-item {
+.summary-inner-frame {
   display: flex;
-  justify-content: space-between;
-  font-size: 15px;
-  color: #6b7280;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 32px;
+  width: 450px;
+  height: 226px;
 }
 
-.breakdown-item .value {
+.summary-total-price-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  width: 450px;
+  height: 39px;
+}
+
+.total-label {
+  flex: 1;
+  font-family: "Inter", sans-serif;
   font-weight: 600;
-  color: #374151;
+  font-size: 20px;
+  line-height: 24px;
+  color: #8a8a8a;
+}
+
+.total-amount-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.total-amount-text {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 39px;
+  color: #292929;
+  text-align: right;
+}
+
+.summary-breakdown-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px 4px 0px 0px;
+  gap: 12px;
+  width: 450px;
+  height: 60px;
+}
+
+.breakdown-line {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  width: 446px;
+  height: 24px;
+}
+
+.breakdown-label {
+  flex: 1;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #8a8a8a;
+}
+
+.breakdown-value-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.breakdown-value {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #292929;
+  text-align: right;
 }
 
 .enroll-submit-btn {
-  width: 100%;
-  padding: 18px;
-  background-color: #4f46e5;
-  color: white;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  width: 450px;
+  height: 63px;
+  background: #4f46e5;
   border: none;
   border-radius: 12px;
-  font-size: 16px;
-  font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
 
-.enroll-submit-btn:hover:not(:disabled) {
-  background-color: #281ed2;
-  transform: translateY(-1px);
-}
-
-.enroll-submit-btn:active:not(:disabled) {
-  transform: translateY(0);
+.enroll-submit-btn .btn-text {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: #ffffff;
 }
 
 .enroll-submit-btn.disabled {
-  background-color: #eeedfc;
-  color: #b7b3f4;
+  background: #eeedfc;
   cursor: not-allowed;
 }
 
-.enroll-submit-btn:disabled:not(.disabled) {
-  opacity: 0.8;
-  cursor: wait;
+.enroll-submit-btn.disabled .btn-text {
+  color: #b7b3f4;
+}
+
+.enroll-submit-btn:hover:not(:disabled) {
+  background-color: #4338ca;
 }
