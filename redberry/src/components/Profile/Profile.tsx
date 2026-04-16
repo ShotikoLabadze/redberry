@@ -24,6 +24,7 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isFormValid, setIsFormValid] = useState(false);
+  const [fileError, setFileError] = useState("");
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -31,20 +32,24 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
     const cleanPhone = mobileNumber.replace(/\s/g, "");
     const newErrors: { [key: string]: string } = {};
 
-    if (!fullName.trim()) newErrors.fullName = "Name is required";
-    else if (fullName.length < 3) newErrors.fullName = "Too short";
+    if (fullName && fullName.length < 3)
+      newErrors.fullName = "Too short (min 3)";
 
-    if (!cleanPhone) newErrors.mobileNumber = "Required";
-    else if (!cleanPhone.startsWith("5"))
-      newErrors.mobileNumber = "Must start with 5";
-    else if (cleanPhone.length !== 9)
-      newErrors.mobileNumber = "Must be 9 digits";
+    if (cleanPhone) {
+      if (!cleanPhone.startsWith("5"))
+        newErrors.mobileNumber = "Must start with 5";
+      else if (cleanPhone.length !== 9)
+        newErrors.mobileNumber = "Must be 9 digits";
+    }
 
-    if (!age) newErrors.age = "Required";
-    else if (Number(age) < 16) newErrors.age = "16+ only";
+    if (age && Number(age) < 16) newErrors.age = "16+ only";
 
     setErrors(newErrors);
-    setIsFormValid(Object.keys(newErrors).length === 0);
+
+    const requiredFieldsPresent = fullName && mobileNumber && age;
+    setIsFormValid(
+      Object.keys(newErrors).length === 0 && !!requiredFieldsPresent,
+    );
   }, [fullName, mobileNumber, age]);
 
   const formatFileSize = (bytes: number) => {
@@ -58,10 +63,11 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
   const processFile = (file: File) => {
     const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
     if (!allowedTypes.includes(file.type)) {
-      alert("Please upload a valid image (JPG, PNG, or WebP).");
+      setFileError("Please upload a valid image (JPG, PNG, or WebP).");
       return;
     }
 
+    setFileError("");
     setAvatar(file);
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -138,17 +144,9 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
       </div>
 
       <div className="step-content">
-        <div className="input">
+        <div className={`input ${errors.fullName ? "error-state" : ""}`}>
           <label>Full Name</label>
-          <div
-            className={`input-wrapper ${
-              errors.fullName
-                ? "error-border"
-                : fullName.length >= 3
-                  ? "success-border"
-                  : ""
-            }`}
-          >
+          <div className="input-wrapper">
             <input
               type="text"
               placeholder="Username"
@@ -157,6 +155,9 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
             />
             <img src={PencilIcon} alt="edit" className="icon" />
           </div>
+          {errors.fullName && (
+            <p className="error-message">{errors.fullName}</p>
+          )}
         </div>
 
         <div className="input">
@@ -173,17 +174,11 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
         </div>
 
         <div className="form-row">
-          <div className="input flex-3">
+          <div
+            className={`input flex-3 ${errors.mobileNumber ? "error-state" : ""}`}
+          >
             <label>Mobile Number</label>
-            <div
-              className={`input-wrapper ${
-                errors.mobileNumber
-                  ? "error-border"
-                  : mobileNumber.length >= 9
-                    ? "success-border"
-                    : ""
-              }`}
-            >
+            <div className="input-wrapper">
               <input
                 type="text"
                 placeholder="+995 599209820"
@@ -192,14 +187,14 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
               />
               <img src={MarkIcon} alt="verified" className="icon" />
             </div>
+            {errors.mobileNumber && (
+              <p className="error-message">{errors.mobileNumber}</p>
+            )}
           </div>
-          <div className="input flex-1">
+
+          <div className={`input flex-1 ${errors.age ? "error-state" : ""}`}>
             <label>Age</label>
-            <div
-              className={`input-wrapper ${
-                errors.age ? "error-border" : age >= 16 ? "success-border" : ""
-              }`}
-            >
+            <div className="input-wrapper">
               <select
                 className="age-select"
                 value={age}
@@ -213,16 +208,18 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
                 ))}
               </select>
             </div>
+            {errors.age && <p className="error-message">{errors.age}</p>}
           </div>
         </div>
 
-        <div className="upload">
+        <div className={`upload ${fileError ? "error-state" : ""}`}>
           <label>Upload Avatar</label>
           <div
-            className={`drop ${avatar ? "uploaded" : ""}`}
+            className={`drop ${avatar ? "uploaded" : ""} ${fileError ? "error-border" : ""}`}
             onDragOver={handleDragOver}
             onDrop={handleDrop}
             onClick={() => !avatar && fileInputRef.current?.click()}
+            style={fileError ? { borderColor: "#f4161a" } : {}}
           >
             {avatar && preview ? (
               <div className="uploaded-content">
@@ -265,6 +262,7 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
               onChange={handleFileChange}
             />
           </div>
+          {fileError && <p className="error-message">{fileError}</p>}
         </div>
 
         <button
