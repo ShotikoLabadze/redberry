@@ -40,7 +40,6 @@ function App() {
       const res = await getMe();
       setUser(res.data || res);
       setIsLoggedIn(true);
-
       fetchEnrollments();
     } catch (err: any) {
       console.error("Auth failed", err);
@@ -86,6 +85,7 @@ function App() {
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
         enrollments={enrollments}
+        onUpdate={fetchEnrollments}
       />
 
       <main>
@@ -101,7 +101,6 @@ function App() {
             }
           />
           <Route path="/catalog" element={<Catalog />} />
-
           <Route
             path="/course/:id"
             element={
@@ -110,6 +109,7 @@ function App() {
                 onProfileClick={() => openModal("profile")}
                 isLoggedIn={isLoggedIn}
                 onLoginClick={() => openModal("login")}
+                onEnrollSuccess={fetchEnrollments}
               />
             }
           />
@@ -123,14 +123,12 @@ function App() {
             onSuccess={handleAuthSuccess}
           />
         )}
-
         {modalType === "register" && (
           <Registration
             onSwitchToLogin={() => openModal("login")}
             onSuccess={handleAuthSuccess}
           />
         )}
-
         {modalType === "profile" && (
           <Profile
             user={user}

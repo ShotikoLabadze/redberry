@@ -42,6 +42,8 @@ const EnrolledStatus = ({ enrollment, onUpdate }: EnrolledStatusProps) => {
       setShowCompletedModal(true);
       setShowRating(true);
       setIsDismissed(false);
+
+      onUpdate();
     } catch (err: any) {
       console.error("Completion failed", err);
     } finally {
@@ -66,6 +68,7 @@ const EnrolledStatus = ({ enrollment, onUpdate }: EnrolledStatusProps) => {
       setShowRating(false);
       setIsDismissed(false);
       setRating(0);
+
       onUpdate();
     } catch (err: any) {
       console.error("Retake failed", err);
