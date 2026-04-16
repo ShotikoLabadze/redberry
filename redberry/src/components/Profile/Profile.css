@@ -93,3 +93,14 @@ select.age-select {
 select.age-select::-ms-expand {
   display: none;
 }
+
+.error-state .age-select,
+.error-state .input-wrapper {
+  border-color: #f4161a !important;
+}
+
+.error-message {
+  color: #f4161a;
+  font-size: 12px;
+  margin-top: 4px;
+}

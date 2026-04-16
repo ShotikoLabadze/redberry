@@ -26,6 +26,8 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [fileError, setFileError] = useState("");
 
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -94,7 +96,9 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
   };
 
   const handleUpdate = async () => {
+    setIsSubmitted(true);
     if (!isFormValid) return;
+
     setIsLoading(true);
     try {
       const formData = new FormData();
@@ -144,7 +148,9 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
       </div>
 
       <div className="step-content">
-        <div className={`input ${errors.fullName ? "error-state" : ""}`}>
+        <div
+          className={`input ${errors.fullName || (isSubmitted && !fullName) ? "error-state" : ""}`}
+        >
           <label>Full Name</label>
           <div className="input-wrapper">
             <input
@@ -155,8 +161,8 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
             />
             <img src={PencilIcon} alt="edit" className="icon" />
           </div>
-          {errors.fullName && (
-            <p className="error-message">{errors.fullName}</p>
+          {(errors.fullName || (isSubmitted && !fullName)) && (
+            <p className="error-message">{errors.fullName || "Required"}</p>
           )}
         </div>
 
@@ -175,7 +181,7 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
 
         <div className="form-row">
           <div
-            className={`input flex-3 ${errors.mobileNumber ? "error-state" : ""}`}
+            className={`input flex-3 ${errors.mobileNumber || (isSubmitted && !mobileNumber) ? "error-state" : ""}`}
           >
             <label>Mobile Number</label>
             <div className="input-wrapper">
@@ -187,12 +193,16 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
               />
               <img src={MarkIcon} alt="verified" className="icon" />
             </div>
-            {errors.mobileNumber && (
-              <p className="error-message">{errors.mobileNumber}</p>
+            {(errors.mobileNumber || (isSubmitted && !mobileNumber)) && (
+              <p className="error-message">
+                {errors.mobileNumber || "Required"}
+              </p>
             )}
           </div>
 
-          <div className={`input flex-1 ${errors.age ? "error-state" : ""}`}>
+          <div
+            className={`input flex-1 ${errors.age || (isSubmitted && !age) ? "error-state" : ""}`}
+          >
             <label>Age</label>
             <div className="input-wrapper">
               <select
@@ -208,7 +218,9 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
                 ))}
               </select>
             </div>
-            {errors.age && <p className="error-message">{errors.age}</p>}
+            {(errors.age || (isSubmitted && !age)) && (
+              <p className="error-message">{errors.age || "Req."}</p>
+            )}
           </div>
         </div>
 
@@ -268,7 +280,7 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
         <button
           className="submit-btn"
           onClick={handleUpdate}
-          disabled={isLoading || !isFormValid}
+          disabled={isLoading}
         >
           {isLoading ? "Updating..." : "Update Profile"}
         </button>
