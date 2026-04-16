@@ -48,7 +48,11 @@ const EnrolledSidebar: React.FC<Props> = ({
         <div className="es-content">
           {enrollments.map((item) => (
             <div key={item.id} className="es-card">
-              <div className="es-card-main">
+              <div
+                className="es-card-main"
+                onClick={() => handleView(item.course?.id)}
+                style={{ cursor: "pointer" }}
+              >
                 <div
                   className="es-card-img"
                   style={{ backgroundImage: `url(${item.course?.image})` }}
