@@ -73,7 +73,7 @@ const EnrolledSidebar: React.FC<Props> = ({ isOpen, onClose, enrollments }) => {
                     </span>
                     <div className="es-rating">
                       <img src={StarIcon} alt="star" />
-                      <span>{item.course?.rating || "4.9"}</span>
+                      <span>{item.course?.avgRating || "4.9"}</span>
                     </div>
                   </div>
                   <h3 className="es-course-title">{item.course?.title}</h3>
