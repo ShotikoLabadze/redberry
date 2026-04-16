@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./Dropdown.css";
+
+import downArrow from "../../../../assets/down.png";
+import upArrow from "../../../../assets/up.png";
 
 interface SortDropdownProps {
   currentSort: string;
@@ -16,6 +19,21 @@ const sortOptions = [
 
 const Dropdown = ({ currentSort, onSortChange }: SortDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleSelect = (value: string) => {
     onSortChange(value);
@@ -27,12 +45,12 @@ const Dropdown = ({ currentSort, onSortChange }: SortDropdownProps) => {
   )?.label;
 
   return (
-    <div className="sort-container">
+    <div className="sort-container" ref={dropdownRef}>
       <div className="sort-header" onClick={() => setIsOpen(!isOpen)}>
         <span className="sort-label">Sort By:</span>
         <span className="sort-current">{currentLabel}</span>
         <img
-          src={isOpen ? "/up.png" : "/down.png"}
+          src={isOpen ? upArrow : downArrow}
           alt="arrow"
           className="sort-arrow"
         />

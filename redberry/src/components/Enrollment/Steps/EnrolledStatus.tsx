@@ -8,6 +8,14 @@ import { useCourse } from "../../../context/CourseContext";
 import CourseCompletedModal from "./CourseCompletedModal";
 import "./EnrolledStatus.css";
 
+import ActiveStar from "../../../assets/ActiveStar.png";
+import CalendarIcon from "../../../assets/calendat-icon.png";
+import ClockIcon from "../../../assets/clock-icon.png";
+import CloseIcon from "../../../assets/CloseVector.png";
+import InactiveStar from "../../../assets/InactiveStar.png";
+import LocationIcon from "../../../assets/location-icon.png";
+import OnlineIcon from "../../../assets/online-icon.png";
+
 interface EnrolledStatusProps {
   enrollment: any;
   onUpdate: () => void;
@@ -86,17 +94,17 @@ const EnrolledStatus = ({ enrollment, onUpdate }: EnrolledStatusProps) => {
 
         <div className="details-stack-figma">
           <div className="detail-row-figma">
-            <img src="/calendat-icon.png" alt="calendar" className="icon-24" />
+            <img src={CalendarIcon} alt="calendar" className="icon-24" />
             <span className="detail-text">
               {schedule?.weeklySchedule?.label}
             </span>
           </div>
           <div className="detail-row-figma">
-            <img src="/clock-icon.png" alt="clock" className="icon-24" />
+            <img src={ClockIcon} alt="clock" className="icon-24" />
             <span className="detail-text">{schedule?.timeSlot?.label}</span>
           </div>
           <div className="detail-row-figma">
-            <img src="/online-icon.png" alt="monitor" className="icon-24" />
+            <img src={OnlineIcon} alt="monitor" className="icon-24" />
             <span className="detail-text">
               {schedule?.sessionType?.name
                 ? schedule.sessionType.name.charAt(0).toUpperCase() +
@@ -105,7 +113,7 @@ const EnrolledStatus = ({ enrollment, onUpdate }: EnrolledStatusProps) => {
             </span>
           </div>
           <div className="detail-row-figma">
-            <img src="/location-icon.png" alt="location" className="icon-24" />
+            <img src={LocationIcon} alt="location" className="icon-24" />
             <span className="detail-text">
               {schedule?.location || "Tbilisi, Chavchavadze St.30"}
             </span>
@@ -146,7 +154,7 @@ const EnrolledStatus = ({ enrollment, onUpdate }: EnrolledStatusProps) => {
             className="close-rating-btn"
             onClick={() => setIsDismissed(true)}
           >
-            <img src="/CloseVector.png" alt="close" />
+            <img src={CloseIcon} alt="close" />
           </button>
           <p className="rate-title">Rate your experience</p>
           <div className="star-row-figma">
@@ -155,7 +163,7 @@ const EnrolledStatus = ({ enrollment, onUpdate }: EnrolledStatusProps) => {
               return (
                 <img
                   key={starValue}
-                  src={isFilled ? "/ActiveStar.png" : "/InactiveStar.png"}
+                  src={isFilled ? ActiveStar : InactiveStar}
                   alt={`star-${starValue}`}
                   className="star-asset-figma"
                   onClick={() => handleRate(starValue)}

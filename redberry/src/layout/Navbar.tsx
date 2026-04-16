@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 
+import BookIcon from "../assets/book.png";
+import DefaultAvatar from "../assets/defAvatar.png";
+import Logo from "../assets/Logo.png";
+import StarsIcon from "../assets/Vector.png";
+
 interface NavbarProps {
   isLoggedIn: boolean;
   user: any;
@@ -23,20 +28,20 @@ const Navbar = ({
       <div className="nv-container">
         <div className="nv-left">
           <Link to="/" className="nv-logo-link">
-            <img src="/Logo.png" alt="Logo" />
+            <img src={Logo} alt="Logo" />
           </Link>
         </div>
 
         <div className="nv-right">
           <div className="nv-links-group">
             <Link to="/catalog" className="nv-link nv-browse">
-              <img src="/Vector.png" alt="Stars" />
+              <img src={StarsIcon} alt="Stars" />
               <span>Browse Courses</span>
             </Link>
 
             {isLoggedIn && (
               <div className="nv-link nv-enrolled" onClick={onEnrolledClick}>
-                <img src="/book.png" alt="Books" />
+                <img src={BookIcon} alt="Books" />
                 <span>Enrolled Courses</span>
               </div>
             )}
@@ -55,7 +60,7 @@ const Navbar = ({
             <div className="nv-profile" onClick={onProfileClick}>
               <div className="nv-avatar-container">
                 <img
-                  src={user?.avatar || "/defAvatar.png"}
+                  src={user?.avatar || DefaultAvatar}
                   alt="Profile"
                   className="nv-avatar-img"
                 />

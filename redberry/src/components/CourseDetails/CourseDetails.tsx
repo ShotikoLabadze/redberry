@@ -6,6 +6,10 @@ import Enrollment from "../Enrollment/Enrollment";
 import EnrolledStatus from "../Enrollment/Steps/EnrolledStatus";
 import "./CourseDetails.css";
 
+import CalendarIcon from "../../assets/calendat-icon.png";
+import ClockIcon from "../../assets/clock-icon.png";
+import StarIcon from "../../assets/Star.png";
+
 const CourseDetails: React.FC<any> = ({
   isLoggedIn,
   user,
@@ -26,6 +30,7 @@ const CourseDetails: React.FC<any> = ({
         setData(courseData);
         setCourseData(courseData.id, courseData.title);
       } catch (err) {
+        console.error("Fetch failed", err);
       } finally {
         setLoading(false);
       }
@@ -35,6 +40,13 @@ const CourseDetails: React.FC<any> = ({
   useEffect(() => {
     fetchCourse();
   }, [id]);
+
+  const getCategoryIcon = (categoryName: string) => {
+    return new URL(
+      `../../assets/${categoryName.toLowerCase()}.png`,
+      import.meta.url,
+    ).href;
+  };
 
   if (loading) return <div className="loading">Loading...</div>;
   if (!data) return <div className="error">Course not found</div>;
@@ -71,23 +83,23 @@ const CourseDetails: React.FC<any> = ({
             <div className="meta-info-bar">
               <div className="meta-left-group">
                 <div className="meta-item">
-                  <img src="/calendat-icon.png" alt="Duration" />
+                  <img src={CalendarIcon} alt="Duration" />
                   <span>{data.durationWeeks} Weeks</span>
                 </div>
                 <div className="meta-item">
-                  <img src="/clock-icon.png" alt="Hours" />
+                  <img src={ClockIcon} alt="Hours" />
                   <span>{data.hours} Hours</span>
                 </div>
               </div>
 
               <div className="meta-right-group">
                 <div className="meta-item rating-item">
-                  <img src="/Star.png" alt="Rating" />
+                  <img src={StarIcon} alt="Rating" />
                   <span>{avgRating}</span>
                 </div>
                 <div className="category-chip">
                   <img
-                    src={`/${data.category.name.toLowerCase()}.png`}
+                    src={getCategoryIcon(data.category.name)}
                     alt={data.category.name}
                     className="category-icon-small"
                   />

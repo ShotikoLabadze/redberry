@@ -1,5 +1,8 @@
 import "./SessionStep.css";
 
+import IconSet from "../../../assets/Icon_Set.png";
+import IconTitle from "../../../assets/Icon_Title.png";
+
 interface SessionStepProps {
   selectedTime: any;
   selectedSession: any;
@@ -17,6 +20,11 @@ const SessionStep = ({
   const isActive = !!selectedTime;
   const selectedId = selectedSession?.id;
 
+  const getSessionIcon = (sessionName: string) => {
+    return new URL(`../../../assets/${sessionName}-icon.png`, import.meta.url)
+      .href;
+  };
+
   return (
     <div
       className={`session-step-container ${selectedId ? "filled" : isActive ? "active" : "disabled"}`}
@@ -27,7 +35,7 @@ const SessionStep = ({
           <h4 className="step-title-text">Session Type</h4>
         </div>
         <img
-          src={isActive ? "/Icon_Set.png" : "/Icon_Title.png"}
+          src={isActive ? IconSet : IconTitle}
           alt="toggle"
           className="step-toggle-icon"
         />
@@ -50,7 +58,7 @@ const SessionStep = ({
                 >
                   <div className="card-main-content">
                     <img
-                      src={`/${session.name}-icon.png`}
+                      src={getSessionIcon(session.name)}
                       alt={session.name}
                       className="session-icon-main"
                     />

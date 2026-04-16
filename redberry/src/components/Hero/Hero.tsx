@@ -49,21 +49,17 @@ const Hero: React.FC = () => {
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [currentIndex]);
+  }, [currentIndex, slides.length]);
 
   const nextSlide = () => {
     if (currentIndex < slides.length - 1) {
       setCurrentIndex(currentIndex + 1);
-    } else {
-      setCurrentIndex(0);
     }
   };
 
   const prevSlide = () => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
-    } else {
-      setCurrentIndex(slides.length - 1);
     }
   };
 
@@ -107,9 +103,14 @@ const Hero: React.FC = () => {
             <img
               src={currentIndex === 0 ? ArrowLeftDisabled : ArrowLeft}
               className="nav-arrow"
-              onClick={prevSlide}
+              onClick={currentIndex === 0 ? undefined : prevSlide}
               alt="prev"
+              style={{
+                cursor: currentIndex === 0 ? "default" : "pointer",
+                pointerEvents: currentIndex === 0 ? "none" : "auto",
+              }}
             />
+
             <img
               src={
                 currentIndex === slides.length - 1
@@ -117,8 +118,16 @@ const Hero: React.FC = () => {
                   : ArrowRight
               }
               className="nav-arrow"
-              onClick={nextSlide}
+              onClick={
+                currentIndex === slides.length - 1 ? undefined : nextSlide
+              }
               alt="next"
+              style={{
+                cursor:
+                  currentIndex === slides.length - 1 ? "default" : "pointer",
+                pointerEvents:
+                  currentIndex === slides.length - 1 ? "none" : "auto",
+              }}
             />
           </div>
         </div>

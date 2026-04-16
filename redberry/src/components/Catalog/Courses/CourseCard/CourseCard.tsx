@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import "./CourseCard.css";
 
+import Star from "../../../../assets/Star.png";
+
 interface CourseCardProps {
   course: any;
 }
@@ -10,6 +12,10 @@ const CourseCard = ({ course }: CourseCardProps) => {
 
   const handleDetailsClick = () => {
     navigate(`/course/${course.id}`);
+  };
+
+  const getCategoryIcon = (iconName: string) => {
+    return new URL(`../../../../assets/${iconName}.png`, import.meta.url).href;
   };
 
   return (
@@ -28,7 +34,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
               <span className="cc-weeks">{course.durationWeeks} Weeks</span>
             </div>
             <div className="cc-rating">
-              <img src="/Star.png" alt="star" className="cc-star-icon" />
+              <img src={Star} alt="star" className="cc-star-icon" />
               <span className="cc-rating-val">{course.avgRating}</span>
             </div>
           </div>
@@ -38,7 +44,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
           <div className="cc-chip-wrapper">
             <div className="cc-chip">
               <img
-                src={`/${course.category.icon}.png`}
+                src={getCategoryIcon(course.category.icon)}
                 alt="icon"
                 className="cc-chip-icon"
               />

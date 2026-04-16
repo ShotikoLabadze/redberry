@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { getCourses, getMyEnrollments } from "../../api/course.service";
 import "./ContinueLearning.css";
 
+import Lock from "../../assets/Lock.png";
+import Star from "../../assets/Star.png";
+
 interface Props {
   isLoggedIn: boolean;
   onLoginClick: () => void;
@@ -99,7 +102,8 @@ const ContinueLearning: React.FC<Props> = ({
                       Lecturer {item.course?.instructor?.name}
                     </span>
                     <div className="rating-pill">
-                      <img src="/Star.png" alt="starPhoto" />
+                      {/* შეცვლილია აქ */}
+                      <img src={Star} alt="star" />
                       <span className="rating-val">
                         {item.course?.rating || "4.9"}
                       </span>
@@ -143,7 +147,8 @@ const ContinueLearning: React.FC<Props> = ({
           <div className="login-overlay">
             <div className="login-overlay-card">
               <div className="lock-icon-container">
-                <img src="/Lock.png" alt="lock" />
+                {/* შეცვლილია აქ */}
+                <img src={Lock} alt="lock" />
               </div>
               <p>Sign in to track your learning progress</p>
               <button className="overlay-login-button" onClick={onLoginClick}>

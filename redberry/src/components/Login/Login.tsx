@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { login } from "../../api/auth.service";
 
+import EyeClosed from "../../assets/closedEye.png";
+import EyeOpen from "../../assets/eye.png";
+
 interface LoginProps {
   onSwitchToSignUp: () => void;
   onSuccess: () => void;
@@ -32,14 +35,20 @@ const Login = ({ onSwitchToSignUp, onSuccess }: LoginProps) => {
 
       onSuccess();
     } catch (err: any) {
-      setError(err.message);
+      setError(err.response?.data?.message || err.message || "Login failed");
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      handleLogin();
+    }
+  };
+
   return (
-    <div className="container">
+    <div className="container" onKeyDown={handleKeyDown}>
       <div className="header">
         <h1>Welcome Back</h1>
         <p>Log in to continue your learning</p>
@@ -66,8 +75,8 @@ const Login = ({ onSwitchToSignUp, onSuccess }: LoginProps) => {
               onChange={(e) => setPassword(e.target.value)}
             />
             <img
-              src={isVisible ? "/eye.png" : "/closedEye.png"}
-              alt="toggle"
+              src={isVisible ? EyeOpen : EyeClosed}
+              alt="toggle visibility"
               className="icon"
               style={{ cursor: "pointer" }}
               onClick={() => setIsVisible(!isVisible)}
@@ -98,6 +107,7 @@ const Login = ({ onSwitchToSignUp, onSuccess }: LoginProps) => {
 
       {error && (
         <p
+          className="error-message"
           style={{
             color: "#FF4D4D",
             fontSize: "12px",

@@ -1,6 +1,11 @@
 import React from "react";
 import "./Pagination.css";
 
+import leftActive from "../../../../assets/left-active.png";
+import leftDisabled from "../../../../assets/left-disabled.png";
+import rightActive from "../../../../assets/right-active.png";
+import rightDisabled from "../../../../assets/right-disabled.png";
+
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
@@ -24,10 +29,7 @@ const Pagination: React.FC<PaginationProps> = ({
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
       >
-        <img
-          src={currentPage === 1 ? "/left-disabled.png" : "/left-active.png"}
-          alt="Prev"
-        />
+        <img src={currentPage === 1 ? leftDisabled : leftActive} alt="Prev" />
       </button>
 
       {pages.map((page) => (
@@ -46,11 +48,7 @@ const Pagination: React.FC<PaginationProps> = ({
         onClick={() => onPageChange(currentPage + 1)}
       >
         <img
-          src={
-            currentPage === totalPages
-              ? "/right-disabled.png"
-              : "/right-active.png"
-          }
+          src={currentPage === totalPages ? rightDisabled : rightActive}
           alt="Next"
         />
       </button>

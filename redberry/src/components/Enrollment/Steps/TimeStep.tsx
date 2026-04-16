@@ -1,5 +1,8 @@
 import "./TimeStep.css";
 
+import IconSet from "../../../assets/Icon_Set.png";
+import IconTitle from "../../../assets/Icon_Title.png";
+
 interface TimeStepProps {
   selectedSchedule: any;
   selectedTime: any;
@@ -18,6 +21,11 @@ const TimeStep = ({
   const isActive = !!selectedSchedule;
   const isFilled = !!selectedTime;
 
+  const getTimeIcon = (label: string) => {
+    const iconName = label.split(" ")[0];
+    return new URL(`../../../assets/${iconName}.png`, import.meta.url).href;
+  };
+
   return (
     <div
       className={`time-step-container ${
@@ -30,7 +38,7 @@ const TimeStep = ({
           <h4 className="step-title-text">Time Slot</h4>
         </div>
         <img
-          src={isActive ? "/Icon_Set.png" : "/Icon_Title.png"}
+          src={isActive ? IconSet : IconTitle}
           alt="toggle"
           className="step-toggle-icon"
         />
@@ -44,9 +52,7 @@ const TimeStep = ({
             <div className="time-options-grid">
               {availableTimes.map((slot) => {
                 const isSelected = selectedTime?.id === slot.id;
-
                 const iconName = slot.label.split(" ")[0];
-                const iconPath = `/${iconName}.png`;
 
                 return (
                   <button
@@ -57,7 +63,7 @@ const TimeStep = ({
                   >
                     <div className="time-card-internal">
                       <img
-                        src={iconPath}
+                        src={getTimeIcon(slot.label)}
                         alt={iconName}
                         className="time-card-icon"
                       />

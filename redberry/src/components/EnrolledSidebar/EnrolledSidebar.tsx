@@ -2,6 +2,12 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./EnrolledSidebar.css";
 
+import StarIcon from "../../assets/Star.png";
+import CalendarIcon from "../../assets/calendat-icon.png";
+import ClockIcon from "../../assets/clock-icon.png";
+import LocationIcon from "../../assets/location-icon.png";
+import OnlineIcon from "../../assets/online-icon.png";
+
 interface Props {
   isOpen: boolean;
   onClose: () => void;
@@ -51,7 +57,7 @@ const EnrolledSidebar: React.FC<Props> = ({ isOpen, onClose, enrollments }) => {
                       Instructor: {item.course?.instructor?.name}
                     </span>
                     <div className="es-rating">
-                      <img src="/Star.png" alt="star" />
+                      <img src={StarIcon} alt="star" />
                       <span>{item.course?.rating || "4.9"}</span>
                     </div>
                   </div>
@@ -59,21 +65,21 @@ const EnrolledSidebar: React.FC<Props> = ({ isOpen, onClose, enrollments }) => {
 
                   <div className="es-schedule">
                     <div className="es-row">
-                      <img src="/calendat-icon.png" alt="cal" />
+                      <img src={CalendarIcon} alt="cal" />
                       <span>
                         {item.schedule?.weeklySchedule?.label || "TBA"}
                       </span>
                     </div>
                     <div className="es-row">
-                      <img src="/clock-icon.png" alt="clock" />
+                      <img src={ClockIcon} alt="clock" />
                       <span>{item.schedule?.timeSlot?.label || "TBA"}</span>
                     </div>
                     <div className="es-row">
-                      <img src="/online-icon.png" alt="type" />
+                      <img src={OnlineIcon} alt="type" />
                       <span>{item.schedule?.sessionType?.name || "TBA"}</span>
                     </div>
                     <div className="es-row">
-                      <img src="/location-icon.png" alt="loc" />
+                      <img src={LocationIcon} alt="loc" />
                       <span>
                         {item.schedule?.location || "Tbilisi, Chavchavadze"}
                       </span>

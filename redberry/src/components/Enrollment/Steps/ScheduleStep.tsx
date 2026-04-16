@@ -2,6 +2,8 @@ import React from "react";
 import shortDay from "../../../utils/shortDay";
 import "./ScheduleStep.css";
 
+import IconSet from "../../../assets/Icon_Set.png";
+
 interface ScheduleStepProps {
   schedules: any[];
   selectedSchedule: any;
@@ -24,7 +26,8 @@ const ScheduleStep: React.FC<ScheduleStepProps> = ({
           <div className="step-number-circle">1</div>
           <h4 className="step-title-text">Weekly Schedule</h4>
         </div>
-        <img src="/Icon_Set.png" alt="toggle" className="step-toggle-icon" />
+
+        <img src={IconSet} alt="toggle" className="step-toggle-icon" />
       </div>
 
       <div className="week-options-grid">

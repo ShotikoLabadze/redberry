@@ -3,6 +3,11 @@ import { useRef, useState } from "react";
 import { register } from "../../api/auth.service";
 import "./Registration.css";
 
+import BackIcon from "../../assets/BackVector.png";
+import EyeClosed from "../../assets/closedEye.png";
+import EyeOpen from "../../assets/eye.png";
+import UploadIcon from "../../assets/uploadIcon.png";
+
 interface RegistrationProps {
   onSwitchToLogin: () => void;
   onSuccess: () => void;
@@ -118,7 +123,7 @@ const Registration = ({ onSwitchToLogin, onSuccess }: RegistrationProps) => {
     <div className="container">
       {step > 1 && (
         <button className="back-arrow" onClick={() => setStep(step - 1)}>
-          <img src="/BackVector.png" alt="backarrow" />
+          <img src={BackIcon} alt="backarrow" />
         </button>
       )}
 
@@ -169,7 +174,7 @@ const Registration = ({ onSwitchToLogin, onSuccess }: RegistrationProps) => {
                 }}
               />
               <img
-                src={isVisible ? "/eye.png" : "/closedEye.png"}
+                src={isVisible ? EyeOpen : EyeClosed}
                 alt="toggle"
                 className="icon"
                 onClick={() => setIsVisible(!isVisible)}
@@ -190,7 +195,7 @@ const Registration = ({ onSwitchToLogin, onSuccess }: RegistrationProps) => {
                 }}
               />
               <img
-                src={isConfirmVisible ? "/eye.png" : "/closedEye.png"}
+                src={isConfirmVisible ? EyeOpen : EyeClosed}
                 alt="toggle"
                 className="icon"
                 onClick={() => setIsConfirmVisible(!isConfirmVisible)}
@@ -255,7 +260,7 @@ const Registration = ({ onSwitchToLogin, onSuccess }: RegistrationProps) => {
                 <div className="upload-placeholder">
                   <img
                     className="upload-icon"
-                    src="/uploadIcon.png"
+                    src={UploadIcon}
                     alt="uploadicon"
                   />
                   <p>
@@ -290,7 +295,7 @@ const Registration = ({ onSwitchToLogin, onSuccess }: RegistrationProps) => {
           <span>or</span>
         </div>
         <p>
-          Already have an account?
+          Already have an account?{" "}
           <span className="link" onClick={onSwitchToLogin}>
             Log In
           </span>

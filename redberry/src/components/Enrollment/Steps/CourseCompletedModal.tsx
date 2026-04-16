@@ -3,6 +3,10 @@ import { addCourseReview } from "../../../api/course.service";
 import { useCourse } from "../../../context/CourseContext";
 import "./CourseCompletedModal.css";
 
+import ActiveStar from "../../../assets/ActiveStar.png";
+import CompleteCourseIcon from "../../../assets/complete-course.png";
+import InactiveStar from "../../../assets/InactiveStar.png";
+
 interface Props {
   onClose: () => void;
 }
@@ -36,7 +40,7 @@ const CourseCompletedModal: React.FC<Props> = ({ onClose }) => {
       <div className="completed-modal-content">
         <div className="confetti-icon-wrapper">
           <img
-            src="/complete-course.png"
+            src={CompleteCourseIcon}
             alt="Congratulations"
             className="modal-main-icon"
           />
@@ -48,20 +52,19 @@ const CourseCompletedModal: React.FC<Props> = ({ onClose }) => {
         </div>
 
         <div className="rate-experience-section">
-          <div className="star-rating">
+          <div className={`star-rating ${isSubmitting ? "submitting" : ""}`}>
             {[1, 2, 3, 4, 5].map((star) => (
               <img
                 key={star}
                 src={
-                  (hoverRating || rating) >= star
-                    ? "/ActiveStar.png"
-                    : "/InactiveStar.png"
+                  (hoverRating || rating) >= star ? ActiveStar : InactiveStar
                 }
                 alt={`Star ${star}`}
                 className="star-img"
                 onClick={() => handleRate(star)}
                 onMouseEnter={() => !isSubmitting && setHoverRating(star)}
                 onMouseLeave={() => !isSubmitting && setHoverRating(0)}
+                style={{ cursor: isSubmitting ? "default" : "pointer" }}
               />
             ))}
           </div>

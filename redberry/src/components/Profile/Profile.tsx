@@ -3,6 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import { updateProfile } from "../../api/auth.service";
 import "./Profile.css";
 
+import DefaultAvatar from "../../assets/defAvatar.png";
+import MarkIcon from "../../assets/mark.png";
+import PencilIcon from "../../assets/pencil.png";
+import UploadIcon from "../../assets/uploadIcon.png";
+
 interface ProfileProps {
   user: any;
   onClose: () => void;
@@ -109,7 +114,7 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
         <div className="profile-info-section">
           <div className="avatar-preview-wrapper">
             <img
-              src={preview || user?.avatar || "/defAvatar.png"}
+              src={preview || user?.avatar || DefaultAvatar}
               alt="User"
               className="profile-main-img"
             />
@@ -150,7 +155,7 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
             />
-            <img src="/pencil.png" alt="edit" className="icon" />
+            <img src={PencilIcon} alt="edit" className="icon" />
           </div>
         </div>
 
@@ -163,7 +168,7 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
               disabled
               className="disabled-input"
             />
-            <img src="/mark.png" alt="verified" className="icon" />
+            <img src={MarkIcon} alt="verified" className="icon" />
           </div>
         </div>
 
@@ -185,7 +190,7 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
                 value={mobileNumber}
                 onChange={(e) => setMobileNumber(e.target.value)}
               />
-              <img src="/mark.png" alt="verified" className="icon" />
+              <img src={MarkIcon} alt="verified" className="icon" />
             </div>
           </div>
           <div className="input flex-1">
@@ -244,11 +249,7 @@ const Profile = ({ user, onClose, onUpdate }: ProfileProps) => {
               </div>
             ) : (
               <div className="upload-placeholder">
-                <img
-                  src="/uploadIcon.png"
-                  alt="upload"
-                  className="upload-icon"
-                />
+                <img src={UploadIcon} alt="upload" className="upload-icon" />
                 <p>
                   Drag and drop or{" "}
                   <span className="upload-link">Upload file</span>

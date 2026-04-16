@@ -12,6 +12,8 @@ import SessionStep from "./Steps/SessionStep";
 import Summary from "./Steps/Sumarry";
 import TimeStep from "./Steps/TimeStep";
 
+import EnrollConfirmedIcon from "../../assets/enroll-confirmed.png";
+
 interface EnrollmentProps {
   courseId: string | number;
   basePrice: string | number;
@@ -129,7 +131,7 @@ const Enrollment = ({ courseId, basePrice, courseTitle }: EnrollmentProps) => {
           });
         }
       } else {
-        const msg = err.response?.data?.message || "ჩაწერა ვერ მოხერხდა";
+        const msg = err.response?.data?.message || "Registration failed";
         alert(msg);
       }
     } finally {
@@ -145,7 +147,7 @@ const Enrollment = ({ courseId, basePrice, courseTitle }: EnrollmentProps) => {
         <div className="success-modal-overlay">
           <div className="success-modal-content">
             <img
-              src="/enroll-confirmed.png"
+              src={EnrollConfirmedIcon}
               alt="Success"
               className="success-modal-icon"
             />

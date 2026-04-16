@@ -2,6 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./FeaturedCard.css";
 
+import StarIcon from "../../../assets/Star.png";
+
 interface CourseProps {
   course: {
     id: number;
@@ -36,7 +38,7 @@ const FeaturedCard: React.FC<CourseProps> = ({ course }) => {
           </span>
           <div className="rating">
             <span>
-              <img src="/Star.png" alt="starimg" />
+              <img src={StarIcon} alt="star" />
             </span>{" "}
             <span>{course.avgRating}</span>
           </div>
