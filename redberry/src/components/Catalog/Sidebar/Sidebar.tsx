@@ -7,6 +7,8 @@ import {
 } from "../../../api/course.service";
 import "./Sidebar.css";
 
+import CloseIcon from "../../../assets/CloseVector.png";
+
 const Sidebar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [categories, setCategories] = useState<any[]>([]);
@@ -33,6 +35,10 @@ const Sidebar = () => {
     };
     fetchInitialData();
   }, []);
+
+  const getCategoryIcon = (iconName: string) => {
+    return new URL(`../../../assets/${iconName}.png`, import.meta.url).href;
+  };
 
   const toggleFilter = (key: string, id: number) => {
     const newParams = new URLSearchParams(searchParams);
@@ -66,7 +72,7 @@ const Sidebar = () => {
       <div className="sidebar-header">
         <h1 className="filters-title">Filters</h1>
         <button className="clear-all-btn" onClick={() => setSearchParams({})}>
-          Clear All <img src="/CloseVector.png" alt="clear" />
+          Clear All <img src={CloseIcon} alt="clear" />
         </button>
       </div>
 
@@ -81,7 +87,7 @@ const Sidebar = () => {
                 onClick={() => toggleFilter("categories[]", cat.id)}
               >
                 <div className="chip-icon">
-                  <img src={`/${cat.icon}.png`} alt="" />
+                  <img src={getCategoryIcon(cat.icon)} alt={cat.name} />
                 </div>
                 <span className="chip-text">{cat.name}</span>
               </button>
@@ -116,7 +122,7 @@ const Sidebar = () => {
                 <div className="chip-icon">
                   <img
                     src={inst.avatar}
-                    alt=""
+                    alt={inst.name}
                     className="instructor-avatar-img"
                   />
                 </div>
