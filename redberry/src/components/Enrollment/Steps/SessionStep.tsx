@@ -3,6 +3,10 @@ import "./SessionStep.css";
 import IconSet from "../../../assets/Icon_Set.png";
 import IconTitle from "../../../assets/Icon_Title.png";
 
+import hybridIcon from "../../../assets/hybrid-icon.png";
+import inPersonIcon from "../../../assets/in-person-icon.png";
+import onlineIcon from "../../../assets/online-icon.png";
+
 interface SessionStepProps {
   selectedTime: any;
   selectedSession: any;
@@ -21,13 +25,21 @@ const SessionStep = ({
   const selectedId = selectedSession?.id;
 
   const getSessionIcon = (sessionName: string) => {
-    return new URL(`../../../assets/${sessionName}-icon.png`, import.meta.url)
-      .href;
+    if (!sessionName) return onlineIcon;
+    const name = sessionName.toLowerCase();
+
+    if (name.includes("online")) return onlineIcon;
+    if (name.includes("hybrid")) return hybridIcon;
+    if (name.includes("person")) return inPersonIcon;
+
+    return onlineIcon;
   };
 
   return (
     <div
-      className={`session-step-container ${selectedId ? "filled" : isActive ? "active" : "disabled"}`}
+      className={`session-step-container ${
+        selectedId ? "filled" : isActive ? "active" : "disabled"
+      }`}
     >
       <div className="step-header-frame">
         <div className="header-info-group">
@@ -55,6 +67,7 @@ const SessionStep = ({
                   disabled={isFull}
                   className={`session-type-card ${isSelected ? "selected" : ""}`}
                   onClick={() => onSelect(session)}
+                  type="button"
                 >
                   <div className="card-main-content">
                     <img
@@ -66,11 +79,13 @@ const SessionStep = ({
                     <div className="session-text-details">
                       <div className="title-location-group">
                         <span className="session-name-title">
-                          {session.name === "online" ? "Online" : "In-Person"}
+                          {session.name.toLowerCase().includes("online")
+                            ? "Online"
+                            : "In-Person"}
                         </span>
                         <div className="location-row">
                           <span className="location-text">
-                            {session.name === "online"
+                            {session.name.toLowerCase().includes("online")
                               ? "Google Meet"
                               : session.location || "Chavchavadze St.34"}
                           </span>
@@ -78,7 +93,11 @@ const SessionStep = ({
                       </div>
 
                       <span
-                        className={`session-price-modifier ${session.name === "online" ? "is-included" : ""}`}
+                        className={`session-price-modifier ${
+                          Number(session.priceModifier) <= 0
+                            ? "is-included"
+                            : ""
+                        }`}
                       >
                         {Number(session.priceModifier) > 0
                           ? `+ $${Number(session.priceModifier).toFixed(0)}`
@@ -89,7 +108,7 @@ const SessionStep = ({
                 </button>
 
                 <div
-                  className={`session-status-tag ${isWarning ? "warning" : ""}`}
+                  className={`session-status-tag ${isWarning ? "warning" : ""} ${isFull ? "full" : ""}`}
                 >
                   {isWarning && <span className="warning-mini-icon">⚠️</span>}
                   <span className="status-text">

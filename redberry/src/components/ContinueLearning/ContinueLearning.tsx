@@ -146,7 +146,6 @@ const ContinueLearning: React.FC<Props> = ({
           <div className="login-overlay">
             <div className="login-overlay-card">
               <div className="lock-icon-container">
-                {/* შეცვლილია აქ */}
                 <img src={Lock} alt="lock" />
               </div>
               <p>Sign in to track your learning progress</p>

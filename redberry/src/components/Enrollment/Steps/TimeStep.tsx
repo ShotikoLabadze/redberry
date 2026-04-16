@@ -69,10 +69,6 @@ const TimeStep = ({
                       />
                       <div className="time-text-bundle">
                         <span className="time-label">{slot.label}</span>
-                        <span className="time-hours">
-                          {slot.startTime.slice(0, 5)} –{" "}
-                          {slot.endTime.slice(0, 5)}
-                        </span>
                       </div>
                     </div>
                   </button>

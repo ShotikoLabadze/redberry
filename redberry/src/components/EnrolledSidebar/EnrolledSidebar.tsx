@@ -6,6 +6,9 @@ import StarIcon from "../../assets/Star.png";
 import CalendarIcon from "../../assets/calendat-icon.png";
 import ClockIcon from "../../assets/clock-icon.png";
 import LocationIcon from "../../assets/location-icon.png";
+
+import HybridIcon from "../../assets/hybrid-icon.png";
+import InPersonIcon from "../../assets/in-person-icon.png";
 import OnlineIcon from "../../assets/online-icon.png";
 
 interface Props {
@@ -20,6 +23,18 @@ const EnrolledSidebar: React.FC<Props> = ({ isOpen, onClose, enrollments }) => {
   const handleView = (courseId: number) => {
     navigate(`/course/${courseId}`);
     onClose();
+  };
+
+  const getSessionIcon = (sessionName: string) => {
+    if (!sessionName) return OnlineIcon;
+    const name = sessionName.toLowerCase();
+
+    if (name.includes("online")) return OnlineIcon;
+    if (name.includes("hybrid")) return HybridIcon;
+    if (name.includes("person") || name.includes("in-person"))
+      return InPersonIcon;
+
+    return OnlineIcon;
   };
 
   return (
@@ -70,14 +85,22 @@ const EnrolledSidebar: React.FC<Props> = ({ isOpen, onClose, enrollments }) => {
                         {item.schedule?.weeklySchedule?.label || "TBA"}
                       </span>
                     </div>
+
                     <div className="es-row">
                       <img src={ClockIcon} alt="clock" />
                       <span>{item.schedule?.timeSlot?.label || "TBA"}</span>
                     </div>
+
                     <div className="es-row">
-                      <img src={OnlineIcon} alt="type" />
-                      <span>{item.schedule?.sessionType?.name || "TBA"}</span>
+                      <img
+                        src={getSessionIcon(item.schedule?.sessionType?.name)}
+                        alt="session-type"
+                      />
+                      <span className="es-session-name">
+                        {item.schedule?.sessionType?.name || "TBA"}
+                      </span>
                     </div>
+
                     <div className="es-row">
                       <img src={LocationIcon} alt="loc" />
                       <span>
